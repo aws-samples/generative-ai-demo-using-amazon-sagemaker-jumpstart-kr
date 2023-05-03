@@ -19,7 +19,7 @@
 이미지로부터 Emotion 분석을 하기 위한 Emotion API는 아래와 같습니다. CloudFront를 이용한 Endpoint는 아래와 같습니다. HTTPS POST Method로 이미지를 전송하면 Emotion 결과를 리턴합니다. 상세한 정보는 [Emotion 분석](https://github.com/kyopark2014/emotion-garden/blob/main/emotion.md)에서 확인합니다.
 
 ```java
-https://d3ic6ryvcaoqdy.cloudfront.net/emotion
+https://[CloudFront Domain]/emotion
 ```
 
 ### gardenfromDB API
@@ -27,7 +27,7 @@ https://d3ic6ryvcaoqdy.cloudfront.net/emotion
 emotion과 favorite로 생성한 이미지를 로드하여 사용자에게 보여줍니다. 이미지 생성시에는 image pool에 저장되지만, administrator에 적절한 이미지가 선택이 되면, serving image를 저장하는 bucket으로 파일을 옮깁니다. 이때 S3 putEvent를 catch하여 DynamoDB에 이미지에 대한 정보를 저장하고, 사용자가 처음에 emotion garden에 진입시 해당 이미지를 DynamoDB에서 로딩하여 보여줍니다.  
 
 ```java
-https://d3ic6ryvcaoqdy.cloudfront.net/gardenfromDB
+https://[CloudFront Domain]/gardenfromDB
 ```
 
 ### Garden API
@@ -35,7 +35,7 @@ https://d3ic6ryvcaoqdy.cloudfront.net/gardenfromDB
 Emotion으로 생성한 이미지를 조회하는 Garden API는 아래와 같습니다. 이미지 조회를 위한 API의 리소스 이름은 /garden 이고, HTTPS POST Method로 요청을 수행합니다. 상세한 정보는 [Garden API](https://github.com/kyopark2014/emotion-garden/blob/main/garden.md)에서 확인합니다.  
 
 ```java
-https://d3ic6ryvcaoqdy.cloudfront.net/garden
+https://[CloudFront Domain]/garden
 ```
 
 
@@ -45,7 +45,7 @@ https://d3ic6ryvcaoqdy.cloudfront.net/garden
 사용자의 연령, 성별을 가지고 적절한 컨텐츠를 추천하기 위해서 Like에 대한 선호를 서버로 전송합니다. 
 
 ```java
-https://d3ic6ryvcaoqdy.cloudfront.net/like
+https://[CloudFront Domain]/like
 ```
 
 java script 예제입니다.
@@ -102,7 +102,7 @@ Emotion Garden을 설치하는 방법은 [Emotion Garden 배포 방법](https://
 
 Emotion 분석을 테스트할 수 있습니다.
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/emotion/emotion.html" 로 접속합니다.
+1) "https://[CloudFront Domain]/html/emotion/emotion.html" 로 접속합니다.
 2) [Video] 버튼을 선택하여 비디오 사용을 allow 해줍니다. 
 3) [Emotion] 버튼을 선택하여 화면 캡춰를 수행하면, [Emotion API](https://github.com/kyopark2014/emotion-garden#emotion-api)로 접속하여 Emotion 분석을 수행하고 결과를 하단에 보여줍니다. 
 
@@ -121,7 +121,7 @@ Features: 안경 눈뜨고있음
 
 Emotion 분석으로 얻어진 결과로 생성된 Stable Diffusion 이미지를 보여줍니다. Personlize에서 결과를 얻기 위해서는 최소 10000개의 interaction event가 필요합니다. Garden에서는 각 emotion에 대해 DynamoDB에 있는 모든 이미지를 보여줍니다. 이때 like 버튼을 통해 interaction data를 수집할 수 있습니다.
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/garden/garden.html" 로 접속합니다.
+1) "https://[CloudFront Domain]/html/garden/garden.html" 로 접속합니다.
 2) [Video] 버튼을 선택하여 비디오 사용을 allow 해줍니다. 
 3) Favorite에 좋아하는 동물이나 사물을 추가할 수 있습니다. 단, 미리 정의되지 않은 Favorite의 경우에는 "No images"로 보여줍니다. 
 4) [Emotion] 버튼을 선택하여 화면 캡춰된 이미지로 Emotion분석을 한 후에, [Garden API](https://github.com/kyopark2014/emotion-garden#garden-api)를 이용하여 미리 생성된 Stable Diffusion 이미지들을 보여줍니다. 이때 얻어진 결과의 예는 아래와 같습니다.
@@ -134,7 +134,7 @@ Emotion 분석으로 얻어진 결과로 생성된 Stable Diffusion 이미지를
 
 ### Emotion Garden
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/emotion-garden/emotion-garden.html" 에 접속합니다.
+1) "https://[CloudFront Domain]/html/emotion-garden/emotion-garden.html" 에 접속합니다.
 2) Video를 “allow”하고, 적당한 화면에서 “Emotion” 버튼을 누릅니다. 이때 화면캡춰 이미지가 오른쪽 Preview에 보여집니다.
 3) Preview 이미지를 Rekognition에 보내서 emotion을 분석하고 결과를 아래에 보여줍니다.
 4) DynamoDB에 저장된 emotion에 해당되는 이미지를 불러오고 아래에 3개를 보여줍니다. 서버에서는 landscape와 portrait 2개 타입으로 전체 이미지 리스트를 전달하고, client에서 일부를 보여주는 형태로 동작합니다. Test Page에서는 UI상 landscape만 보여줍니다. 
@@ -145,7 +145,7 @@ Emotion 분석으로 얻어진 결과로 생성된 Stable Diffusion 이미지를
 
 ### Stable Diffusion 이미지 생성에 필요한 Prompt 준비
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/text2image.html" 에 접속합니다. 
+1) "https://[CloudFront Domain]/html/text2image.html" 에 접속합니다. 
 2) 적당한 이미지를 Prompt에 입력합니다. 
 3) Resolution에서 적절한 해상도를 선택합니다. 여기서는 기본(768x512), WXGA(1024x600), WXGA(1280x800)를 지정할 수 있습니다. 
 
@@ -159,7 +159,7 @@ Emotion 분석으로 얻어진 결과로 생성된 Stable Diffusion 이미지를
 
 다수의 이미지를 생성하기 위한 웯 페이지입니다. 생성된 이미지를 확인하고 삭제할 수 있습니다. 이미지는 바로 Serviring되지 않고 이미지 Pool(Bucket의 imgPool)에 저장됩니다.
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/pool/bulk/bulk.html" 에 접속합니다.
+1) "https://[CloudFront Domain]/html/pool/bulk/bulk.html" 에 접속합니다.
 2) RepeatCount는 같은 prompt로 생성하는 이미지의 숫자를 의미합니다.
 3) Emotion을 선택하고,
 4) 추가로 넣을 값 (Favorite)이 있을 경우에 입력합니다.
@@ -183,7 +183,7 @@ S3에 Object가 저장될때 발생하는 putEvent를 이용하여 Lambda가 Obj
 
 생성된 이미지들중에 좋은 이미지를 선택하기 위하여 DynamoDB에 저장된 index를 기준으로 S3에 저장된 이미지를 확인하고 필요시 삭제할 수 있습니다. 
 
-1) "https://d3ic6ryvcaoqdy.cloudfront.net/html/viewer/viewer.html" 에 접속합니다.
+1) "https://[CloudFront Domain]/html/viewer/viewer.html" 에 접속합니다.
 2) Emotion과 Favorite를 선택합니다.
 3) Retrieve를 선택하여 S3에 있는 이미지를 가져옵니다. 이미지가 많은 경우에 “Start”를 조정하면 뒤쪽의 이미지를 확인할 수 있습니다. 최대로 보여줄수 있는 이미지의 숫자는 "Number of Images"로 100개까지 지정할 수 있습니다.
 4) 불필요한 이미지는 아래처럼 dislike 선택후 [Remove] 버튼을 통해 삭제합니다. 
@@ -194,7 +194,7 @@ S3에 Object가 저장될때 발생하는 putEvent를 이용하여 Lambda가 Obj
 
 ### 여러개의 Stable Diffusion 이미지 생성시 속도 향상 방법
 
-이미지 생성시간을 단축하기 위하여 병렬처리를 수행합니다. 상세한 내용은 [Stable Diffusion 이미지 생성하기](https://github.com/kyopark2014/emotion-garden/blob/main/stable-diffusion.md)를 참조합니다.
+이미지 생성시간을 단축하기 위하여 병렬처리를 수행합니다. 상세한 내용은 [Stable Diffusion 이미지 생성하기](./stable-diffusion.md)를 참조합니다.
 
 ### 지원해상도 및 소요시간
 
@@ -265,16 +265,16 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 ### CSV 파일 생성
 
-[generate-csv](https://github.com/kyopark2014/emotion-garden/blob/main/generate-csv.md)에서는 DynamoDB에 저장된 user, item, interaction 데이터를 CSV 파일로 변환하여 S3에 저장합니다.
+[generate-csv](./generate-csv.md)에서는 DynamoDB에 저장된 user, item, interaction 데이터를 CSV 파일로 변환하여 S3에 저장합니다.
 
 ### Recommendation 리스트 가져오기
 
-[recommendation](https://github.com/kyopark2014/emotion-garden/blob/main/recommendation.md)에서는 userId로 해당 사용자에 대한 추천이미지를 읽어옵니다.
+[recommendation](./recommendation.md)에서는 userId로 해당 사용자에 대한 추천이미지를 읽어옵니다.
 
 
 ### DataSet에 데이터 추가
 
-[dataset-info](https://github.com/kyopark2014/emotion-garden/blob/main/dataset-info.md)에서는 user, item, interaction의 DataSet에 대한 정보를 수집합니다.
+[dataset-info](./dataset-info.md)에서는 user, item, interaction의 DataSet에 대한 정보를 수집합니다.
 
 
 
