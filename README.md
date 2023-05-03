@@ -1,4 +1,4 @@
-# Generative AI Demo
+# Amazon SageMaker를 이용한 Generative AI Demo
 
 생성 AI(Generative AI)를 이용한 데모의 주요 내용과 코드를 공유합니다.
 
