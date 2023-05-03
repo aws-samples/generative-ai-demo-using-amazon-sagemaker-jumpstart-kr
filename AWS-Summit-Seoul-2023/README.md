@@ -1,4 +1,4 @@
-# My Emotion Gardesn 
+# My Emotion Gardens 
 
 AWS Summit Seoul 2023에서 "My Emotion Gardesns"가 메인 데모로 전시되었습니다. "My Emotion Gardens"의 주요 구성은 아래와 같습니다.
 
