@@ -1,0 +1,128 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Stable Diffusion</title>
+    <script type="application/javascript">
+        function sendFile(text) {
+            const uri = "https://d3ic6ryvcaoqdy.cloudfront.net/text2image";
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("POST", uri, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    console.log("response: " + JSON.stringify(response));
+                    let result = JSON.parse(response.body);
+                    console.log("time: " + JSON.parse(response.time));
+
+                    for (let i in result) {
+                        console.log(result[i]);
+
+                        let htmlsrc;
+                        htmlsrc = `<H5>${result[i]}</H5>
+                            <img id="${i}" src="${result[i]}" height="600"/>
+                            <i onclick="likeOrDislike(this)" class="fa fa-thumbs-up"></i>`;
+                        console.log('htmlsrc: ', htmlsrc);
+
+                        previewlist[i].innerHTML = htmlsrc;
+                    }
+                }
+            };
+
+            let previewlist = [];
+            for (let i = 0; i < 10; i++) {
+                previewlist.push(document.getElementById('preview' + i));
+                previewlist[i].innerHTML = '';
+
+                // add listener        
+                (function (index) {
+                    previewlist[index].addEventListener("click", function () {
+                        i = index;
+                        console.log('click! index: ' + index);
+                    });
+                })(i);
+            }
+
+            let selectedResolution = document.getElementById("resolutionId");
+            console.log("resolution: " + selectedResolution.value);
+
+            let width = 768, height = 512;
+            if (selectedResolution.value == "BASIC") {
+                width = 768;
+                height = 512;
+            }
+            else if (selectedResolution.value == "WSVGA") {
+                width = 1024;
+                height = 600;
+            }
+            else if (selectedResolution.value == "WXGA") {
+                width = 1280;
+                height = 800;
+            }
+            console.log("width: " + width + ', height: ' + height);
+
+            // request
+            var requestObj = { 
+                "text": text,
+                "width": width,
+                "height": height
+            }
+            console.log("request: " + JSON.stringify(requestObj));
+
+            var blob = new Blob([JSON.stringify(requestObj)], { type: 'application/json' });
+
+            xhr.send(blob);
+        }
+
+        window.onload = () => {
+            var form = document.forms.myform;
+            form.elements.button.onclick = function () {
+                var text = form.elements.prompt.value;
+                console.log("input: " + text);
+
+                if (text) {
+                    sendFile(text);
+                } else {
+                    alert("No prompt.");
+                }
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Stable Diffusion</h1>
+    <h4>Enter your text to generate your stable diffusion image.</h4>
+    <div>
+        <form id="myform">
+            <text>Prompt: </text><input type="text" name="prompt" autofocus size="100"
+                value="white flowers, fantasy, very happy, immature, smile, concept art, trending on artstation, highly detailed, intricate, sharp focus, digital art">
+            <input type="button" name="button" value="Send">
+        </form>
+    </div>
+    <form id="input_row1">
+        <text>Resolution: </text>
+        <select name="resolution" id="resolutionId">
+            <option type="text" value="BASIC" selected="selected">Basic: 768 x 512</option>
+            <option value="WSVGA">WSVGA: 1024 x 600</option>
+            <option value="WXGA">WXGA: 1280 x 800</option>
+        </select>
+    </form>
+    <div class="images" id="imagePanel">
+        <H3>Images</H3>
+        <div id="preview0"></div>
+        <div id="preview1"></div>
+        <div id="preview2"></div>
+        <div id="preview3"></div>
+        <div id="preview4"></div>
+        <div id="preview5"></div>
+        <div id="preview6"></div>
+        <div id="preview7"></div>
+        <div id="preview8"></div>
+        <div id="preview9"></div>
+        <div id="preview10"></div>
+    </div>
+    <h4>Stable diffusion images will be generated from your text and then served in CloudFront.</h4>
+</body>
+
+</html>

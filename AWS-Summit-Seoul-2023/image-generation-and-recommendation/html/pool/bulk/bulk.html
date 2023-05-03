@@ -1,0 +1,179 @@
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Garden</title>
+    <link rel="stylesheet" , href="style.css">
+</head>
+<body>
+    <h1>Stable Diffusion Image Generator</h1>
+    <p>You can enter your text as bellows.</p>
+    <form id="input_row0">
+        <text>RepeatCount: </text><input type="text" name="repeatCount" autofocus size="50" value="10">
+    </form>
+    <div>
+        <form id="myform">
+            <form id="input_row1">
+                <H4>Features</H4>
+                <text>Emotion: </text><select name="emotion" id="emoitonId" onchange=SelectChanged()>
+                    <option type="text" value="happy" selected="selected">행복 (HAPPY)</option>
+                    <option value="surprised">놀람 (SURPRISED)</option>
+                    <option value="calm">평온 (CALM)</option>
+                    <option value="angry">화남 (ANGRY)</option>
+                    <option value="fear">공포 (FEAR)</option>
+                    <option value="confused">혼란스러움 (CONFUSED)</option>
+                    <option value="disgusted">역겨움 (DISGUSTED)</option>
+                    <option value="sad">슬픔 (SAD)</option>
+                </select>
+            </form>
+            <form id="EmotionText">
+                <text>Emotion Text: </text><input type="text" id="emtoionText" autofocus size="30" value="happy">
+            </form>
+            <form id="input_row2">
+                <text>Favorite: </text><input type="text" name="favorite" autofocus size="50">
+            </form>
+            <form id="input_row3">
+                <text>Others: </text><input type="text" name="others" autofocus size="100"
+                    value="flowers, fantasy, concept art, trending on artstation, highly detailed, intricate, sharp focus, digital art">
+                <input type="button" name="send" value="Generate">
+                <input type="button" name="update" value="Update">
+                <input type="button" name="remove" value="Remove">
+            </form>
+        </form>
+    </div>
+    <text>[Generate] 선택후에 이미지가 생성될때까지 기다린 후에 [Update]를 누르면 이미지를 확인할 수 있습니다.</text>
+    <text>또한, 이미지 오른쪽의 like/dislike를 선택한후에 [Remove]를 선택하면 삭제할 수 있습니다.</text>
+    
+    <div class="result-container">
+        <div id="status"></div>
+    </div>
+    <div class="chat-panel" id="chatPanel">
+        <H3>Landscape</H3>
+        <div id="preview0h"></div>
+        <div id="preview1h"></div>
+        <div id="preview2h"></div>
+        <div id="preview3h"></div>
+        <div id="preview4h"></div>
+        <div id="preview5h"></div>
+        <div id="preview6h"></div>
+        <div id="preview7h"></div>
+        <div id="preview8h"></div>
+        <div id="preview9h"></div>
+        <div id="preview10h"></div>
+        <div id="preview11h"></div>
+        <div id="preview12h"></div>
+        <div id="preview13h"></div>
+        <div id="preview14h"></div>
+        <div id="preview15h"></div>
+        <div id="preview16h"></div>
+        <div id="preview17h"></div>
+        <div id="preview18h"></div>
+        <div id="preview19h"></div>
+        <div id="preview20h"></div>
+        <div id="preview21h"></div>
+        <div id="preview22h"></div>
+        <div id="preview23h"></div>
+        <div id="preview24h"></div>
+        <div id="preview25h"></div>
+        <div id="preview26h"></div>
+        <div id="preview27h"></div>
+        <div id="preview28h"></div>
+        <div id="preview29h"></div>
+        <div id="preview30h"></div>
+        <div id="preview31h"></div>
+        <div id="preview32h"></div>
+        <div id="preview33h"></div>
+        <div id="preview34h"></div>
+        <div id="preview35h"></div>
+        <div id="preview36h"></div>
+        <div id="preview37h"></div>
+        <div id="preview38h"></div>
+        <div id="preview39h"></div>
+        <div id="preview30h"></div>
+        <div id="preview31h"></div>
+        <div id="preview32h"></div>
+        <div id="preview33h"></div>
+        <div id="preview34h"></div>
+        <div id="preview35h"></div>
+        <div id="preview36h"></div>
+        <div id="preview37h"></div>
+        <div id="preview38h"></div>
+        <div id="preview39h"></div>
+        <div id="preview40h"></div>
+        <div id="preview41h"></div>
+        <div id="preview42h"></div>
+        <div id="preview43h"></div>
+        <div id="preview44h"></div>
+        <div id="preview45h"></div>
+        <div id="preview46h"></div>
+        <div id="preview47h"></div>
+        <div id="preview48h"></div>
+        <div id="preview49h"></div>
+        <div id="preview50h"></div>
+        <H3>Portrait</H3>
+        <div id="preview0v"></div>
+        <div id="preview1v"></div>
+        <div id="preview2v"></div>
+        <div id="preview3v"></div>
+        <div id="preview4v"></div>
+        <div id="preview5v"></div>
+        <div id="preview6v"></div>
+        <div id="preview7v"></div>
+        <div id="preview8v"></div>
+        <div id="preview9v"></div>
+        <div id="preview10v"></div>
+        <div id="preview11v"></div>
+        <div id="preview12v"></div>
+        <div id="preview13v"></div>
+        <div id="preview14v"></div>
+        <div id="preview15v"></div>
+        <div id="preview16v"></div>
+        <div id="preview17v"></div>
+        <div id="preview18v"></div>
+        <div id="preview19v"></div>
+        <div id="preview20v"></div>
+        <div id="preview21v"></div>
+        <div id="preview22v"></div>
+        <div id="preview23v"></div>
+        <div id="preview24v"></div>
+        <div id="preview25v"></div>
+        <div id="preview26v"></div>
+        <div id="preview27v"></div>
+        <div id="preview28v"></div>
+        <div id="preview29v"></div>
+        <div id="preview30v"></div>
+        <div id="preview31v"></div>
+        <div id="preview32v"></div>
+        <div id="preview33v"></div>
+        <div id="preview34v"></div>
+        <div id="preview35v"></div>
+        <div id="preview36v"></div>
+        <div id="preview37v"></div>
+        <div id="preview38v"></div>
+        <div id="preview39v"></div>
+        <div id="preview40v"></div>
+        <div id="preview41v"></div>
+        <div id="preview42v"></div>
+        <div id="preview43v"></div>
+        <div id="preview44v"></div>
+        <div id="preview45v"></div>
+        <div id="preview46v"></div>
+        <div id="preview47v"></div>
+        <div id="preview48v"></div>
+        <div id="preview49v"></div>
+        <div id="preview50v"></div>
+    </div>
+    <script src="bulk.js"></script>
+    <script type='text/javascript'>
+        function SelectChanged()  {  
+            console.log("emotion: " + emoitonId.value);
+            emtoionText.value = emoitonId.value;
+            console.log("emtoionText: " + emtoionText.value);
+
+         }        
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+</body>
+</html>

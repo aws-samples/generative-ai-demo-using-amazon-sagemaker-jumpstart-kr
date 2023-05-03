@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://d2sakx48tnf086.cloudfront.net/flower-viewer.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+
+body { 
+  background: url(https://source.unsplash.com/random/?flower) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#garden-form {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 12px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+</style>
+<script type="text/javascript">
+
+document.cookie = "SameSite=None; Secure";
+
+window.addEventListener("DOMContentLoaded", (event) => {
+    function startGardenViewer(element) {
+        document.getElementById("garden-form").style.visibility = "hidden"
+        document.documentElement.requestFullscreen()
+
+        var imageBaseUrl = document.getElementById("garden-image-url").value
+        var updatePeriod = document.getElementById("garden-time").value
+        console.log(imageBaseUrl)
+        console.log(updatePeriod)
+
+        var newImage = new Image();
+        newImage.src = imageBaseUrl
+
+        function updateImage(){
+            if(newImage.complete) {
+                console.log("complete")
+                console.log(newImage.src)
+                background =  "url(" + newImage.src + ") no-repeat center center fixed;"
+                document.body.style.backgroundImage = "url("+newImage.src+")"
+                document.body.style.backgroundRepeat = "no-repeat"
+                document.body.style.backgroundPosition = "center center"
+                document.body.style.backgroundAttachment = "fixed"
+                newImage = new Image();
+                newImage.src = imageBaseUrl + "&time=" + new Date().getTime();
+            }
+            setTimeout(updateImage, updatePeriod);
+        }
+        updateImage()
+    }
+    document.getElementById("garden-start").onclick = startGardenViewer
+})
+
+
+</script>
+</head><body style="background-image: url(&quot;https://d3ic6ryvcaoqdy.cloudfront.net/emotions/surprised/img_20230324-214248_3h.jpeg&quot;); background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
+    <div id="garden-form" style="visibility: hidden;">
+        <p for="fname" style="font-size:x-large; text-align: center; font-weight: 600;">My Emotion Garden Viewer</p>
+        <label for="fname">업데이트되는 이미지 URL</label>
+        <input type="text" id="garden-image-url" placeholder="Image URL" value="https://d3ic6ryvcaoqdy.cloudfront.net/emotions/surprised/img_20230324-214248_3h.jpeg">
+    
+        <label for="lname">이미지 변경 주기 (ms) <br> <span style="font-size: small;">
+            주기마다 이미지 로드가 완료됐는지 확인합니다. <br> 완료된 경우에만 화면을 갱신하고 다시 이미지를 요청합니다.</span>
+        </label>
+        <input type="text" id="garden-time" placeholder="Update Period" value="5000">
+    
+        <button id="garden-start" type="submit">시작</button>
+      </div>
+
+</body></html>

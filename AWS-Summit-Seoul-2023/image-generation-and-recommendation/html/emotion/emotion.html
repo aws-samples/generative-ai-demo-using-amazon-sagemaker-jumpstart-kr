@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotion</title>
+<link rel="stylesheet" href="emotion.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="button-container">
+            <button class="start-button">Video</button>
+            <!-- <button class="preview-button">Preview</button> -->
+            <a class="emotion-button">Emotion</a>
+            <a class="download-button">Download</a>            
+        </div>
+        <div class="video-container">
+            <div class="video-item">
+                <h2>Video</h2>
+                <video width="500" height="376" autoplay muted id="preview"></video>
+            </div>        
+            <div class="video-item">                
+                <h2>Preview</h2>
+                <canvas id="canvas" style="border: 1px solid black;"></canvas>
+            </div>
+        </div>
+        <div class="result-container">
+            <div id="profile-emotion"></div>             
+            <div id="profile-age"></div>             
+            <div id="profile-features"></div>             
+        </div>
+    </div>
+    <script src="emotion.js"></script>
+</body>
+</html>

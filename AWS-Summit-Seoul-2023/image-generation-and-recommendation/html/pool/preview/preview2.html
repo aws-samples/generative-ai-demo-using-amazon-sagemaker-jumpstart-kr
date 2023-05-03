@@ -1,0 +1,343 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Garden - Preview</title>
+    <link rel="stylesheet" , href="style.css">
+</head>
+<body>
+    <h1>Preview</h1>
+    <p>Check the quality of stable diffusion images as bellows.</p>
+    <div>
+        <form id="myform">
+            <form id="input_row1">
+                <H4>Features</H4>
+                <text>Emotion: </text><select name="emotion" id="emoitonId">
+                    <option type="text" value="happy" selected="selected">행복 (HAPPY)</option>
+                    <option value="surprised">놀람 (SURPRISED)</option>
+                    <option value="calm">평온 (CALM)</option>
+                    <option value="angry">화남 (ANGRY)</option>
+                    <option value="fear">공포 (FEAR)</option>
+                    <option value="confused">혼란스러움 (CONFUSED)</option>
+                    <option value="disgusted">역겨움 (DISGUSTED)</option>
+                    <option value="sad">슬픔 (SAD)</option>
+                </select>
+            </form>
+            <form id="input_row2">
+            <!--   <text>Favorite: </text><input type="text" name="favorite" autofocus size="200"> --> 
+                <text>Favorite: </text><select name="favorite" id="favoriteStr">
+                    <option type="text" value="spring,cloudy,day" selected="selected">1. spring,cloudy,day</option>
+                    <option value="spring,cloudy,sunset">2. spring,cloudy,sunset</option>
+                    <option value="spring,cloudy,the-early-dawn">3. spring,cloudy,the-early-dawn</option>
+                    <option value="spring,cloudy,the-middle-of-the-night">4. spring,cloudy,the-middle-of-the-night/</option>
+                    <option value="spring,rainy,day">5. spring,rainy,day</option>
+                    <option value="spring,rainy,sunset">6. spring,rainy,sunset</option>
+                    <option value="spring,rainy,the-early-dawn">7. spring,rainy,the-early-dawn</option>
+                    <option value="spring,rainy,the-middle-of-the-night">8. spring,rainy,the-middle-of-the-night</option>
+                    <option value="spring,snowy,day">9. spring,snowy,day</option>
+                    <option value="spring,snowy,sunset">10. spring,snowy,sunset</option>
+                    <option value="spring,snowy,the-early-dawn">11. spring,snowy,the-early-dawn</option>
+                    <option value="spring,snowy,the-middle-of-the-night">12. spring,snowy,the-middle-of-the-night</option>
+                    <option value="spring,sunny,day">13. spring,sunny,day</option>
+                    <option value="spring,sunny,sunset">14. spring,sunny,sunset</option>
+                    <option value="spring,sunny,the-early-dawn">15. spring,sunny,the-early-dawn</option>
+                    <option value="spring,sunny,the-middle-of-the-night">16. spring,sunny,the-middle-of-the-night</option>
+                    
+                    <option type="text" value="summer,cloudy,day">1. summer,cloudy,day</option>
+                    <option value="summer,cloudy,sunset">2. summer,cloudy,sunset</option>
+                    <option value="summer,cloudy,the-early-dawn">3. summer,cloudy,the-early-dawn</option>
+                    <option value="summer,cloudy,the-middle-of-the-night">4. summer,cloudy,the-middle-of-the-night/</option>
+                    <option value="summer,rainy,day">5. summer,rainy,day</option>
+                    <option value="summer,rainy,sunset">6. summer,rainy,sunset</option>
+                    <option value="summer,rainy,the-early-dawn">7. summer,rainy,the-early-dawn</option>
+                    <option value="summer,rainy,the-middle-of-the-night">8. summer,rainy,the-middle-of-the-night</option>
+                    <option value="summer,snowy,day">9. summer,snowy,day</option>
+                    <option value="summer,snowy,sunset">10. summer,snowy,sunset</option>
+                    <option value="summer,snowy,the-early-dawn">11. summer,snowy,the-early-dawn</option>
+                    <option value="summer,snowy,the-middle-of-the-night">12. summer,snowy,the-middle-of-the-night</option>
+                    <option value="summer,sunny,day">13. summer,sunny,day</option>
+                    <option value="summer,sunny,sunset">14. summer,sunny,sunset</option>
+                    <option value="summer,sunny,the-early-dawn">15. summer,sunny,the-early-dawn</option>
+                    <option value="summer,sunny,the-middle-of-the-night">16. summer,sunny,the-middle-of-the-night</option>
+
+                    <option type="text" value="autumn,cloudy,day">1. autumn,cloudy,day</option>
+                    <option value="autumn,cloudy,sunset">2. autumn,cloudy,sunset</option>
+                    <option value="autumn,cloudy,the-early-dawn">3. autumn,cloudy,the-early-dawn</option>
+                    <option value="autumn,cloudy,the-middle-of-the-night">4. autumn,cloudy,the-middle-of-the-night/</option>
+                    <option value="autumn,rainy,day">5. autumn,rainy,day</option>
+                    <option value="autumn,rainy,sunset">6. autumn,rainy,sunset</option>
+                    <option value="autumn,rainy,the-early-dawn">7. autumn,rainy,the-early-dawn</option>
+                    <option value="autumn,rainy,the-middle-of-the-night">8. autumn,rainy,the-middle-of-the-night</option>
+                    <option value="autumn,snowy,day">9. autumn,snowy,day</option>
+                    <option value="autumn,snowy,sunset">10. autumn,snowy,sunset</option>
+                    <option value="autumn,snowy,the-early-dawn">11. autumn,snowy,the-early-dawn</option>
+                    <option value="autumn,snowy,the-middle-of-the-night">12. autumn,snowy,the-middle-of-the-night</option>
+                    <option value="autumn,sunny,day">13. autumn,sunny,day</option>
+                    <option value="autumn,sunny,sunset">14. autumn,sunny,sunset</option>
+                    <option value="autumn,sunny,the-early-dawn">15. autumn,sunny,the-early-dawn</option>
+                    <option value="autumn,sunny,the-middle-of-the-night">16. autumn,sunny,the-middle-of-the-night</option>
+
+                    <option type="text" value="winter,cloudy,day">1. winter,cloudy,day</option>
+                    <option value="winter,cloudy,sunset">2. winter,cloudy,sunset</option>
+                    <option value="winter,cloudy,the-early-dawn">3. winter,cloudy,the-early-dawn</option>
+                    <option value="winter,cloudy,the-middle-of-the-night">4. winter,cloudy,the-middle-of-the-night/</option>
+                    <option value="winter,rainy,day">5. winter,rainy,day</option>
+                    <option value="winter,rainy,sunset">6. winter,rainy,sunset</option>
+                    <option value="winter,rainy,the-early-dawn">7. winter,rainy,the-early-dawn</option>
+                    <option value="winter,rainy,the-middle-of-the-night">8. winter,rainy,the-middle-of-the-night</option>
+                    <option value="winter,snowy,day">9. winter,snowy,day</option>
+                    <option value="winter,snowy,sunset">10. winter,snowy,sunset</option>
+                    <option value="winter,snowy,the-early-dawn">11. winter,snowy,the-early-dawn</option>
+                    <option value="winter,snowy,the-middle-of-the-night">12. winter,snowy,the-middle-of-the-night</option>
+                    <option value="winter,sunny,day">13. winter,sunny,day</option>
+                    <option value="winter,sunny,sunset">14. winter,sunny,sunset</option>
+                    <option value="winter,sunny,the-early-dawn">15. winter,sunny,the-early-dawn</option>
+                    <option value="winter,sunny,the-middle-of-the-night">16. winter,sunny,the-middle-of-the-night</option>
+                </select>
+            </form>
+            <form id="input_row3">
+                <text>Start: </text><input type="text" name="start" autofocus size="30" value="0">
+                <text>Number of Images: </text><input type="text" name="nRow" autofocus size="30" value="200">
+                <input type="button" name="retrieve" value="Retrieve">
+                <input type="button" name="remove" value="Remove">
+            </form>            
+        </form>
+    </div>
+    <text>[Retrieve] 선택하여 현재 emotion으로 저장된 이미지를 확인합니다. </text>
+    <text>또한, 이미지 오른쪽의 like/dislike를 선택한후에 [Remove]를 선택하면 삭제할 수 있습니다.</text>
+    
+    <div class="result-container">
+        <div id="status"></div>
+    </div>
+    <div class="images" id="imagePanel">
+        <H3>Images</H3>
+        <div id="preview0"></div>
+        <div id="preview1"></div>
+        <div id="preview2"></div>
+        <div id="preview3"></div>
+        <div id="preview4"></div>
+        <div id="preview5"></div>
+        <div id="preview6"></div>
+        <div id="preview7"></div>
+        <div id="preview8"></div>
+        <div id="preview9"></div>
+        <div id="preview10"></div>
+        <div id="preview11"></div>
+        <div id="preview12"></div>
+        <div id="preview13"></div>
+        <div id="preview14"></div>
+        <div id="preview15"></div>
+        <div id="preview16"></div>
+        <div id="preview17"></div>
+        <div id="preview18"></div>
+        <div id="preview19"></div>
+        <div id="preview20"></div>
+        <div id="preview21"></div>
+        <div id="preview22"></div>
+        <div id="preview23"></div>
+        <div id="preview24"></div>
+        <div id="preview25"></div>
+        <div id="preview26"></div>
+        <div id="preview27"></div>
+        <div id="preview28"></div>
+        <div id="preview29"></div>
+        <div id="preview30"></div>
+        <div id="preview31"></div>
+        <div id="preview32"></div>
+        <div id="preview33"></div>
+        <div id="preview34"></div>
+        <div id="preview35"></div>
+        <div id="preview36"></div>
+        <div id="preview37"></div>
+        <div id="preview38"></div>
+        <div id="preview39"></div>
+        <div id="preview30"></div>
+        <div id="preview31"></div>
+        <div id="preview32"></div>
+        <div id="preview33"></div>
+        <div id="preview34"></div>
+        <div id="preview35"></div>
+        <div id="preview36"></div>
+        <div id="preview37"></div>
+        <div id="preview38"></div>
+        <div id="preview39"></div>
+        <div id="preview40"></div>
+        <div id="preview41"></div>
+        <div id="preview42"></div>
+        <div id="preview43"></div>
+        <div id="preview44"></div>
+        <div id="preview45"></div>
+        <div id="preview46"></div>
+        <div id="preview47"></div>
+        <div id="preview48"></div>
+        <div id="preview49"></div>
+        <div id="preview50"></div>
+        <div id="preview51"></div>
+        <div id="preview52"></div>
+        <div id="preview53"></div>
+        <div id="preview54"></div>
+        <div id="preview55"></div>
+        <div id="preview56"></div>
+        <div id="preview57"></div>
+        <div id="preview58"></div>
+        <div id="preview59"></div>
+        <div id="preview60"></div>
+        <div id="preview61"></div>
+        <div id="preview62"></div>
+        <div id="preview63"></div>
+        <div id="preview64"></div>
+        <div id="preview65"></div>
+        <div id="preview66"></div>
+        <div id="preview67"></div>
+        <div id="preview68"></div>
+        <div id="preview69"></div>
+        <div id="preview70"></div>
+        <div id="preview71"></div>
+        <div id="preview72"></div>
+        <div id="preview73"></div>
+        <div id="preview74"></div>
+        <div id="preview75"></div>
+        <div id="preview76"></div>
+        <div id="preview77"></div>
+        <div id="preview78"></div>
+        <div id="preview79"></div>
+        <div id="preview80"></div>
+        <div id="preview81"></div>
+        <div id="preview82"></div>
+        <div id="preview83"></div>
+        <div id="preview84"></div>
+        <div id="preview85"></div>
+        <div id="preview86"></div>
+        <div id="preview87"></div>
+        <div id="preview88"></div>
+        <div id="preview89"></div>
+        <div id="preview90"></div>
+        <div id="preview91"></div>
+        <div id="preview92"></div>
+        <div id="preview93"></div>
+        <div id="preview94"></div>
+        <div id="preview95"></div>
+        <div id="preview96"></div>
+        <div id="preview97"></div>
+        <div id="preview98"></div>
+        <div id="preview99"></div>
+        <div id="preview100"></div>
+
+        <div id="preview101"></div>
+        <div id="preview102"></div>
+        <div id="preview103"></div>
+        <div id="preview104"></div>
+        <div id="preview105"></div>
+        <div id="preview106"></div>
+        <div id="preview107"></div>
+        <div id="preview108"></div>
+        <div id="preview109"></div>
+        <div id="preview110"></div>
+        <div id="preview111"></div>
+        <div id="preview112"></div>
+        <div id="preview113"></div>
+        <div id="preview114"></div>
+        <div id="preview115"></div>
+        <div id="preview116"></div>
+        <div id="preview117"></div>
+        <div id="preview118"></div>
+        <div id="preview119"></div>
+        <div id="preview120"></div>
+        <div id="preview121"></div>
+        <div id="preview122"></div>
+        <div id="preview123"></div>
+        <div id="preview124"></div>
+        <div id="preview125"></div>
+        <div id="preview126"></div>
+        <div id="preview127"></div>
+        <div id="preview128"></div>
+        <div id="preview129"></div>
+        <div id="preview130"></div>
+        <div id="preview131"></div>
+        <div id="preview132"></div>
+        <div id="preview133"></div>
+        <div id="preview134"></div>
+        <div id="preview135"></div>
+        <div id="preview136"></div>
+        <div id="preview137"></div>
+        <div id="preview138"></div>
+        <div id="preview139"></div>
+        <div id="preview130"></div>
+        <div id="preview131"></div>
+        <div id="preview132"></div>
+        <div id="preview133"></div>
+        <div id="preview134"></div>
+        <div id="preview135"></div>
+        <div id="preview136"></div>
+        <div id="preview137"></div>
+        <div id="preview138"></div>
+        <div id="preview139"></div>
+        <div id="preview140"></div>
+        <div id="preview141"></div>
+        <div id="preview142"></div>
+        <div id="preview143"></div>
+        <div id="preview144"></div>
+        <div id="preview145"></div>
+        <div id="preview146"></div>
+        <div id="preview147"></div>
+        <div id="preview148"></div>
+        <div id="preview149"></div>
+        <div id="preview150"></div>
+        <div id="preview151"></div>
+        <div id="preview152"></div>
+        <div id="preview153"></div>
+        <div id="preview154"></div>
+        <div id="preview155"></div>
+        <div id="preview156"></div>
+        <div id="preview157"></div>
+        <div id="preview158"></div>
+        <div id="preview159"></div>
+        <div id="preview160"></div>
+        <div id="preview161"></div>
+        <div id="preview162"></div>
+        <div id="preview163"></div>
+        <div id="preview164"></div>
+        <div id="preview165"></div>
+        <div id="preview166"></div>
+        <div id="preview167"></div>
+        <div id="preview168"></div>
+        <div id="preview169"></div>
+        <div id="preview170"></div>
+        <div id="preview171"></div>
+        <div id="preview172"></div>
+        <div id="preview173"></div>
+        <div id="preview174"></div>
+        <div id="preview175"></div>
+        <div id="preview176"></div>
+        <div id="preview177"></div>
+        <div id="preview178"></div>
+        <div id="preview179"></div>
+        <div id="preview180"></div>
+        <div id="preview181"></div>
+        <div id="preview182"></div>
+        <div id="preview183"></div>
+        <div id="preview184"></div>
+        <div id="preview185"></div>
+        <div id="preview186"></div>
+        <div id="preview187"></div>
+        <div id="preview188"></div>
+        <div id="preview189"></div>
+        <div id="preview190"></div>
+        <div id="preview191"></div>
+        <div id="preview192"></div>
+        <div id="preview193"></div>
+        <div id="preview194"></div>
+        <div id="preview195"></div>
+        <div id="preview196"></div>
+        <div id="preview197"></div>
+        <div id="preview198"></div>
+        <div id="preview199"></div>
+        <div id="preview200"></div>
+    </div>    
+    <form id="input_row4">
+        <input type="button" name="remove2" value="Remove">
+    </form>
+    <script src="preview2.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+</body>
+</html>
