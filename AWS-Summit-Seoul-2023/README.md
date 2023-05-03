@@ -1,4 +1,4 @@
-# AWS Summi Seoul 2003 데모
+# AWS Summit Seoul 2023 데모
 
 관련 소스는 아래와 같이 구성됩니다.
 
