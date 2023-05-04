@@ -276,6 +276,11 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 [dataset-info](./dataset-info.md)에서는 user, item, interaction의 DataSet에 대한 정보를 수집합니다.
 
+## 이미지 공유
+
+이미지는 아래와 같은 웹페이지로 공유 됩니다.
+
+![Screenshot_20230505_063046_Chrome](https://user-images.githubusercontent.com/52392004/236335259-3c32a005-2917-4264-b5ee-e0ab4086b072.jpg)
 
 
 ## Reference
