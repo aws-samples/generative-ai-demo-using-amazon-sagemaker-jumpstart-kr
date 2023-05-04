@@ -92,7 +92,7 @@ console.log('putUser result: '+JSON.stringify(result));
 
 ## 구현
 
-[lambda-putItem](https://github.com/kyopark2014/emotion-garden/blob/main/lambda-putItem/index.js)에서 사용자 정보를 personalize에 전달합니다.
+[lambda-putItem](./lambda-putItem/index.js)에서 사용자 정보를 personalize에 전달합니다.
 
 ```java
 var params = {
