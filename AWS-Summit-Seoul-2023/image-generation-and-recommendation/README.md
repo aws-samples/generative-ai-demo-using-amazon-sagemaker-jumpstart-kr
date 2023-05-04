@@ -2,90 +2,34 @@
 
 이미지를 Stable Diffusion 모델을 이용해 생성하고, emotion을 분석하며, 추천을 통해 좀더 다양한 이미지를 사용자가 선택할 수 있습니다.
 
+이미지 생성시에는 image pool에 저장되지만, administrator에 적절한 이미지가 선택이 되면, serving image를 저장하는 bucket으로 파일을 옮깁니다. 이때 S3 putEvent를 catch하여 DynamoDB에 이미지에 대한 정보를 저장하고, 
+
 전체적인 Architecture는 아래와 같습니다. Stable Diffusion을 이용하면 텍스트로된 prompt로 부터 창조적인 이미지를 생성할 수 있습니다. 하지만, 생성된 이미지를 서비스하기 위해서는 관리자(Administrator)에 의해 이미지를 취사선택하는 과정이 필요합니다. 따라서, 아래 Architecture에서는 "/bulk" API를 통해 다수 생성한 후에 확인(retrieve)하고, 적절하지 않은 이미지를 삭제하는 과정을 수행합니다. 이를 통해 정리된 이미지들을 S3로 복사하여 사용할 수 있게 합니다. 복사시에 다수의 이미지가 한꺼번에 로딩 될 수 있으므로 FIFO방식의 SQS에 저장한 후에 Lambda에서 꺼내서 Personalize에 아이템으로 등록합니다. 
 사용자는 별도의 클라이언트를 통해 API Gateway를 통해 먼저 감정(Emotion)분석을 합니다. Emotion분석은 Rekognition을 이용하며, 이때 Personalize에 User 메타데이터를 등록합니다. 감정 분석시 얻은 사용자 아이디(UserID)를 가지고 Personalize에 현재의 사용자 감정에 맞는 이미지 추천을 요청합니다. 이때 이미지 리스트로된 응답을 받은 후 화면에 3개씩 표시해줍니다. 사용자는 이미지들중에 맘에 드는 이미지를 고를수 있고, 이때 사용자의 interaction은 "/like" API를 통해 Personalize에 전달되어 좀더 나은 추천이 이루어 질 수 있게 됩니다. 
 
 
 ![image](https://user-images.githubusercontent.com/52392004/233786237-7981f65c-5b32-44d4-a82c-7fe6865bb202.png)
 
-<!--
-![image](https://user-images.githubusercontent.com/52392004/226938546-99d6b50b-90e1-4f66-a1dc-4375fe16b734.png)
--->
 
 ## Client에서 Emoton Garden을 구성하기 위해 필요한 API
 
+
 ### Emotion API
 
-이미지로부터 Emotion 분석을 하기 위한 Emotion API는 아래와 같습니다. CloudFront를 이용한 Endpoint는 아래와 같습니다. HTTPS POST Method로 이미지를 전송하면 Emotion 결과를 리턴합니다. 상세한 정보는 [Emotion 분석](https://github.com/kyopark2014/emotion-garden/blob/main/emotion.md)에서 확인합니다.
-
-```java
-https://[CloudFront Domain]/emotion
-```
-
-### gardenfromDB API
-
-emotion과 favorite로 생성한 이미지를 로드하여 사용자에게 보여줍니다. 이미지 생성시에는 image pool에 저장되지만, administrator에 적절한 이미지가 선택이 되면, serving image를 저장하는 bucket으로 파일을 옮깁니다. 이때 S3 putEvent를 catch하여 DynamoDB에 이미지에 대한 정보를 저장하고, 사용자가 처음에 emotion garden에 진입시 해당 이미지를 DynamoDB에서 로딩하여 보여줍니다.  
-
-```java
-https://[CloudFront Domain]/gardenfromDB
-```
+이미지로부터 Emotion 분석을 하기 위한 Emotion API는 '/emotion'입니다. HTTPS POST Method로 이미지를 전송하면 Emotion 분석 결과를 리턴합니다. 상세한 정보는 [Emotion 분석](./emotion.md)에서 확인합니다.
 
 ### Garden API
 
-Emotion으로 생성한 이미지를 조회하는 Garden API는 아래와 같습니다. 이미지 조회를 위한 API의 리소스 이름은 /garden 이고, HTTPS POST Method로 요청을 수행합니다. 상세한 정보는 [Garden API](https://github.com/kyopark2014/emotion-garden/blob/main/garden.md)에서 확인합니다.  
+Emotion으로 생성한 이미지를 조회하는 API는 '/garden'입니다. HTTPS POST Method로 요청을 수행합니다. 상세한 정보는 [Garden API](./garden.md)에서 확인합니다.  
 
-```java
-https://[CloudFront Domain]/garden
-```
+### gardenfromDB API
 
-
+Emotion과 favorite로 생성한 이미지를 로드하여 보여주기 위한 API는 '/gardenfromDB' 입니다. 사용자가 kiosk에서 emotion과 favorite를 선택하고 보여지는 페이지는 DynamoDB로 부터 가져온 생성된 이미지들입니다. '/gardenfromDB'로 요청하는 포맷은 '/garden'과 동일합니다.
 
 ### Like API
 
-사용자의 연령, 성별을 가지고 적절한 컨텐츠를 추천하기 위해서 Like에 대한 선호를 서버로 전송합니다. 
+사용자의 연령, 성별을 가지고 적절한 컨텐츠를 추천하기 위해서는 선호도를 저장하고 분석하여야 합니다. 선호도를 수집하기 위한 API는 '/like'입니다. 상세한 정보는 [Like API](./like.md)에서 확인합니다.  
 
-```java
-https://[CloudFront Domain]/like
-```
-
-java script 예제입니다.
-
-```java
-const url = "/like";
-const xhr = new XMLHttpRequest();
-
-xhr.open("POST", url, true);
-xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log("--> responseText: " + xhr.responseText);
-    }
-};
-
-let requestObj = {
-    "id": userId,
-    "itemId": itemId,
-    "impression": impression,
-};
-console.log("request: " + JSON.stringify(requestObj));
-
-let blob = new Blob([JSON.stringify(requestObj)], { type: 'application/json' });
-
-xhr.send(blob);
-```
-
-서버로 보내는 json 입력의 형태는 아래와 같습니다. id는 사용자의 아이디이며, itemId는 선택된 이미지에 대한 object의 key이고, impression은 화면에 표시되는 3개의 이미지에 대한 object key들입니다. Personalize에서는 3개의 이미지중에 1개의 이미지를 선호했다는 의미로 인지하게 됩니다.
-
-```java
-{
-    "id": "bfc150a5-07ad-45a0-87e8-435e8a21d6ee",
-    "itemId": "emotions/calm/img_20230320-121242_6h.jpeg",
-    "impression": [
-        "emotions/calm/img_20230320-121242_6h.jpeg",
-        "emotions/calm/img_20230320-121242_3h.jpeg",
-        "emotions/calm/img_20230320-00504_2h.jpeg"
-    ]
-}
-```
 
 ## Personalize
 
