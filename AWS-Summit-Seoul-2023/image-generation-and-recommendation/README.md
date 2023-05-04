@@ -30,27 +30,25 @@ Emotion과 favorite로 생성한 이미지를 로드하여 보여주기 위한 A
 
 사용자의 연령, 성별을 가지고 적절한 컨텐츠를 추천하기 위해서는 선호도를 저장하고 분석하여야 합니다. 선호도를 수집하기 위한 API는 '/like'입니다. 상세한 정보는 [Like API](./like.md)에서 확인합니다.  
 
-
 ## Personalize
 
-추천은 [Personalize](https://github.com/kyopark2014/emotion-garden/blob/main/personalize.md)를 이용해 구현합니다.
+추천은 [Personalize](./personalize.md)를 이용해 구현합니다.
 
 ## 배포방법
 
-Emotion Garden을 설치하는 방법은 [Emotion Garden 배포 방법](https://github.com/kyopark2014/emotion-garden/blob/main/deployment.md)에 따라 진행합니다. 
+인프라를 설치하는 방법은 [배포 방법](./deployment.md)에 따라 진행합니다. 
 
+## 이미지 생성 및 시험
 
-### Stable Diffusion 이미지 생성에 필요한 Prompt 준비
+### Prompt 테스트 방법
+
+Prompt를 테스트 할 수 있는 웹페이지는 아래와 같습니다. 여기서 적절한 Prompt를 시험하고 이미지를 확인할 수 있습니다.
 
 1) "https://[CloudFront Domain]/html/text2image.html" 에 접속합니다. 
 2) 적당한 이미지를 Prompt에 입력합니다. 
 3) Resolution에서 적절한 해상도를 선택합니다. 여기서는 기본(768x512), WXGA(1024x600), WXGA(1280x800)를 지정할 수 있습니다. 
 
 ![image](https://user-images.githubusercontent.com/52392004/226779121-12ef5889-22f7-4a07-86bd-d4e535dc9d2b.png)
-
-
-
-
 
 ### 다수의 이미지 생성 방법
 
@@ -66,15 +64,12 @@ Emotion Garden을 설치하는 방법은 [Emotion Garden 배포 방법](https://
 - [Update]: 생성된 이미지 확인
 - [Remove]: dislike로 불필요한 이미지 삭제
 
-Bucket의 imgPool에 저장된 이지는 [Previw](https://d3ic6ryvcaoqdy.cloudfront.net/html/pool/preview/preview.html)를 통해 전체적인 확인을 하고, 만족할만큼 정리가 되면 실제 Serving을 위한 폴더인 "/emotions"로 복사합니다. 
+Bucket의 imgPool에 저장된 이미지는 [preview.html](./html/preview.html)를 통해 S3에 저장된 이미지를 확인을 할 수 있습니다. 확인된 이미지를 Serving을 위한 폴더인 "/emotions"로 복사하는 명령어는 아래와 같습니다. S3에 파일을 복사할때 발생하는 putEvent를 이용하여 DynamoDB 및 Personalize에 정보가 기록되므로 아래와 같이 다운로드후에 업로드하는 과정을 거쳐야 합니다. SQS FIFO의 size가 15000이므로 파일을 올릴때 이보다 적은 숫자를 업로드합니다. 만약 이보다 크다면 나누어서 업로드하여야 합니다. 
 
 ```java
 aws s3 cp s3://demo-emotion-garden/imgPool/ ./imgPool/ --recursive
 aws s3 cp ./imgPool/ s3://demo-emotion-garden/emotions/ --recursive
 ```
-
-S3에 Object가 저장될때 발생하는 putEvent를 이용하여 Lambda가 Object Key로 부터 emotion을 분류하고, Personalzie에 item으로 등록됩니다. 기준이 되는 ITEM_ID가 동일하므로 중복으로 파일을 업로드해도 업데이트가 됩니다.
-
 
 ### S3에 저장된 이미지 확인
 
@@ -124,7 +119,6 @@ S3에 Object가 저장될때 발생하는 putEvent를 이용하여 Lambda가 Obj
 - WXGA: 1280 x 800 (26s)
 
 
-
 ### 이미지 백업 및 복구
 
 #### 이미지 백업
@@ -168,7 +162,6 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 [recommendation](./recommendation.md)에서는 userId로 해당 사용자에 대한 추천이미지를 읽어옵니다.
 
-
 ### DataSet에 데이터 추가
 
 [dataset-info](./dataset-info.md)에서는 user, item, interaction의 DataSet에 대한 정보를 수집합니다.
@@ -182,18 +175,8 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 ## Reference
 
-[[Python] 병렬처리(Multiprocessing)를 통한 연산속도 개선](https://yganalyst.github.io/data_handling/memo_17_parallel/)
-
 [Running On-Demand P instances](https://ap-northeast-2.console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-417A185B)
 
 [ml.p3.2xlarge for endpoint usage](https://ap-northeast-2.console.aws.amazon.com/servicequotas/home/services/sagemaker/quotas/L-1623D0BE)
 
 [AI Art 모델인 Stable Diffusion을 쉽고 편리하게 이용하기](https://github.com/kyopark2014/stable-diffusion-api-server)
-
-[How TO - CSS Loader](https://www.w3schools.com/howto/howto_css_loader.asp)
-
-[Stable Diffusion 1 vs 2 - What you need to know](https://www.assemblyai.com/blog/stable-diffusion-1-vs-2-what-you-need-to-know/)
-
-[How to generate stunning images using Stable Diffusion](https://babich.biz/how-to-use-stable-diffusion/)
-
-[Get personalized recommendations using AWS and Node.JS](https://medium.com/analytics-vidhya/get-personalized-recommendations-using-aws-and-node-js-e79f7442549d)
