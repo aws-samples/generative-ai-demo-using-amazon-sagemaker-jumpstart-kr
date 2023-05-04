@@ -181,4 +181,4 @@ kiosk에서 생성된 이미지를 각 Zone에 설치된 디스플레이에 보�
 
 [ml.p3.2xlarge for endpoint usage](https://ap-northeast-2.console.aws.amazon.com/servicequotas/home/services/sagemaker/quotas/L-1623D0BE)
 
-[AI Art 모델인 Stable Diffusion을 쉽고 편리하게 이용하기](https://github.com/kyopark2014/stable-diffusion-api-server)
+[Stable Diffusion을 Amazon SageMaker JumpStart로 편리하게 이용하기](https://aws.amazon.com/ko/blogs/tech/ai-art-stable-diffusion-sagemaker-jumpstart/)
