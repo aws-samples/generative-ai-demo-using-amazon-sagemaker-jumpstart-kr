@@ -2,13 +2,7 @@
 
 ## 생성된 이미지들을 8개의 Display에 업데이트하는 방법
 
-이미지를 업데이트하기 위하여 Pad의 Client에서는 아래와 같은 URL로 HTTPS POST 방식으로 업데이트하려는 이미지를 JSON으로 전달합니다. 이대 "content-Type" Header는 "application/json"입니다.
-
-```java
-https://d3ic6ryvcaoqdy.cloudfront.net/updateDisplay
-```
-
-이때의 JSON 예는 아래와 같습니다. 어떤 zone인지 전달하기 위해 "zone"에 "zone1", "zone2", "zone3"의 포맷으로 정보를 전달합니다. portrait와 landscape이미지는 각각 8개씩 전달하여 현장의 디바이스 상태에 따라 선택적으로 표시할 수 있어야 합니다. 
+이미지를 업데이트하기 위힌 API는 '/updateDisplay'이며, HTTPS POST 방식으로 업데이트하려는 이미지를 JSON으로 전달합니다. 이대 "content-Type" Header는 "application/json"입니다. JSON 예는 아래와 같습니다. 어떤 zone인지 전달하기 위해 "zone"에 "zone1", "zone2", "zone3"의 포맷으로 정보를 전달합니다. portrait와 landscape이미지는 각각 8개씩 전달하여 현장의 디바이스 상태에 따라 선택적으로 표시할 수 있어야 합니다. 
 
 ```java
 {
