@@ -170,7 +170,7 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 이미지는 아래와 같은 웹페이지로 공유 됩니다.
 
-<img src="[https://user-images.githubusercontent.com/52392004/170202244-bcf39e71-381d-4a54-a823-2a45b471cb7f.png](https://user-images.githubusercontent.com/52392004/236335259-3c32a005-2917-4264-b5ee-e0ab4086b072.jpg)" width="600">
+<img src="https://user-images.githubusercontent.com/52392004/236335259-3c32a005-2917-4264-b5ee-e0ab4086b072.jpg" width="600">
 
 
 ## Reference
