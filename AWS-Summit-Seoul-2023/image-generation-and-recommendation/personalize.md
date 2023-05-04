@@ -39,7 +39,7 @@
 
 ### 구현
 
-[lambda-emotion](https://github.com/kyopark2014/emotion-garden/blob/main/lambda-emotion/index.js)에서 사용자 정보를 personalize에 전달합니다.
+[lambda-emotion](./lambda-emotion/index.js)에서 사용자 정보를 personalize에 전달합니다.
 
 
 ```java
@@ -149,7 +149,7 @@ console.log('putItem result: '+JSON.stringify(result));
 
 ### 구현
 
-[lambda-like](https://github.com/kyopark2014/emotion-garden/blob/main/lambda-like/index.js)에서 사용자 정보를 personalize에 전달합니다.
+[lambda-like](./lambda-like/index.js)에서 사용자 정보를 personalize에 전달합니다.
 
 ```java
 var params = {            
@@ -172,7 +172,7 @@ console.log('putEvent result: ' + JSON.stringify(result));
 
 ## CDK로 구현하기
 
-[personalize-schema](https://github.com/kyopark2014/emotion-garden/blob/main/personalize-schema.md)에서는 CDK로 Personalize Schema를 구현하는 것에 대해 설명합니다.
+[personalize-schema](./personalize-schema.md)에서는 CDK로 Personalize Schema를 구현하는 것에 대해 설명합니다.
 
 ## Referecne
 
