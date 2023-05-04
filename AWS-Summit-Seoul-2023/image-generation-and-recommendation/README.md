@@ -168,7 +168,7 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 ### 이미지 공유
 
-이미지는 아래와 같은 웹페이지로 공유 됩니다. 이때 이용되는 API는 '/image'이며, [lambda-imagePage]([image](./lambda-imagePage/index.js)와 같이 구현됩니다.
+이미지는 아래와 같은 웹페이지로 공유 됩니다. 이때 이용되는 API는 '/image'이며, [lambda-imagePage](./lambda-imagePage/index.js)와 같이 구현됩니다.
 
 <img src="https://user-images.githubusercontent.com/52392004/236335259-3c32a005-2917-4264-b5ee-e0ab4086b072.jpg" width="500">
 
