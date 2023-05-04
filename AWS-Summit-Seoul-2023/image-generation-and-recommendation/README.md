@@ -156,7 +156,7 @@ aws s3 cp dataset/ s3://demo-emotion-garden/dataset/ --recursive
 
 ### 생성된 이미지를 디스플레이에 보여주기
 
-kiosk에서 생성된 이미지를 각 Zone에 설치된 디스플레이에 보여주기 위해 [생성된 이미지를 보여주기](./image-generation-and-recommendation/updateDisplay.md)에 따라 디스플레이에서 이미지를 주기적으로 로드합니다.
+kiosk에서 생성된 이미지를 각 Zone에 설치된 디스플레이에 보여주기 위해 [생성된 이미지를 보여주기](./updateDisplay.md)에 따라 디스플레이에서 이미지를 주기적으로 로드합니다.
 
 ### CSV 파일 생성
 
