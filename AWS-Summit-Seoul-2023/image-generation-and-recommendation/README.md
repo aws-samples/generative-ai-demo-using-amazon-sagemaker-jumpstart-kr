@@ -96,53 +96,6 @@ xhr.send(blob);
 Emotion Garden을 설치하는 방법은 [Emotion Garden 배포 방법](https://github.com/kyopark2014/emotion-garden/blob/main/deployment.md)에 따라 진행합니다. 
 
 
-## 각종 Test용 웹 페이지 정보
-
-### Emotion 
-
-Emotion 분석을 테스트할 수 있습니다.
-
-1) "https://[CloudFront Domain]/html/emotion/emotion.html" 로 접속합니다.
-2) [Video] 버튼을 선택하여 비디오 사용을 allow 해줍니다. 
-3) [Emotion] 버튼을 선택하여 화면 캡춰를 수행하면, [Emotion API](https://github.com/kyopark2014/emotion-garden#emotion-api)로 접속하여 Emotion 분석을 수행하고 결과를 하단에 보여줍니다. 
-
-이때의 결과의 예는 아래와 같습니다.
-
-```java
-Emotion: 평온 (CALM)
-Age: 13 ~ 21 (남자)
-Features: 안경 눈뜨고있음
-```
-
-
-
-
-### Garden
-
-Emotion 분석으로 얻어진 결과로 생성된 Stable Diffusion 이미지를 보여줍니다. Personlize에서 결과를 얻기 위해서는 최소 10000개의 interaction event가 필요합니다. Garden에서는 각 emotion에 대해 DynamoDB에 있는 모든 이미지를 보여줍니다. 이때 like 버튼을 통해 interaction data를 수집할 수 있습니다.
-
-1) "https://[CloudFront Domain]/html/garden/garden.html" 로 접속합니다.
-2) [Video] 버튼을 선택하여 비디오 사용을 allow 해줍니다. 
-3) Favorite에 좋아하는 동물이나 사물을 추가할 수 있습니다. 단, 미리 정의되지 않은 Favorite의 경우에는 "No images"로 보여줍니다. 
-4) [Emotion] 버튼을 선택하여 화면 캡춰된 이미지로 Emotion분석을 한 후에, [Garden API](https://github.com/kyopark2014/emotion-garden#garden-api)를 이용하여 미리 생성된 Stable Diffusion 이미지들을 보여줍니다. 이때 얻어진 결과의 예는 아래와 같습니다.
-
-![image](https://user-images.githubusercontent.com/52392004/227059404-4a56c15e-74ec-41d9-956b-21a58b99c547.png)
-
-5) Next 버튼을 눌러서, 다른 이미지들을 순차적으로 확인합니다.
-
-
-
-### Emotion Garden
-
-1) "https://[CloudFront Domain]/html/emotion-garden/emotion-garden.html" 에 접속합니다.
-2) Video를 “allow”하고, 적당한 화면에서 “Emotion” 버튼을 누릅니다. 이때 화면캡춰 이미지가 오른쪽 Preview에 보여집니다.
-3) Preview 이미지를 Rekognition에 보내서 emotion을 분석하고 결과를 아래에 보여줍니다.
-4) DynamoDB에 저장된 emotion에 해당되는 이미지를 불러오고 아래에 3개를 보여줍니다. 서버에서는 landscape와 portrait 2개 타입으로 전체 이미지 리스트를 전달하고, client에서 일부를 보여주는 형태로 동작합니다. Test Page에서는 UI상 landscape만 보여줍니다. 
-5) 이미지 오른쪽에 dislike/like 버튼을 선택하여, like를 표시할 수 있습니다. like를 선택하면 어떤 연령, 성별의 사람이 어떤 이미지를 선택하였는지, 서버로 전달되어 추천용도로 사용됩니다. (dislike에서 like로 전환되고, 이후는 like를 유지)
-6) [Nex] 버튼을 선택하면 다음 이미지 3개를 보여주고, 모두 다 보여주면 처음으로 돌아갑니다.
-
-
-
 ### Stable Diffusion 이미지 생성에 필요한 Prompt 준비
 
 1) "https://[CloudFront Domain]/html/text2image.html" 에 접속합니다. 
