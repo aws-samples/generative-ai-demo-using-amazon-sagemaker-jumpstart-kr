@@ -2,16 +2,10 @@
 
 ## Stable Diffusion 이미지를 생성하는 API
 
-API의 Resouce는 '/text2image'으로 아래와 같이 CloudFront Domain을 활용하여 RESTful API의 POST method로 요청합니다.
+API의 Resouce는 '/text2image'이며 POST method로 요청합니다. 이것을 구현하기 위한 java script 예제 코드는 아래와 같습니다. response의 'body'에 생성된 이미지의 URL들이 내려옵니다.
 
 ```java
-https://d3ic6ryvcaoqdy.cloudfront.net/emotion
-```
-
-이것을 구현하기 위한 java script 예제 코드는 아래와 같습니다. response의 'body'에 생성된 이미지의 URL들이 내려옵니다.
-
-```java
-const uri = "https://d3ic6ryvcaoqdy.cloudfront.net/text2image";
+const uri = "text2image";
 const xhr = new XMLHttpRequest();
 
 xhr.open("POST", uri, true);
