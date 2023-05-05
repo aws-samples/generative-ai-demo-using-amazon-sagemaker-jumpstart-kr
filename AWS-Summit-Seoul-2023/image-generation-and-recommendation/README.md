@@ -78,7 +78,9 @@ aws s3 cp ./imgPool/ s3://demo-emotion-garden/emotions/ --recursive
 3) Retrieve를 선택하여 S3에 있는 이미지를 가져옵니다. 이미지가 많은 경우에 “Start”를 조정하면 뒤쪽의 이미지를 확인할 수 있습니다. 최대로 보여줄수 있는 이미지의 숫자는 "Number of Images"로 100개까지 지정할 수 있습니다.
 4) 불필요한 이미지는 아래처럼 dislike 선택후 [Remove] 버튼을 통해 삭제합니다. 
 
-<img src="https://user-images.githubusercontent.com/52392004/226780516-579c7f8d-5b0d-4512-be48-b5de4c68bacc.png" width="600">
+
+![noname](https://user-images.githubusercontent.com/52392004/236373208-e0f7a19e-5727-460b-92f7-b7ca9580d746.png)
+
 
 ## 기타 중요한 내용
 
