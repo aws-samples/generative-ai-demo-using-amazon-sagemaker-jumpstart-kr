@@ -2,7 +2,7 @@
 
 AWS Summit Seoul 2023에서 "My Emotion Gardens"가 메인 데모로 전시되었습니다. "My Emotion Gardens"의 주요 구성은 아래와 같습니다.
 
-![20230502_153504](https://user-images.githubusercontent.com/52392004/236374382-282f279f-33dc-4da3-883b-6b4d783015c7.jpg)
+![IMG_20230508_104538_959](https://user-images.githubusercontent.com/52392004/236716359-1fffda3f-4cbf-4f34-b002-d0a334c5e08a.jpg)
 
 
 ## 이미지 생성 및 추천
