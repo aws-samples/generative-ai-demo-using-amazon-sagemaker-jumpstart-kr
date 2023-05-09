@@ -8,12 +8,5 @@ My Emotion Gardens에 사용될 이미지 생성을 위해 사용한 Prompt Gene
 
 <img width="800" src="https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/assets/1788481/ddd72e52-988e-4d9a-b622-9afc91154b77">
 
-입력:
-Prompt 템플릿
-프롬프트를 부풀리는데 사용할 기본 템플릿입니다.
-미리 작성하신 프롬프트를 기반으로 몇가지 샘플을 넣어놨으며, 수정이 가능합니다.
-Checkbox & Input
-템플릿의 PlaceHolder(ex, [EMOTION]) 에 대신 들어갈 단어입니다.
-
 ## 사용된 라이브러리
 Tabulator(MIT License) https://tabulator.info/
