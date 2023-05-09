@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"> -->
+
+<style>
+html,
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background: black;
+}
+
+.center{
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 4em;
+}
+
+.box{
+    margin:2em
+}
+
+#garden-form {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 12px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=submit]:hover {
+  background-color: #45a049;
+}
+
+</style>
+
+<script type="text/javascript">
+
+// 1. Gender
+// 2. Age
+// 3. Season
+// 4. Weather
+// 5. Time
+// 6. Emotions
+
+USER_INFO_URL = "https://d1lpe3al91b8v9.cloudfront.net/public/"
+
+window.addEventListener("DOMContentLoaded", (event) => {
+
+
+    function startGardenViewer(element) {
+        document.getElementById("garden-form").style.visibility = "hidden"
+        document.documentElement.requestFullscreen()
+
+        function requestUserInfo() {
+            
+            var infoBaseUrl = document.getElementById("garden-image-url").value + "?" + new Date().getTime();
+            var updatePeriod = document.getElementById("garden-time").value
+            
+            const uri = infoBaseUrl;
+            const xhr = new XMLHttpRequest();
+
+            const seasonDiv = document.getElementById('v-season')
+            const weatherDiv = document.getElementById('v-weather')
+            const timeDiv = document.getElementById('v-time')
+            const emotionDiv = document.getElementById('v-emotion')
+
+            xhr.open("GET", uri, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    
+                    let season = response["season"]
+                    let weather = response["weather"]
+                    let time = response["time"]
+                    let emotion = response["emotion"]
+
+                    seasonDiv.innerHTML = `<h1 class="title">${season}</h1>`
+                    weatherDiv.innerHTML = `<h1 class="title">${weather}</h1>`
+                    timeDiv.innerHTML = `<h1 class="title">${time}</h1>`
+                    emotionDiv.innerHTML = `<h1 class="title">${emotion}</h1>`
+                    
+                    setTimeout(requestUserInfo, updatePeriod);
+                }
+            };
+
+            let blob = new Blob([], { type: 'application/json' });
+            xhr.send(blob);
+        }
+
+        requestUserInfo()
+    }
+
+    const changeSelected = (e) => {
+        var zone = document.getElementById("zone-select");
+
+        var zoneValue = zone.value;
+        var imageUrl = USER_INFO_URL + zoneValue
+
+        document.getElementById("garden-image-url").value = imageUrl;
+
+        console.log(zoneValue)
+    };
+    document.getElementById('zone-select').addEventListener('change', changeSelected);
+    document.getElementById("garden-start").onclick = startGardenViewer
+})
+
+</script>
+
+<body>
+
+        
+</body>
+
+    <div class="center">
+        <div id="v-emotion"  class="box">
+            <h1 class="title">Sad</h1>
+        </div>
+
+        <div id="v-season"  class="box">
+            <h1 class="title">Spring</h1>
+        </div>
+
+        <div id="v-weather"  class="box">
+            <h1 class="title">Winter</h1>
+        </div>
+
+        <div id="v-time"  class="box">
+            <h1 class="title">Day</h1>
+        </div>
+    </div>
+
+
+    <div id="garden-form">
+        <p for="fname" style="font-size:x-large; text-align: center; font-weight: 600;">My Emotion Garden Viewer</p>
+        <label for="fname">업데이트되는 정보 URL</label>
+        
+        <select id="zone-select" name="Zone">
+          <option value="">Zone 선택</option>
+          <option value="zone1.json">Zone1</option>
+          <option value="zone2.json">Zone2</option>
+          <option value="zone3.json">Zone3</option>
+        </select>
+
+        <input type="text" id="garden-image-url" placeholder="Image URL" value="https://d1lpe3al91b8v9.cloudfront.net/public/zone1.json">
+    
+        <label for="lname">변경 주기 (ms)</label>
+        <input type="text" id="garden-time" placeholder="Update Period" value="1000">
+    
+        <button id="garden-start" type="submit">시작</button>
+      </div>
+
+</html>

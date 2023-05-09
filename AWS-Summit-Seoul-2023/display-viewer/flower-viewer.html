@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+<style>
+
+body { 
+  background: url(https://d3ic6ryvcaoqdy.cloudfront.net/display/zone1/img1v.jpeg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+}
+
+#garden-form {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 12px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+</style>
+<script type="text/javascript">
+
+document.cookie = "SameSite=None; Secure";
+
+BASE_URL = "https://d3ic6ryvcaoqdy.cloudfront.net/display/"
+
+window.addEventListener("DOMContentLoaded", (event) => {
+
+    document.getElementById('garden-body').onclick = function(){
+      console.log('bodyclick')
+      document.documentElement.requestFullscreen()
+    }
+
+    var zone = document.getElementById("zone-select");
+    var zoneValue = zone.value;
+
+    var image = document.getElementById("image-select");
+    var imageValue = image.value;
+
+    var orien = document.getElementById("orient-select");
+    var orienValue = orien.value;
+
+
+    const changeSelected = (e) => {
+      var zone = document.getElementById("zone-select");
+      var image = document.getElementById("image-select");
+      var orient = document.getElementById("orient-select");
+
+      var zoneValue = zone.value;
+      var imageValue = image.value;
+      var orientValue = orient.value
+      var imageName = ""
+      if (imageValue && orientValue) {
+        imageName = imageValue + orientValue + ".jpeg"
+      }
+      var imageUrl = BASE_URL + zoneValue + "/" + imageName
+
+      document.getElementById("garden-image-url").value = imageUrl;
+      
+      console.log(zoneValue)
+    };
+
+    document.getElementById('zone-select').addEventListener('change', changeSelected);
+    document.getElementById('image-select').addEventListener('change', changeSelected);
+    document.getElementById('orient-select').addEventListener('change', changeSelected);
+
+    function startGardenViewer(element) {
+        document.getElementById("garden-form").style.visibility = "hidden"
+        document.documentElement.requestFullscreen()
+
+        var imageBaseUrl = document.getElementById("garden-image-url").value
+        var updatePeriod = document.getElementById("garden-time").value
+        console.log(imageBaseUrl)
+        console.log(updatePeriod)
+
+        var newImage = new Image();
+        newImage.src = imageBaseUrl
+
+        function updateImage(){
+            if(newImage.complete) {
+                background =  "url(" + newImage.src + ") no-repeat center center fixed;"
+                document.body.style.backgroundImage = "url("+newImage.src+")"
+                document.body.style.backgroundRepeat = "no-repeat"
+                document.body.style.backgroundPosition = "center center"
+                document.body.style.backgroundAttachment = "fixed"
+                newImage = new Image();
+                newImage.src = imageBaseUrl + "?" + new Date().getTime();
+            }
+            setTimeout(updateImage, updatePeriod);
+        }
+        updateImage()
+    }
+    document.getElementById("garden-start").onclick = startGardenViewer
+})
+
+
+</script>
+<body id="garden-body">
+    <div id="garden-form">
+        <p for="fname" style="font-size:x-large; text-align: center; font-weight: 600;">My Emotion Garden Viewer</p>
+        <label for="fname">업데이트되는 이미지 URL</label>
+        
+        <select id="zone-select" name="Zone">
+          <option value="">Zone 선택</option>
+          <option value="zone1">Zone1</option>
+          <option value="zone2">Zone2</option>
+          <option value="zone3">Zone3</option>
+        </select>
+
+        <select id="image-select" name="Image">
+          <option value="">Image 선택</option>
+          <option value="img1">Img1</option>
+          <option value="img2">Img2</option>
+          <option value="img3">Img3</option>
+          <option value="img4">Img4</option>
+          <option value="img5">Img5</option>
+          <option value="img6">Img6</option>
+          <option value="img7">Img7</option>
+          <option value="img8">Img8</option>
+          <option value="img9">Img9</option>
+        </select>
+
+        <select id="orient-select" name="Orientation">
+          <option value="">Orientation 선택</option>
+          <option value="v">Vertical</option>
+          <option value="h">Horizontal</option>
+        </select>
+
+        <input type="text" id="garden-image-url" placeholder="Image URL" value="https://d3ic6ryvcaoqdy.cloudfront.net/display/">
+    
+        <label for="lname">이미지 변경 주기 (ms) <br> <span style="font-size: small;">
+            주기마다 이미지 로드가 완료되었는지 확인합니다. <br> 완료된 경우에만 화면을 갱신하고 다시 이미지를 요청합니다.</span>
+        </label>
+        <input type="text" id="garden-time" placeholder="Update Period" value="1000">
+    
+        <button id="garden-start" type="submit">시작</button>
+      </div>
+</body>
+</html>
