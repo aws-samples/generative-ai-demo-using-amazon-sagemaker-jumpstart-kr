@@ -16,3 +16,8 @@ AWS Summit Seoul 2023에서 "My Emotion Gardens"가 메인 데모로 전시되�
 ## Dashboard
 
 ## Display
+
+[display-viewer](./display-viewer) 생성된 이미지를 정원의 디스플레이를 통해 보여주는 뷰어입니다.
+
+[prompt-generator](./prompt-generator) My Emotion Gardens에 사용될 이미지 생성을 위해 사용한 Prompt Generator 입니다. 
+
