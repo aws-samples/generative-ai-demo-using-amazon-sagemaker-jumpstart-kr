@@ -17,11 +17,11 @@ Generative AI는 인공 지능 분야의 하나로, 기존의 데이터에서 �
 
 ### My Emotion Gardens 에서 생성한 이미지 예시
 
-입력한 프롬프트
+**입력한 프롬프트**
 > botanic garden with flowers and ((dog)), very strong (((happy))) nature, best quality, ((sunny)), ((spring)), cinematic lighting, dramatic angle, wide angle view, [illustration: real artstation: 0.4], stunningly beautiful, dystopian, (day)
 
 
-생성된 이미지
+**생성된 이미지**
 ![img_20230418-05818_14h](https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/assets/1788481/68694742-4490-4d80-b8c7-748195ffe20b)
 
 
