@@ -1,0 +1,2673 @@
+{
+    "Status": 200,
+    "AnalysisId": "9577ea40-a697-4f49-88ec-81323d4cebd1",
+    "Name": "My Emotion Gardens-Analysis",
+    "ResourceStatus": "CREATION_SUCCESSFUL",
+    "ThemeArn": "arn:aws:quicksight:ap-northeast-1:868746300942:theme/f2690ee6-bb27-4d69-9585-2088a8e03912",
+    "Definition": {
+        "DataSetIdentifierDeclarations": [
+            {
+                "Identifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                "DataSetArn": "arn:aws:quicksight:ap-northeast-1:868746300942:dataset/a21c7a9b-a534-4d6d-bef2-1d7112ec2875"
+            }
+        ],
+        "Sheets": [
+            {
+                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                "Name": "Emotion",
+                "Visuals": [
+                    {
+                        "ComboChartVisual": {
+                            "VisualId": "4189ee2d-421b-4fb6-a3cb-e5b58be2d92c",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>Count of Records by Season and Emotions</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "ComboChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682496412032",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "BarValues": [
+                                            {
+                                                "CategoricalMeasureField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.id.2.1682496417054",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "id"
+                                                    },
+                                                    "AggregationFunction": "COUNT"
+                                                }
+                                            }
+                                        ],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.2.1682515761137",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "season"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "LineValues": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682496412032",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "BarsArrangement": "STACKED",
+                                "Legend": {
+                                    "Position": "BOTTOM"
+                                },
+                                "BarDataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "HeatMapVisual": {
+                            "VisualId": "6db0d22e-9755-4cd2-bd44-1cf7cc54fc12",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>Count by Emotions and CreateAt</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "HeatMapAggregatedFieldWells": {
+                                        "Rows": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682258901237",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Columns": [
+                                            {
+                                                "DateDimensionField": {
+                                                    "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.2.1683113499771",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "createAtKor"
+                                                    },
+                                                    "DateGranularity": "HOUR",
+                                                    "HierarchyId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.2.1683113499771",
+                                                    "FormatConfiguration": {
+                                                        "DateTimeFormat": "MM/D, h A"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [
+                                            {
+                                                "CategoricalMeasureField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.id.2.1682258849727",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "id"
+                                                    },
+                                                    "AggregationFunction": "COUNT"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "HeatMapColumnSort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.2.1683113499771",
+                                                "Direction": "ASC"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "ColumnLabelOptions": {
+                                    "SortIconVisibility": "VISIBLE"
+                                },
+                                "ColorScale": {
+                                    "Colors": [
+                                        {
+                                            "Color": "#ABCAC1"
+                                        },
+                                        {
+                                            "Color": "#226060"
+                                        }
+                                    ],
+                                    "ColorFillType": "GRADIENT"
+                                },
+                                "Legend": {
+                                    "Visibility": "HIDDEN",
+                                    "Width": "279px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.id.2.1682258849727",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682258901237",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.2.1683113499771",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "ColumnHierarchies": [
+                                {
+                                    "DateTimeHierarchy": {
+                                        "HierarchyId": "dd1983ed-b32a-4e64-8622-616413c12a1e",
+                                        "DrillDownFilters": []
+                                    }
+                                },
+                                {
+                                    "DateTimeHierarchy": {
+                                        "HierarchyId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.2.1683113499771"
+                                    }
+                                }
+                            ],
+                            "Actions": []
+                        }
+                    },
+                    {
+                        "WordCloudVisual": {
+                            "VisualId": "d5366a72-a530-40aa-9e85-f23b75ff223c",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "WordCloudAggregatedFieldWells": {
+                                        "GroupBy": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682659885049",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    },
+                                                    "HierarchyId": "4fea178a-94a7-4977-9c21-e62555734155"
+                                                }
+                                            }
+                                        ],
+                                        "Size": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "EXCLUDE"
+                                    }
+                                },
+                                "WordCloudOptions": {
+                                    "WordOrientation": "HORIZONTAL_AND_VERTICAL",
+                                    "WordScaling": "EMPHASIZE",
+                                    "CloudLayout": "FLUID",
+                                    "WordCasing": "EXISTING_CASE",
+                                    "WordPadding": "SMALL",
+                                    "MaximumStringLength": 40
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": [
+                                {
+                                    "ExplicitHierarchy": {
+                                        "HierarchyId": "4fea178a-94a7-4977-9c21-e62555734155",
+                                        "Columns": [
+                                            {
+                                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                "ColumnName": "emotions"
+                                            },
+                                            {
+                                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                "ColumnName": "time"
+                                            },
+                                            {
+                                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                "ColumnName": "season"
+                                            },
+                                            {
+                                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                "ColumnName": "weather"
+                                            }
+                                        ],
+                                        "DrillDownFilters": []
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "KPIVisual": {
+                            "VisualId": "fba2c0aa-8549-4628-8f08-9398cc510c6f",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>\n  <inline font-size=\"12px\"/>\n  Total\n</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "Values": [
+                                        {
+                                            "NumericalMeasureField": {
+                                                "FieldId": "4688c17d-e764-4bf6-8584-6ebba126d0fe.0.1682486283199",
+                                                "Column": {
+                                                    "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                    "ColumnName": "count"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "TargetValues": [],
+                                    "TrendGroups": []
+                                },
+                                "SortConfiguration": {},
+                                "KPIOptions": {
+                                    "PrimaryValueFontConfiguration": {
+                                        "FontSize": {
+                                            "Relative": "EXTRA_LARGE"
+                                        }
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "LineChartVisual": {
+                            "VisualId": "54a71c31-0d07-472b-bb14-9f7935d1be68",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>Count by CreateAt and Emotions</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "LineChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "DateDimensionField": {
+                                                    "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.3.1682660052514",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "createAtKor"
+                                                    },
+                                                    "DateGranularity": "HOUR",
+                                                    "HierarchyId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.3.1682660052514",
+                                                    "FormatConfiguration": {
+                                                        "DateTimeFormat": "h A"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [
+                                            {
+                                                "NumericalMeasureField": {
+                                                    "FieldId": "4688c17d-e764-4bf6-8584-6ebba126d0fe.3.1682660081643",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "count"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.2.1682660131486",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.3.1682660052514",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Type": "LINE",
+                                "Legend": {
+                                    "Position": "RIGHT"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "4688c17d-e764-4bf6-8584-6ebba126d0fe.3.1682660081643",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.3.1682660052514",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.2.1682660131486",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": [
+                                {
+                                    "DateTimeHierarchy": {
+                                        "HierarchyId": "0e0fbcf0-0457-42b0-b5b4-5a873da42aae.3.1682660052514"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "BarChartVisual": {
+                            "VisualId": "909ff941-6bd7-4a33-9f75-e7da81f5d785",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BarChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.0.1682385638016",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "9801355f-e9f1-38f8-8c5c-6cdf5ac2ef21-d3c947f1-63f5-4d19-9f6e-f4b82c9464b7.GENDER.1.1682435314381",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "gender"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.0.1682385638016",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Orientation": "HORIZONTAL",
+                                "BarsArrangement": "STACKED",
+                                "Legend": {
+                                    "Title": {
+                                        "Visibility": "HIDDEN"
+                                    },
+                                    "Position": "BOTTOM",
+                                    "Width": "308px",
+                                    "Height": "40px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.0.1682385638016",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "9801355f-e9f1-38f8-8c5c-6cdf5ac2ef21-d3c947f1-63f5-4d19-9f6e-f4b82c9464b7.GENDER.1.1682435314381",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "BarChartVisual": {
+                            "VisualId": "e7ab580c-bd0d-45bb-a935-bb6b74d70326",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BarChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682495658575",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682495650824",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "generation"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682495658575",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Orientation": "VERTICAL",
+                                "BarsArrangement": "STACKED_PERCENT",
+                                "VisualPalette": {
+                                    "ColorMap": [
+                                        {
+                                            "Element": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682495650824",
+                                                "FieldValue": "teenager"
+                                            },
+                                            "Color": "#B9E52F"
+                                        },
+                                        {
+                                            "Element": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682495650824",
+                                                "FieldValue": "young-adult"
+                                            },
+                                            "Color": "#226060"
+                                        },
+                                        {
+                                            "Element": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682495650824",
+                                                "FieldValue": "middle-age"
+                                            },
+                                            "Color": "#DE6449"
+                                        }
+                                    ]
+                                },
+                                "Legend": {
+                                    "Position": "BOTTOM",
+                                    "Height": "40px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682495658575",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682495650824",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "PieChartVisual": {
+                            "VisualId": "bc5c8574-0f2b-440c-b68c-589404dfdc82",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PieChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.0.1682496357871",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "DonutOptions": {
+                                    "ArcOptions": {
+                                        "ArcThickness": "LARGE"
+                                    }
+                                },
+                                "Legend": {
+                                    "Width": "105px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "VISIBLE",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.0.1682496357871",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "BarChartVisual": {
+                            "VisualId": "0b1d5451-b157-410f-aa00-991f6cc874b0",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BarChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682496533944",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.1.1682496537499",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "time"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682496533944",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Orientation": "VERTICAL",
+                                "BarsArrangement": "CLUSTERED",
+                                "VisualPalette": {
+                                    "ColorMap": [
+                                        {
+                                            "Element": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.1.1682496537499",
+                                                "FieldValue": "the-middle-of-the-night"
+                                            },
+                                            "Color": "#D8D4F2"
+                                        }
+                                    ]
+                                },
+                                "Legend": {
+                                    "Title": {
+                                        "Visibility": "HIDDEN"
+                                    },
+                                    "Position": "RIGHT"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682496533944",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.1.1682496537499",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "CustomContentVisual": {
+                            "VisualId": "a4188744-4927-40ad-8efa-9fcdcabc6d90",
+                            "Title": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "ContentUrl": "https://d3ic6ryvcaoqdy.cloudfront.net/quickSightResource/MyEmotionGarden-Sticker-2.png",
+                                "ContentType": "IMAGE",
+                                "ImageScaling": "FIT_TO_WIDTH"
+                            },
+                            "Actions": [],
+                            "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging"
+                        }
+                    }
+                ],
+                "Layouts": [
+                    {
+                        "Configuration": {
+                            "GridLayout": {
+                                "Elements": [
+                                    {
+                                        "ElementId": "a4188744-4927-40ad-8efa-9fcdcabc6d90",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 5,
+                                        "RowIndex": 0,
+                                        "RowSpan": 4
+                                    },
+                                    {
+                                        "ElementId": "fba2c0aa-8549-4628-8f08-9398cc510c6f",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 5,
+                                        "ColumnSpan": 5,
+                                        "RowIndex": 0,
+                                        "RowSpan": 4
+                                    },
+                                    {
+                                        "ElementId": "d5366a72-a530-40aa-9e85-f23b75ff223c",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 10,
+                                        "ColumnSpan": 8,
+                                        "RowIndex": 0,
+                                        "RowSpan": 5
+                                    },
+                                    {
+                                        "ElementId": "6db0d22e-9755-4cd2-bd44-1cf7cc54fc12",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 18,
+                                        "ColumnSpan": 18,
+                                        "RowIndex": 0,
+                                        "RowSpan": 7
+                                    },
+                                    {
+                                        "ElementId": "bc5c8574-0f2b-440c-b68c-589404dfdc82",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 10,
+                                        "RowIndex": 4,
+                                        "RowSpan": 8
+                                    },
+                                    {
+                                        "ElementId": "909ff941-6bd7-4a33-9f75-e7da81f5d785",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 10,
+                                        "ColumnSpan": 8,
+                                        "RowIndex": 5,
+                                        "RowSpan": 7
+                                    },
+                                    {
+                                        "ElementId": "0b1d5451-b157-410f-aa00-991f6cc874b0",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 18,
+                                        "ColumnSpan": 18,
+                                        "RowIndex": 7,
+                                        "RowSpan": 5
+                                    },
+                                    {
+                                        "ElementId": "4189ee2d-421b-4fb6-a3cb-e5b58be2d92c",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 10,
+                                        "RowIndex": 12,
+                                        "RowSpan": 7
+                                    },
+                                    {
+                                        "ElementId": "e7ab580c-bd0d-45bb-a935-bb6b74d70326",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 10,
+                                        "ColumnSpan": 11,
+                                        "RowIndex": 12,
+                                        "RowSpan": 7
+                                    },
+                                    {
+                                        "ElementId": "54a71c31-0d07-472b-bb14-9f7935d1be68",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 21,
+                                        "ColumnSpan": 15,
+                                        "RowIndex": 12,
+                                        "RowSpan": 7
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "ContentType": "INTERACTIVE"
+            },
+            {
+                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                "Name": "Owner",
+                "Visuals": [
+                    {
+                        "CustomContentVisual": {
+                            "VisualId": "d11867c6-cda3-4fad-af93-264f9c11831d",
+                            "Title": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "ContentUrl": "https://d3ic6ryvcaoqdy.cloudfront.net/quickSightResource/MyEmotionGarden-Sticker-1.png",
+                                "ContentType": "IMAGE",
+                                "ImageScaling": "FIT_TO_HEIGHT"
+                            },
+                            "Actions": [],
+                            "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging"
+                        }
+                    },
+                    {
+                        "KPIVisual": {
+                            "VisualId": "d8d98b4d-be0b-4f22-8b5e-6dcbbe04d2cd",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>The number of Emotion Gardens</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "Values": [
+                                        {
+                                            "NumericalMeasureField": {
+                                                "FieldId": "4688c17d-e764-4bf6-8584-6ebba126d0fe.0.1682659301046",
+                                                "Column": {
+                                                    "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                    "ColumnName": "count"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "TargetValues": [],
+                                    "TrendGroups": []
+                                },
+                                "SortConfiguration": {},
+                                "KPIOptions": {
+                                    "PrimaryValueFontConfiguration": {
+                                        "FontSize": {
+                                            "Relative": "EXTRA_LARGE"
+                                        }
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "BoxPlotVisual": {
+                            "VisualId": "507db839-e5b9-4b2e-b28f-e7c99ebb5703",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>Age Distribution by Emotions</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BoxPlotAggregatedFieldWells": {
+                                        "GroupBy": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682517472728",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "emotions"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [
+                                            {
+                                                "NumericalMeasureField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.age.1.1682516419260",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "age"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {},
+                                "BoxPlotOptions": {},
+                                "PrimaryYAxisLabelOptions": {
+                                    "AxisLabelOptions": [
+                                        {
+                                            "CustomLabel": "age",
+                                            "ApplyTo": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.age.1.1682516419260",
+                                                "Column": {
+                                                    "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                    "ColumnName": "age"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.age.1.1682516419260",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.emotions.1.1682517472728",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "ReferenceLines": []
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "KPIVisual": {
+                            "VisualId": "8029c795-c99b-4659-ae11-7ea603257ba6",
+                            "Title": {
+                                "Visibility": "VISIBLE",
+                                "FormatText": {
+                                    "RichText": "<visual-title>Average Age of Garden Owners</visual-title>"
+                                }
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "Values": [
+                                        {
+                                            "NumericalMeasureField": {
+                                                "FieldId": "2bf9322f-8ca8-42a8-9775-cb45072cf52e.0.1682497897727",
+                                                "Column": {
+                                                    "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                    "ColumnName": "AverageAge"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "TargetValues": [],
+                                    "TrendGroups": []
+                                },
+                                "SortConfiguration": {},
+                                "KPIOptions": {
+                                    "PrimaryValueFontConfiguration": {
+                                        "FontSize": {
+                                            "Relative": "EXTRA_LARGE"
+                                        }
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "PivotTableVisual": {
+                            "VisualId": "3770c86e-d1a6-49c6-b442-cb82704d2f82",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PivotTableAggregatedFieldWells": {
+                                        "Rows": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.2.1682516599460",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "generation"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.3.1682516599460",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "time"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.weather.4.1682516599460",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "weather"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Columns": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "season"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "gender"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "FieldSortOptions": [
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.2.1682516599460",
+                                            "SortBy": {
+                                                "Column": {
+                                                    "SortBy": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "generation"
+                                                    },
+                                                    "Direction": "DESC",
+                                                    "AggregationFunction": {
+                                                        "CategoricalAggregationFunction": "COUNT"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "TableOptions": {
+                                    "SingleMetricVisibility": "HIDDEN",
+                                    "ToggleButtonsVisibility": "VISIBLE",
+                                    "ColumnHeaderStyle": {
+                                        "TextWrap": "NONE",
+                                        "HorizontalTextAlignment": "CENTER"
+                                    },
+                                    "RowHeaderStyle": {
+                                        "FontConfiguration": {
+                                            "FontSize": {
+                                                "Relative": "MEDIUM"
+                                            }
+                                        },
+                                        "HorizontalTextAlignment": "LEFT"
+                                    },
+                                    "CellStyle": {
+                                        "TextWrap": "NONE",
+                                        "Height": 20
+                                    },
+                                    "RowFieldNamesStyle": {
+                                        "FontConfiguration": {
+                                            "FontSize": {
+                                                "Relative": "MEDIUM"
+                                            }
+                                        },
+                                        "HorizontalTextAlignment": "LEFT"
+                                    }
+                                },
+                                "TotalOptions": {
+                                    "RowSubtotalOptions": {
+                                        "TotalsVisibility": "VISIBLE"
+                                    },
+                                    "ColumnSubtotalOptions": {
+                                        "TotalsVisibility": "HIDDEN"
+                                    }
+                                },
+                                "FieldOptions": {
+                                    "SelectedFieldOptions": [
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.2.1682516599460",
+                                            "Visibility": "VISIBLE"
+                                        },
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.3.1682516599460",
+                                            "Visibility": "VISIBLE"
+                                        },
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.weather.4.1682516599460",
+                                            "Visibility": "VISIBLE"
+                                        },
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                            "Visibility": "VISIBLE"
+                                        },
+                                        {
+                                            "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                            "Visibility": "VISIBLE"
+                                        }
+                                    ],
+                                    "DataPathOptions": [
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.2.1682516599460",
+                                                    "FieldValue": "generation"
+                                                }
+                                            ],
+                                            "Width": "123px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "autumn"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Female"
+                                                }
+                                            ],
+                                            "Width": "62px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "winter"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Female"
+                                                }
+                                            ],
+                                            "Width": "62px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "summer"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Female"
+                                                }
+                                            ],
+                                            "Width": "61px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "spring"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Female"
+                                                }
+                                            ],
+                                            "Width": "60px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "autumn"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Male"
+                                                }
+                                            ],
+                                            "Width": "54px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "summer"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Male"
+                                                }
+                                            ],
+                                            "Width": "53px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "winter"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Male"
+                                                }
+                                            ],
+                                            "Width": "49px"
+                                        },
+                                        {
+                                            "DataPathList": [
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682516599460",
+                                                    "FieldValue": "spring"
+                                                },
+                                                {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.1.1682516599460",
+                                                    "FieldValue": "Male"
+                                                }
+                                            ],
+                                            "Width": "49px"
+                                        }
+                                    ]
+                                }
+                            },
+                            "Actions": []
+                        }
+                    },
+                    {
+                        "PieChartVisual": {
+                            "VisualId": "48769258-07fd-4b9f-b0b1-b60809ade5c3",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PieChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682517271179",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "season"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "DonutOptions": {
+                                    "ArcOptions": {
+                                        "ArcThickness": "LARGE"
+                                    },
+                                    "DonutCenterOptions": {
+                                        "LabelVisibility": "HIDDEN"
+                                    }
+                                },
+                                "Legend": {
+                                    "Visibility": "VISIBLE",
+                                    "Position": "BOTTOM",
+                                    "Height": "40px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "VISIBLE",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.season.0.1682517271179",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "PieChartVisual": {
+                            "VisualId": "e87eb9df-8f32-443f-9944-4b7cd8a9fde6",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PieChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.weather.0.1682517406111",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "weather"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "DonutOptions": {
+                                    "ArcOptions": {
+                                        "ArcThickness": "LARGE"
+                                    },
+                                    "DonutCenterOptions": {
+                                        "LabelVisibility": "HIDDEN"
+                                    }
+                                },
+                                "Legend": {
+                                    "Position": "BOTTOM"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "VISIBLE",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.weather.0.1682517406111",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "PieChartVisual": {
+                            "VisualId": "386ffaf1-098d-439f-b498-1a357e5b308a",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PieChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.0.1682517592143",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "time"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "DonutOptions": {
+                                    "ArcOptions": {
+                                        "ArcThickness": "LARGE"
+                                    },
+                                    "DonutCenterOptions": {
+                                        "LabelVisibility": "HIDDEN"
+                                    }
+                                },
+                                "Legend": {
+                                    "Visibility": "VISIBLE",
+                                    "Position": "BOTTOM"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "VISIBLE",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.time.0.1682517592143",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "PieChartVisual": {
+                            "VisualId": "ba610ed1-b986-4eb3-ba0a-83a9d3acc585",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "PieChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.0.1682517659483",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "gender"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": []
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "DonutOptions": {
+                                    "ArcOptions": {
+                                        "ArcThickness": "LARGE"
+                                    },
+                                    "DonutCenterOptions": {
+                                        "LabelVisibility": "HIDDEN"
+                                    }
+                                },
+                                "Legend": {
+                                    "Position": "BOTTOM",
+                                    "Height": "40px"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "VISIBLE",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.gender.0.1682517659483",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    },
+                    {
+                        "BarChartVisual": {
+                            "VisualId": "9ff094c4-2655-43a8-bbef-aedca50a48b8",
+                            "Title": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "Subtitle": {
+                                "Visibility": "VISIBLE"
+                            },
+                            "ChartConfiguration": {
+                                "FieldWells": {
+                                    "BarChartAggregatedFieldWells": {
+                                        "Category": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682518540511",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "generation"
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "Values": [],
+                                        "Colors": [
+                                            {
+                                                "CategoricalDimensionField": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682518475879",
+                                                    "Column": {
+                                                        "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                                        "ColumnName": "time"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SortConfiguration": {
+                                    "CategorySort": [
+                                        {
+                                            "FieldSort": {
+                                                "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682518540511",
+                                                "Direction": "DESC"
+                                            }
+                                        }
+                                    ],
+                                    "CategoryItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "ColorItemsLimit": {
+                                        "OtherCategories": "INCLUDE"
+                                    },
+                                    "SmallMultiplesLimitConfiguration": {
+                                        "OtherCategories": "INCLUDE"
+                                    }
+                                },
+                                "Orientation": "VERTICAL",
+                                "BarsArrangement": "CLUSTERED",
+                                "Legend": {
+                                    "Position": "BOTTOM"
+                                },
+                                "DataLabels": {
+                                    "Visibility": "HIDDEN",
+                                    "Overlap": "DISABLE_OVERLAP"
+                                },
+                                "Tooltip": {
+                                    "TooltipVisibility": "VISIBLE",
+                                    "SelectedTooltipType": "BASIC",
+                                    "FieldBasedTooltip": {
+                                        "AggregationVisibility": "HIDDEN",
+                                        "TooltipTitleType": "PRIMARY_VALUE",
+                                        "TooltipFields": [
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682518475879",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            },
+                                            {
+                                                "FieldTooltipItem": {
+                                                    "FieldId": "49443c0e-8657-448c-9d32-c544e6fe85f4.generation.1.1682518540511",
+                                                    "Visibility": "VISIBLE"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "Actions": [],
+                            "ColumnHierarchies": []
+                        }
+                    }
+                ],
+                "Layouts": [
+                    {
+                        "Configuration": {
+                            "GridLayout": {
+                                "Elements": [
+                                    {
+                                        "ElementId": "d11867c6-cda3-4fad-af93-264f9c11831d",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 5,
+                                        "RowIndex": 0,
+                                        "RowSpan": 4
+                                    },
+                                    {
+                                        "ElementId": "d8d98b4d-be0b-4f22-8b5e-6dcbbe04d2cd",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 5,
+                                        "ColumnSpan": 6,
+                                        "RowIndex": 0,
+                                        "RowSpan": 4
+                                    },
+                                    {
+                                        "ElementId": "8029c795-c99b-4659-ae11-7ea603257ba6",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 11,
+                                        "ColumnSpan": 6,
+                                        "RowIndex": 0,
+                                        "RowSpan": 4
+                                    },
+                                    {
+                                        "ElementId": "48769258-07fd-4b9f-b0b1-b60809ade5c3",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 17,
+                                        "ColumnSpan": 10,
+                                        "RowIndex": 0,
+                                        "RowSpan": 5
+                                    },
+                                    {
+                                        "ElementId": "e87eb9df-8f32-443f-9944-4b7cd8a9fde6",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 27,
+                                        "ColumnSpan": 9,
+                                        "RowIndex": 0,
+                                        "RowSpan": 5
+                                    },
+                                    {
+                                        "ElementId": "507db839-e5b9-4b2e-b28f-e7c99ebb5703",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 17,
+                                        "RowIndex": 4,
+                                        "RowSpan": 7
+                                    },
+                                    {
+                                        "ElementId": "386ffaf1-098d-439f-b498-1a357e5b308a",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 17,
+                                        "ColumnSpan": 10,
+                                        "RowIndex": 5,
+                                        "RowSpan": 6
+                                    },
+                                    {
+                                        "ElementId": "ba610ed1-b986-4eb3-ba0a-83a9d3acc585",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 27,
+                                        "ColumnSpan": 9,
+                                        "RowIndex": 5,
+                                        "RowSpan": 6
+                                    },
+                                    {
+                                        "ElementId": "9ff094c4-2655-43a8-bbef-aedca50a48b8",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 17,
+                                        "RowIndex": 11,
+                                        "RowSpan": 8
+                                    },
+                                    {
+                                        "ElementId": "3770c86e-d1a6-49c6-b442-cb82704d2f82",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 17,
+                                        "ColumnSpan": 19,
+                                        "RowIndex": 11,
+                                        "RowSpan": 8
+                                    }
+                                ],
+                                "CanvasSizeOptions": {
+                                    "ScreenCanvasSizeOptions": {
+                                        "ResizeOption": "FIXED",
+                                        "OptimizedViewPortWidth": "1600px"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ContentType": "INTERACTIVE"
+            },
+            {
+                "SheetId": "34d876f5-c12e-4cb1-9868-17806dc29e69",
+                "Name": "Gallery",
+                "Visuals": [
+                    {
+                        "CustomContentVisual": {
+                            "VisualId": "52e7da27-c3f3-4c33-a108-ed3e5b70e16e",
+                            "Title": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "Subtitle": {
+                                "Visibility": "HIDDEN"
+                            },
+                            "ChartConfiguration": {
+                                "ContentUrl": "https://d3ic6ryvcaoqdy.cloudfront.net/html/top-images/garden.html",
+                                "ContentType": "OTHER_EMBEDDED_CONTENT"
+                            },
+                            "Actions": [],
+                            "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging"
+                        }
+                    }
+                ],
+                "Layouts": [
+                    {
+                        "Configuration": {
+                            "GridLayout": {
+                                "Elements": [
+                                    {
+                                        "ElementId": "52e7da27-c3f3-4c33-a108-ed3e5b70e16e",
+                                        "ElementType": "VISUAL",
+                                        "ColumnIndex": 0,
+                                        "ColumnSpan": 36,
+                                        "RowIndex": 0,
+                                        "RowSpan": 21
+                                    }
+                                ],
+                                "CanvasSizeOptions": {
+                                    "ScreenCanvasSizeOptions": {
+                                        "ResizeOption": "FIXED",
+                                        "OptimizedViewPortWidth": "1920px"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ContentType": "INTERACTIVE"
+            }
+        ],
+        "CalculatedFields": [
+            {
+                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                "Name": "AverageAge",
+                "Expression": "avg(age)"
+            },
+            {
+                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                "Name": "count",
+                "Expression": "count(id)"
+            }
+        ],
+        "ParameterDeclarations": [
+            {
+                "IntegerParameterDeclaration": {
+                    "ParameterValueType": "SINGLE_VALUED",
+                    "Name": "count",
+                    "DefaultValues": {
+                        "StaticValues": []
+                    },
+                    "ValueWhenUnset": {
+                        "ValueWhenUnsetOption": "RECOMMENDED_VALUE"
+                    }
+                }
+            },
+            {
+                "StringParameterDeclaration": {
+                    "ParameterValueType": "SINGLE_VALUED",
+                    "Name": "averageAge",
+                    "DefaultValues": {
+                        "StaticValues": []
+                    },
+                    "ValueWhenUnset": {
+                        "ValueWhenUnsetOption": "RECOMMENDED_VALUE"
+                    }
+                }
+            }
+        ],
+        "FilterGroups": [
+            {
+                "FilterGroupId": "e59fdef6-b2dc-4324-96cd-2c3c797cfb7d",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "4bb0a4c0-831a-4e11-9480-e69cb8214e0b",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "emotions"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "d5366a72-a530-40aa-9e85-f23b75ff223c"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "7eb9cb92-9ba0-4c46-8e9d-fbfd0c712af4",
+                "Filters": [
+                    {
+                        "NumericEqualityFilter": {
+                            "FilterId": "76558140-1e37-4cd8-bf4b-fd926c73da93",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "count"
+                            },
+                            "SelectAllOptions": "FILTER_ALL_VALUES",
+                            "MatchOperator": "EQUALS",
+                            "NullOption": "ALL_VALUES"
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "4189ee2d-421b-4fb6-a3cb-e5b58be2d92c"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "869c372d-c87a-4eea-856e-74df4fe72665",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "4d234870-80b6-4882-99c7-2de2bb0b1e27",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "emotions"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "909ff941-6bd7-4a33-9f75-e7da81f5d785"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "f49ed757-73a6-4ea8-b7ee-580a1d53dd52",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "d67a8895-9529-48e7-99d0-2a62c4fda665",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "season"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null,
+                                        ""
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "e7ab580c-bd0d-45bb-a935-bb6b74d70326"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "8e2d46a5-1c8e-4d5d-be43-5f0a7cabd76c",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "f2325e72-48c7-47b9-9729-34e814f7f2d9",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "emotions"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "6db0d22e-9755-4cd2-bd44-1cf7cc54fc12"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "71820862-517c-4c2f-b62d-500bef5658e4",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "1560de48-8d4f-4991-9fc6-a2b2426b5cee",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "generation"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "e7ab580c-bd0d-45bb-a935-bb6b74d70326"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "bd4a3b97-f17b-454d-8134-a7cef19ffd5c",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "d49eba37-cdc5-4e8b-ab42-09cb43ca3861",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "time"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "0b1d5451-b157-410f-aa00-991f6cc874b0"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "386e4f99-d053-4190-91f6-f819e6043649",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "065ff17c-c864-4271-9447-112a7ec08c8a",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "season"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "4189ee2d-421b-4fb6-a3cb-e5b58be2d92c"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "1e774044-ba49-40d7-ab50-4d72c3384f06",
+                "Filters": [
+                    {
+                        "TimeRangeFilter": {
+                            "FilterId": "eb225bbf-56fc-476d-86d4-b15a04e24b9d",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "createAtKor"
+                            },
+                            "IncludeMinimum": true,
+                            "IncludeMaximum": true,
+                            "RangeMinimumValue": {
+                                "StaticValue": "2023-05-02T09:00:00+09:00"
+                            },
+                            "RangeMaximumValue": {
+                                "StaticValue": "2023-05-05T09:00:00+09:00"
+                            },
+                            "NullOption": "NON_NULLS_ONLY",
+                            "TimeGranularity": "DAY"
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "eca02ca0-39c3-432e-a7d2-0faff9d79257",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "6db0d22e-9755-4cd2-bd44-1cf7cc54fc12"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "321f7edf-fdea-4493-9ee4-d428ffa739e3",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "74790f74-4d48-4450-89d1-f5a53c4c2246",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "generation"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "3770c86e-d1a6-49c6-b442-cb82704d2f82"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "d4b3b1f3-c4ba-41f7-9441-3a501a921192",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "88b756d1-d853-4ce4-a701-2a9fc744e2e6",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "season"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "3770c86e-d1a6-49c6-b442-cb82704d2f82"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "572c41c7-817f-450a-8b0f-b468cb43c034",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "5bf8fc24-7f42-497c-8453-7a198394e705",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "time"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "3770c86e-d1a6-49c6-b442-cb82704d2f82"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "7da2746e-a7ad-4af3-90f1-613b3eda9af5",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "cbe45340-b214-4a3d-b786-9ea4c14883a9",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "season"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "48769258-07fd-4b9f-b0b1-b60809ade5c3"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "d7c2cb40-cac9-4a6e-8669-53a8c4cae6d8",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "a91e7483-37ba-4c57-ba42-d8eeda054df9",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "weather"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "e87eb9df-8f32-443f-9944-4b7cd8a9fde6"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "cb64103c-6715-410d-a815-d7193467ddc4",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "aae376d0-763a-442d-b0ae-d6c1479746b9",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "time"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "386ffaf1-098d-439f-b498-1a357e5b308a"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "87518362-b755-492e-bd1c-19a0615f95b4",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "9516ac2a-39b5-48f5-852c-91a06b9f50eb",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "generation"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "9ff094c4-2655-43a8-bbef-aedca50a48b8"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "1d8779ac-f4ad-44b3-80ae-855e5fa6d0a6",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "d27d1508-30c2-4b8c-9dc2-7dcb1c217d79",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "emotions"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "CONTAINS",
+                                    "SelectAllOptions": "FILTER_ALL_VALUES"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "d11867c6-cda3-4fad-af93-264f9c11831d"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            },
+            {
+                "FilterGroupId": "bffaa220-b90c-45e3-9257-6941046207d6",
+                "Filters": [
+                    {
+                        "CategoryFilter": {
+                            "FilterId": "c015a2ee-8250-4df3-aab9-04f274fc0839",
+                            "Column": {
+                                "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                                "ColumnName": "time"
+                            },
+                            "Configuration": {
+                                "FilterListConfiguration": {
+                                    "MatchOperator": "DOES_NOT_CONTAIN",
+                                    "CategoryValues": [
+                                        "",
+                                        null
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "ScopeConfiguration": {
+                    "SelectedSheets": {
+                        "SheetVisualScopingConfigurations": [
+                            {
+                                "SheetId": "69573924-05c9-4584-a0d1-37fa1b5f9265",
+                                "Scope": "SELECTED_VISUALS",
+                                "VisualIds": [
+                                    "9ff094c4-2655-43a8-bbef-aedca50a48b8"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "Status": "ENABLED",
+                "CrossDataset": "SINGLE_DATASET"
+            }
+        ],
+        "ColumnConfigurations": [
+            {
+                "Column": {
+                    "DataSetIdentifier": "emotiondetailinfo-qifb52sb6bhkxpwqtn7na3yfgi-staging",
+                    "ColumnName": "createdAt"
+                },
+                "Role": "DIMENSION"
+            }
+        ],
+        "AnalysisDefaults": {
+            "DefaultNewSheetConfiguration": {
+                "InteractiveLayoutConfiguration": {
+                    "Grid": {
+                        "CanvasSizeOptions": {
+                            "ScreenCanvasSizeOptions": {
+                                "ResizeOption": "FIXED",
+                                "OptimizedViewPortWidth": "1600px"
+                            }
+                        }
+                    }
+                },
+                "SheetContentType": "INTERACTIVE"
+            }
+        }
+    },
+    "RequestId": "f77262c6-1ccb-486b-8579-33c0c76b74af"
+}
