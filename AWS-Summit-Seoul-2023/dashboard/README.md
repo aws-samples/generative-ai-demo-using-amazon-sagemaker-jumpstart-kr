@@ -50,7 +50,7 @@ QuickSight의 Analysis에서 필요한 Data생성을 위해서 Calculated fields
 
 ## Gallery
 Gallery에서는 좋아요 개수가 많은 순으로 이미지를 조회하여 보여줍니다. 좋아요 순으로 이미지를 조회하고 정렬하기 위해 Lambda함수를 사용하여 간단한 조회화면을 구현한 뒤 Quicksight에 인입했습니다.<br>
-[Lambda Function]("https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/tree/main/AWS-Summit-Seoul-2023/dashboard/lambda-top-likes-image-list")
+[Lambda Function](https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/tree/main/AWS-Summit-Seoul-2023/dashboard/lambda-top-likes-image-list)
 <br>
 
 ----
@@ -60,5 +60,5 @@ Gallery에서는 좋아요 개수가 많은 순으로 이미지를 조회하여 
 해당 Repository에는 Demo에서 사용한 Dashboard를 json형태로 추출한 파일이 포함되어 있습니다
 해당 json파일을 사용하여 Dashboard를 생성하는 방법은 아래 AWS Blog를 참고하시기 바랍니다.
 
-[New Amazon QuickSight API Capabilities to Accelerate Your BI Transformation]("https://aws.amazon.com/blogs/aws/new-amazon-quicksight-api-capabilities-to-accelerate-your-bi-transformation/")
+[New Amazon QuickSight API Capabilities to Accelerate Your BI Transformation](https://aws.amazon.com/blogs/aws/new-amazon-quicksight-api-capabilities-to-accelerate-your-bi-transformation/)
 
