@@ -24,9 +24,9 @@ My Emotion Gardens은 사용자 감정과 외부 날씨에 따라 변화되는 �
 - 전시 Suppport: 개발 인원 및 [JinHyeok Lee](https://www.linkedin.com/in/jinhyeok-lee-3ba63a125/), JinAh Kim, [Jeongwon Kim](https://www.linkedin.com/in/jeongwonkim/), Suji Lee, [Jisun Choi](https://www.linkedin.com/in/%EC%A7%80%EC%84%A0-%EC%B5%9C-5a8666a6/), [Jiyun Park](https://www.linkedin.com/in/jiyunpark-31a9bb1b6/), [Sukwon Lee](https://www.linkedin.com/in/sukwon-won-lee/), [Hojae Lee](https://www.linkedin.com/in/leehojae/), [Sejin Kim](https://www.linkedin.com/in/saygenie/)
 
 - 이벤트 및 데모 관련 링크
-1. [공식 이벤트 페이지](https://aws.amazon.com/ko/events/summits/seoul/)
-2. [(Blog) 다시 돌아온 AWS Summit Seoul에 참여해 주셔서 감사합니다!](https://aws.amazon.com/ko/blogs/korea/thank-you-for-joining-aws-summit-seoul-2023/?fbclid=IwAR0lcvIBgjDFLD1RUwQ2XLG4gN0Qpbe2wUfNE7IzhIjmxoiYeULNzna8TMc)
-3. [기조연설 - 데모소개는 1시간 9분 17초부터](https://www.youtube.com/watch?v=xYYHB5zfNmo)
+    - [공식 Summit 이벤트 페이지](https://aws.amazon.com/ko/events/summits/seoul/)
+    - [(Blog) 다시 돌아온 AWS Summit Seoul에 참여해 주셔서 감사합니다!](https://aws.amazon.com/ko/blogs/korea/thank-you-for-joining-aws-summit-seoul-2023/?fbclid=IwAR0lcvIBgjDFLD1RUwQ2XLG4gN0Qpbe2wUfNE7IzhIjmxoiYeULNzna8TMc)
+    - [기조연설 중 데모 소개 - 1시간 9분 17초부터](https://youtu.be/xYYHB5zfNmo?t=4157)
 
 
 
