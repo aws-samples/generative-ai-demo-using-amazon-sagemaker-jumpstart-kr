@@ -14,7 +14,7 @@ AWS Summit Seoul 2023에서 "My Emotion Gardens"가 메인 데모로 전시되�
 ## IoT 
 
 ## Dashboard
-[Dashboard](./dashboard)사용자가 Kiosk에서 생성한 데이터를 볼 수 있는 Dashboard입니다. Dashboard는 Amazon의 Cloud Native BI서비스인 Amazon Quicksight를 사용하였습니다. Dashboard는 감정 중심의 통계를 볼 수 있는 Emotion, 사용자의 데이터를 집계한 Owner, 가장 많은 좋아요를 받은 이미지 20개를 보여주는 Gallery까지 총 3개의 Sheet로 구성했습니다.
+[Dashboard](./dashboard)에서는 사용자가 Kiosk에서 생성한 데이터를 볼 수 있는 Dashboard에 대해 설명하고 있습니다. Dashboard는 Amazon의 Cloud Native BI서비스인 [Amazon Quicksight](https://aws.amazon.com/ko/quicksight/)를 사용하였습니다. Dashboard는 감정 중심의 통계를 볼 수 있는 Emotion, 사용자의 데이터를 집계한 Owner, 가장 많은 좋아요를 받은 이미지 20개를 보여주는 Gallery까지 총 3개의 Sheet로 구성했습니다.
 
 ## Display
 
