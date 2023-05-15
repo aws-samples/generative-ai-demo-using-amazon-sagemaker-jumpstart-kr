@@ -17,7 +17,7 @@ AWS Summit Seoul 2023에서 "My Emotion Gardens"가 메인 데모로 전시되�
 
 
 ## 전체 아키텍처
-
+![2023 AWS Summit Seoul_MyEmotionGardens(1)](https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/assets/100750420/3f75065a-76dc-4118-a788-1908881276f8)
 
 
 ## 이미지 생성 및 추천
