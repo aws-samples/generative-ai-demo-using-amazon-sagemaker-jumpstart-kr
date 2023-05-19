@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive CSS Masonry - W3Bits</title>
+
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<script type="text/javascript">
+
+  window.addEventListener('resize', function () { 
+      "use strict";
+      window.location.reload(); 
+  });
+
+  window.addEventListener("DOMContentLoaded", (event) => {
+    
+    const masory = document.getElementById('garden-masonry')
+
+    function requestTopImages() {
+  
+      const uri = "https://d3ic6ryvcaoqdy.cloudfront.net/lambda-top-likes-image-list";
+      const bucketurl = "https://d3ic6ryvcaoqdy.cloudfront.net/";
+      const xhr = new XMLHttpRequest();
+  
+      xhr.open("GET", uri, true);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          let response = JSON.parse(xhr.responseText);
+
+          let imageTags = ''
+          for (let idx in response.Items) {
+            let item = response.Items[idx]
+            let like = item["likeCount"]
+            let url = bucketurl + item["id"]
+            
+            imageTags += `
+              <div class="masonry-item">
+                <img src="${url}" class="masonry-content">
+                <div class="masonry-item-after">👍 ${like}</div>
+              </div>
+            `
+          } 
+          masory.innerHTML = imageTags
+
+          waitForImages()
+        }
+      };
+  
+      let requestObj = {
+        "text": "test",
+      }
+      let blob = new Blob([JSON.stringify(requestObj)], { type: 'application/json' });
+      xhr.send(blob);
+    }
+  
+    
+    requestTopImages()
+    var intervalId = window.setInterval(function(){
+      requestTopImages()
+    }, 180000);
+
+  })
+  
+  </script>
+
+<body>
+  <div id="garden-masonry" class="masonry">
+
+  </div>
+
+  <script type="text/javascript" src="imageLoaded.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
