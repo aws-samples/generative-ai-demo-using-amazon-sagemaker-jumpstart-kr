@@ -1,0 +1,135 @@
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Generator</title>
+    <link rel="stylesheet" , href="style.css">
+</head>
+<body>
+    <h1>Stable Diffusion Image Generator</h1>
+    <p>You can enter your text as bellows.</p>
+    <form id="input_row0">
+        <text>RepeatCount: </text><input type="text" name="repeatCount" autofocus size="50" value="30">
+    </form>
+    <div>
+        <form id="myform">
+            <form id="input_row1">
+                <H4>Features</H4>
+                <text>Emotion: </text><select name="emotion" id="emoitonId" onchange=SelectChanged()>
+                    <option type="text" value="happy" selected="selected">행복 (HAPPY)</option>
+                    <option value="surprised">놀람 (SURPRISED)</option>
+                    <option value="calm">평온 (CALM)</option>
+                    <option value="angry">화남 (ANGRY)</option>
+                    <option value="fear">공포 (FEAR)</option>
+                    <option value="confused">혼란스러움 (CONFUSED)</option>
+                    <option value="disgusted">역겨움 (DISGUSTED)</option>
+                    <option value="sad">슬픔 (SAD)</option>
+                </select>
+            </form>
+            <form id="input_row3">
+                <text>Prompt: </text><input type="text" id="promptText" autofocus size="100"
+                    value="best quality, very happy nature, real *Artstation*, botanical garden, flowers, cinematic lighting, dramatic angle, (an extremely delicate and beautiful)">
+                <input type="button" name="send" value="Generate">
+                <input type="button" name="update" value="Update">
+                <input type="button" name="remove" value="Remove">
+            </form>
+        </form>
+    </div>
+    <text>[Generate] 선택후에 이미지가 생성될때까지 기다린 후에 [Update]를 누르면 이미지를 확인할 수 있습니다.</text>
+    <text>또한, 이미지 오른쪽의 like/dislike를 선택한후에 [Remove]를 선택하면 삭제할 수 있습니다.</text>
+    
+    <div class="result-container">
+        <div id="status"></div>
+    </div>
+    <div class="chat-panel" id="chatPanel">
+        <H3>Landscape</H3>
+        <div id="preview0h"></div>
+        <div id="preview1h"></div>
+        <div id="preview2h"></div>
+        <div id="preview3h"></div>
+        <div id="preview4h"></div>
+        <div id="preview5h"></div>
+        <div id="preview6h"></div>
+        <div id="preview7h"></div>
+        <div id="preview8h"></div>
+        <div id="preview9h"></div>
+        <div id="preview10h"></div>
+        <div id="preview11h"></div>
+        <div id="preview12h"></div>
+        <div id="preview13h"></div>
+        <div id="preview14h"></div>
+        <div id="preview15h"></div>
+        <div id="preview16h"></div>
+        <div id="preview17h"></div>
+        <div id="preview18h"></div>
+        <div id="preview19h"></div>
+        <div id="preview20h"></div>
+        <div id="preview21h"></div>
+        <div id="preview22h"></div>
+        <div id="preview23h"></div>
+        <div id="preview24h"></div>
+        <div id="preview25h"></div>
+        <div id="preview26h"></div>
+        <div id="preview27h"></div>
+        <div id="preview28h"></div>
+        <div id="preview29h"></div>
+        <div id="preview30h"></div>
+        <div id="preview31h"></div>
+        <div id="preview32h"></div>
+        <div id="preview33h"></div>
+        <div id="preview34h"></div>
+        <div id="preview35h"></div>
+        <div id="preview36h"></div>
+        <div id="preview37h"></div>
+        <div id="preview38h"></div>
+        <div id="preview39h"></div>
+        <div id="preview30h"></div>
+        <div id="preview31h"></div>
+        <div id="preview32h"></div>
+        <div id="preview33h"></div>
+        <div id="preview34h"></div>
+        <div id="preview35h"></div>
+        <div id="preview36h"></div>
+        <div id="preview37h"></div>
+        <div id="preview38h"></div>
+        <div id="preview39h"></div>
+        <div id="preview40h"></div>
+        <div id="preview41h"></div>
+        <div id="preview42h"></div>
+        <div id="preview43h"></div>
+        <div id="preview44h"></div>
+        <div id="preview45h"></div>
+        <div id="preview46h"></div>
+        <div id="preview47h"></div>
+        <div id="preview48h"></div>
+        <div id="preview49h"></div>
+        <div id="preview50h"></div>
+    </div>
+    <script src="imgGenerator.js"></script>
+    <script type='text/javascript'>
+        function SelectChanged()  {  
+            let emotionText = {
+                "happy": "best quality, very happy nature, real *Artstation*, botanical garden, flowers, cinematic lighting, dramatic angle, (an extremely delicate and beautiful)",
+                "calm": "best quality, very calm nature, real *Artstation*, botanical garden, flowers, cinematic lighting, dramatic angle, (an extremely delicate and beautiful)",
+                "fear": "best quality, very fear nature, real *Artstation*, botanical garden, flowers, cinematic lighting, dramatic angle, (an extremely delicate and beautiful)",
+                "surprised": "best quality, dreamlikeart, very strong (surprised: 2.5), wonder, unexpected, firework nature, real Artstation, botanical garden, flowers, cinematic lighting, dramatic angle, ((back to the viewer)), (an extremely delicate and beautiful)",
+                "sad": "botanic garden with flowers, very strong (sad: 2.5) nature, best quality, surrealist, hyperrealistic, fantasy, cinematic dark lighting, expansive view angle, by Rembrandt and Vincent van Gogh, illustration, vintage blue and grey",
+                //"confused": "best quality, very confused nature, beautiful and detailed [[spiral]], real Artstation, botanical garden, flowers, cinematic lighting, dramatic angle, ((back to the viewer)), (an extremely delicate and beautiful)",
+                "confused": "botanic garden with very strong (confused: 100.5) nature, flowers and best quality, modernism, surrealist, hyperrealistic, fantasy, dark lighting, wide view angle, questions by Edgar Degas and Paul Gauguin, Artisation, ((back to the viewer)), (an extremely delicate and scared",
+
+                "angry":"best quality, ((angry)) nature, *tornado and thunder*, sunny, spring, real Artstation, botanical garden, flowers, cinematic lighting, dramatic angle, ((back to the viewer)), (an extremely delicate and beautiful), day",
+                //"disgusted": "botanic garden with and (bugs), very extremely (disgusted: 3.5) nature, (((dizziness and discomfort))), psychedelic, best quality, surrealist, hyperrealistic, cinematic lighting, dramatic angle, low angle shot, yellow and ((green)), by Ernst Ludwig Kirchner and Wassily Kandinsky, [real artisation: illustration: 0.4]",
+
+                "disgusted": "botanic garden with and (bugs), very extremely (disgusted: 3.5) nature, (((dizziness and discomfort))), psychedelic, best quality, surrealist, hyperrealistic, cinematic lighting, dramatic angle, wide angle view, yellow and ((green)), by Ernst Ludwig Kirchner and Wassily Kandinsky, [real artisation: illustration: 0.4]"
+            };
+
+            console.log("emotion: " + emoitonId.value);
+            promptText.value = emotionText[emoitonId.value];
+            console.log("prompt: " + promptText.value);
+         }        
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+</body>
+</html>

@@ -1,0 +1,112 @@
+@startuml Sequence Diagram - Sprites
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!includeurl AWSPuml/AWSCommon.puml
+!includeurl AWSPuml/Compute/all.puml
+!includeurl AWSPuml/Mobile/APIGateway.puml
+!includeurl AWSPuml/General/InternetGateway.puml
+!includeurl AWSPuml/Database/DynamoDB.puml
+!includeurl AWSPuml/Database/ElastiCache.puml
+!includeurl AWSPuml/Storage/SimpleStorageServiceS3.puml
+!includeurl AWSPuml/NetworkingAndContentDelivery/CloudFront.puml
+!includeurl AWSPuml/ApplicationIntegration/SNS.puml
+!includeurl AWSPuml/MachineLearning/Rekognition.puml
+!includeurl AWSPuml/MachineLearning/Polly.puml
+!includeurl AWSPuml/MachineLearning/Personalize.puml
+!includeurl AWSPuml/ApplicationIntegration/SQS.puml
+
+'Comment out to use default PlantUML sequence formatting
+skinparam participant {
+    BackgroundColor AWS_BG_COLOR
+    BorderColor AWS_BORDER_COLOR
+}
+'Hide the bottom boxes
+hide footbox
+
+actor Admin as admin
+actor User as user
+participant "<color:#magenta><$CloudFront></color>\nAmazon CloudFront" as cdn
+participant "<color:#red><$APIGateway>\nAmazon API Gateway" as api
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(emotion)" as lambdaEmotion
+participant "<color:#green><$SimpleStorageServiceS3></color>\nAmazon S3" as s3
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(s3-event)" as lambdaS3Event
+participant "<color:#green><$Rekognition></color>\nAmazon\nRekognition" as rekognition
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(createUser)" as lambdaCreateUser
+participant "<color:#blue><$DynamoDB></color>\nDynamoDB" as dynamodb
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(gallery)" as lambdaGallery
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(like)" as lambdaLike
+participant "<color:#magenta><$SQS></color>\nAmazon SQS\nFIFO" as sqs
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(putItem)" as lambdaPutItem
+participant "<color:#green><$Personalize></color>\nPersonalize" as personalize
+
+'/ admin /'
+admin -> s3 ++: copy images manually
+s3 --> admin --
+s3 -> lambdaS3Event ++: put event
+lambdaS3Event -> sqs ++: object info
+sqs --> lambdaS3Event --
+lambdaS3Event --> s3 --
+
+sqs -> lambdaPutItem ++: object info
+lambdaPutItem -> personalize ++: putItems
+personalize --> lambdaPutItem --
+lambdaPutItem --> sqs --
+
+
+'/ user /'
+user -> cdn: POST /emotion
+cdn -> api: /emotion
+api -> lambdaEmotion ++ : /emotion
+lambdaEmotion -> s3 ++: putObject
+s3 --> lambdaEmotion --: 
+
+
+lambdaEmotion -> rekognition ++: detectFaces 
+rekognition --> lambdaEmotion --: 200OK (emotion)
+
+lambdaEmotion -> rekognition ++: searchFaces 
+rekognition --> lambdaEmotion --: 200OK (userId)
+
+lambdaEmotion -> s3 ++: deleteObject
+s3 --> lambdaEmotion --: 
+lambdaEmotion --> api -- : 200OK (userId, emotion)
+api --> cdn: 200OK (userId, emotion)
+cdn --> user: 200OK (userId, emotion)
+
+
+user -> cdn: POST /createUser 
+cdn -> api: /createUser 
+
+api -> lambdaCreateUser ++ : /createUser
+lambdaCreateUser -> dynamodb ++: query userId/emotion
+dynamodb ---> lambdaCreateUser --: 
+
+lambdaCreateUser -> personalize ++: putUsers
+personalize --> lambdaCreateUser --:
+
+lambdaCreateUser -> dynamodb ++: put userId/emotion
+dynamodb ---> lambdaCreateUser --: 
+
+lambdaCreateUser --> api --: 200OK
+api --> cdn: 200OK 
+cdn --> user: 200OK 
+
+user -> cdn: POST /gallery 
+cdn -> api: /gallery 
+api -> lambdaGallery ++: /gallery 
+lambdaGallery -> personalize ++: getRecommendations
+personalize --> lambdaGallery --: 200OK (items)
+lambdaGallery --> api --: 200OK (Items)
+api --> cdn: 200OK (items)
+cdn --> user: 200OK (items)
+
+user -> cdn: POST /like (userId, item)
+cdn -> api: /like (userId, item)
+api -> lambdaLike++ : /like (userId, item)
+lambdaLike -> personalize ++: putEvents
+personalize --> lambdaLike --: 200OK
+lambdaLike --> api --: 200OK
+api --> cdn: 200OK
+cdn --> user: 200OK
+
+@enduml
