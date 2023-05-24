@@ -98,27 +98,15 @@ form.elements.send.onclick = function () {
         msglist[msgCnt++].innerHTML = htmlsrc;
 
         generateDataset(requestList);   
-        sleep(500);   
     }
 
     let requestList = [];  
     for(let i in emotions) {  
-        gender = "others";          
-        userId = `${gender}/${emotions[i]}`;
+        let gender = "others";          
+        let userId = `${gender}/${emotions[i]}`;
         console.log("userId: ", userId);
 
-        requiredDataset = {
-            "userId": userId,
-            "gender": gender,
-            "emotion": emotions[i]
-        };
-        requestList.push(requiredDataset);
-
-        gender = "others";          
-        userId = `${gender}/${emotions[i]}`;
-        console.log("userId: ", userId);
-
-        requiredDataset = {
+        let requiredDataset = {
             "userId": userId,
             "gender": gender,
             "emotion": emotions[i]

@@ -6,10 +6,9 @@ const sqsUrl = process.env.sqsUrl;
 const itemTableName = process.env.tableName.itemTableName;
 
 exports.handler = async (event, context) => {
-    console.log('## ENVIRONMENT VARIABLES: ' + JSON.stringify(process.env));
-    console.log('## EVENT: ' + JSON.stringify(event));
+    //console.log('## ENVIRONMENT VARIABLES: ' + JSON.stringify(process.env));
+    //console.log('## EVENT: ' + JSON.stringify(event));
 
-    let isCompleted = false;
     let response;
     for (let i in event.Records) {
         // Get the object from the event and show its content type
@@ -125,51 +124,5 @@ exports.handler = async (event, context) => {
         }
     }
 
-  /*  function wait() {
-        return new Promise((resolve, reject) => {
-            if (!isCompleted) {
-                setTimeout(() => resolve("wait..."), 1000);
-            }
-            else {
-                setTimeout(() => resolve("done..."), 0);
-            }
-        });
-    }
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
-
-    response = {
-        statusCode: 200,
-    }; */
-
     return response;
 };
-
-function getControlParameters(bucket, key, emotion) {
-    try {
-        const params = {
-            bucket: bucket,
-            key: key,
-            emotion: emotion
-        };        
-        console.log('params: ' + JSON.stringify(params));
-        
-        // To-Do: API request 
-
-    } catch (error) {
-        console.log(error);
-        return;
-    } 
-
-    return {  // dummy control values
-        first: {
-            R: 100, G: 100, B: 0
-        },
-        second: {
-            R: 100, G: 0, B: 0
-        }
-    };
-}
