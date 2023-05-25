@@ -3,6 +3,7 @@ const sqs = new aws.SQS({apiVersion: '2012-11-05'});
 const dynamo = new aws.DynamoDB.DocumentClient();
 const queueUrl = process.env.queueUrl;
 const interactionTableName = process.env.interactionTableName;
+const trackingId = process.env.trackingId;
 const personalizeevents = new aws.PersonalizeEvents();
 
 exports.handler = async (event, context) => {
@@ -20,7 +21,6 @@ exports.handler = async (event, context) => {
         const body = JSON.parse(records[i].body);
         console.log('body: ' + JSON.stringify(body));
 
-        const trackingId = body['trackingId'];
         const itemId = body['itemId'];
         const userId = body['userId'];
         const eventType = body['eventType'];

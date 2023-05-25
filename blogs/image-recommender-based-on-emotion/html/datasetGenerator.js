@@ -98,6 +98,7 @@ form.elements.send.onclick = function () {
         msglist[msgCnt++].innerHTML = htmlsrc;
 
         generateDataset(requestList);   
+        sleep(1000);   
     }
 
     let requestList = [];  

@@ -22,7 +22,7 @@ const endpoints = [
   "jumpstart-example-model-txt2img-stabili-2023-05-23-11-01-09-198",
 ]
 const nproc = 1;
-const trackingId = "a7bcf443-3116-450a-9274-0beef6082a34";
+const trackingId = "c7816336-ef6c-4d50-8fb6-44a67abe2b32";
 
 export class CdkImageRecommenderStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -882,7 +882,6 @@ export class CdkImageRecommenderStack extends cdk.Stack {
         userTableName: userTableName,
         tableName: tableName,
         indexName: indexName,
-        trackingId: trackingId,
         queueUrl: queuePutInteractionDataset.queueUrl
       }
     });    
@@ -905,7 +904,8 @@ export class CdkImageRecommenderStack extends cdk.Stack {
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {
         interactionTableName: interactionTableName,
-        queueUrl: queuePutInteractionDataset.queueUrl
+        queueUrl: queuePutInteractionDataset.queueUrl,
+        trackingId: trackingId
       }
     });    
     interactionDataTable.grantReadWriteData(lambdaPutInteractionDataset); // permission for dynamo 

@@ -10,7 +10,6 @@ const dynamo = new aws.DynamoDB.DocumentClient();
 
 const tableName = process.env.tableName;
 const indexName = process.env.indexName;
-const trackingId = process.env.trackingId;
 const queueUrl = process.env.queueUrl;
 
 exports.handler = async (event, context) => {
@@ -114,7 +113,6 @@ exports.handler = async (event, context) => {
                     MessageDeduplicationId: uuid,
                     MessageAttributes: {},
                     MessageBody: JSON.stringify({
-                        trackingId: trackingId,
                         itemId: itemId,
                         userId: userId,
                         eventType: "click",
