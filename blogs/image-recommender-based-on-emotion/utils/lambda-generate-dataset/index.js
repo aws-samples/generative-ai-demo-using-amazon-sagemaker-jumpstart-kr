@@ -78,14 +78,27 @@ exports.handler = async (event, context) => {
             }
         });
 
-        let queryParams = {
-            TableName: tableName,
-            IndexName: indexName,    
-            KeyConditionExpression: "Emotion = :emotion",
-            ExpressionAttributeValues: {
-                ":emotion": emotion
-            }
-        };
+        let queryParams;
+        if(emotion == "any") { // for any
+            queryParams = {
+                TableName: tableName,
+                IndexName: indexName,    
+                KeyConditionExpression: "Emotion = :emotion",
+                ExpressionAttributeValues: {
+                    ":emotion": "surprised"
+                }
+            };
+        }
+        else {
+            queryParams = {
+                TableName: tableName,
+                IndexName: indexName,    
+                KeyConditionExpression: "Emotion = :emotion",
+                ExpressionAttributeValues: {
+                    ":emotion": emotion
+                }
+            };
+        }
 
         let dynamoQuery; 
         try {

@@ -239,7 +239,7 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     const interactionDataTable = new dynamodb.Table(this, 'dynamodb-personalize-interactions', {
       tableName: interactionTableName,
       partitionKey: { name: 'USER_ID', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: 'TIMESTAMP', type: dynamodb.AttributeType.NUMBER }, // no need
+      sortKey: { name: 'TIMESTAMP', type: dynamodb.AttributeType.NUMBER }, 
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });

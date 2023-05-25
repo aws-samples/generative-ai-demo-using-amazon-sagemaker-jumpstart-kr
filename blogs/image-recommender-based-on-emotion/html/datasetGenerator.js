@@ -7,6 +7,7 @@ emotions.push("disgusted");
 emotions.push("fear");
 emotions.push("sad");
 emotions.push("surprised");
+emotions.push("any");
 
 function generateDataset(requestList) {    
     const xhr = new XMLHttpRequest();
