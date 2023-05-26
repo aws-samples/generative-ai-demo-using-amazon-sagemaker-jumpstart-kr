@@ -18,11 +18,12 @@ import * as rekognition from 'aws-cdk-lib/aws-rekognition';
 
 const debug = false;
 const stage = "dev";
+
 const endpoints = [
   "jumpstart-example-model-txt2img-stabili-2023-05-23-11-01-09-198",
 ]
 const nproc = 1;
-const trackingId = "c7816336-ef6c-4d50-8fb6-44a67abe2b32";
+const trackingId = "916f972e-f7a2-49ce-ab1b-9802ae166c6e";
 
 export class CdkImageRecommenderStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -81,8 +82,8 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     }
 
     // API Gateway
-    const role = new iam.Role(this, "api-role-image-recommender", {
-      roleName: "api-role-image-recommender",
+    const role = new iam.Role(this, `api-role-image-recommender`, {
+      roleName: `api-role-image-recommender-${cdk.Stack.of(this).region}`,
       assumedBy: new iam.ServicePrincipal("apigateway.amazonaws.com")
     });
     role.addToPolicy(new iam.PolicyStatement({
@@ -238,7 +239,7 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     const interactionTableName = 'db-personalize-interactions';
     const interactionDataTable = new dynamodb.Table(this, 'dynamodb-personalize-interactions', {
       tableName: interactionTableName,
-      partitionKey: { name: 'USER_ID', type: dynamodb.AttributeType.STRING },
+      partitionKey: { name: 'ITEM_ID', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'TIMESTAMP', type: dynamodb.AttributeType.NUMBER }, 
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,

@@ -9,7 +9,7 @@ emotions.push("sad");
 emotions.push("surprised");
 emotions.push("any");
 
-function generateDataset(requestList) {    
+function generateDataset(requestList) {
     const xhr = new XMLHttpRequest();
 
     xhr.open("POST", "generateDataset", true);
@@ -51,60 +51,15 @@ for (let i = 0; i < maxMsgItems; i++) {
 for (let i = 0; i < maxMsgItems; i++) {
     msglist[i].innerHTML = '';
 }
-    
+
 form.elements.send.onclick = function () {
     repeatCount = document.forms.input_row0.elements.repeatCount.value;
     console.log("repeatCount: " + repeatCount);
-    
+
     let msgCnt = 0;
-    for(let cnt=0;cnt<repeatCount;cnt++) {
-        let requestList = [];
-        for(let i in emotions) {            
-            let gender = "male";          
-            let userId = `${gender}/${emotions[i]}`;
-            console.log("userId: ", userId);
-
-            let requiredDataset = {
-                "userId": userId,
-                "gender": gender,
-                "emotion": emotions[i]
-            };
-            requestList.push(requiredDataset);
-
-            gender = "female";          
-            userId = `${gender}/${emotions[i]}`;
-            console.log("userId: ", userId);
-
-            requiredDataset = {
-                "userId": userId,
-                "gender": gender,
-                "emotion": emotions[i]
-            };
-            requestList.push(requiredDataset);      
-            
-            gender = "any";          
-            userId = `${gender}/${emotions[i]}`;
-            console.log("userId: ", userId);
-
-            requiredDataset = {
-                "userId": userId,
-                "gender": gender,
-                "emotion": emotions[i]
-            };
-            requestList.push(requiredDataset);
-        } 
-        console.log("requestList: ", JSON.stringify(requestList));
-         
-        let htmlsrc = `<p>cnt:${msgCnt+1} --> </p><text>${JSON.stringify(requestList)}</text> `;
-        msglist[msgCnt++].innerHTML = htmlsrc;
-
-        generateDataset(requestList);   
-        sleep(1000);   
-    }
-
-    let requestList = [];  
-    for(let i in emotions) {  
-        let gender = "others";          
+    let requestList = [];
+    for (let i in emotions) {
+        let gender = "male";
         let userId = `${gender}/${emotions[i]}`;
         console.log("userId: ", userId);
 
@@ -114,12 +69,80 @@ form.elements.send.onclick = function () {
             "emotion": emotions[i]
         };
         requestList.push(requiredDataset);
-    }
-    let htmlsrc = `<p>cnt:${msgCnt+1} --> </p><text>${JSON.stringify(requestList)}</text> `;
-    msglist[msgCnt].innerHTML = htmlsrc;
-    generateDataset(requestList);   
 
-    alert("Dataset 생성 요청이 완료되었습니다.");    
+        gender = "female";
+        userId = `${gender}/${emotions[i]}`;
+        console.log("userId: ", userId);
+
+        requiredDataset = {
+            "userId": userId,
+            "gender": gender,
+            "emotion": emotions[i]
+        };
+        requestList.push(requiredDataset);
+
+        gender = "any";
+        userId = `${gender}/${emotions[i]}`;
+        console.log("userId: ", userId);
+
+        requiredDataset = {
+            "userId": userId,
+            "gender": gender,
+            "emotion": emotions[i]
+        };
+        requestList.push(requiredDataset);
+
+        gender = "others";
+        userId = `${gender}/${emotions[i]}`;
+        console.log("userId: ", userId);
+
+        requiredDataset = {
+            "userId": userId,
+            "gender": gender,
+            "emotion": emotions[i]
+        };
+        requestList.push(requiredDataset);
+    }
+    let htmlsrc = `<p>msgCnt:${msgCnt} --> </p><text>${JSON.stringify(requestList)}</text> `;
+    msglist[msgCnt].innerHTML = htmlsrc;
+    generateDataset(requestList);
+    msgCnt++; 
+
+    for (; msgCnt < repeatCount; msgCnt++) {
+        let requestList = [];
+        for (let i in emotions) {
+            let gender = "male";
+            let userId = `${gender}/${emotions[i]}`;
+            console.log("userId: ", userId);
+    
+            let requiredDataset = {
+                "userId": userId,
+                "gender": gender,
+                "emotion": emotions[i]
+            };
+            requestList.push(requiredDataset);
+    
+            gender = "female";
+            userId = `${gender}/${emotions[i]}`;
+            console.log("userId: ", userId);
+    
+            requiredDataset = {
+                "userId": userId,
+                "gender": gender,
+                "emotion": emotions[i]
+            };
+            requestList.push(requiredDataset);    
+        }
+        console.log("requestList: ", JSON.stringify(requestList));
+
+        let htmlsrc = `<p>msgCnt:${msgCnt} --> </p><text>${JSON.stringify(requestList)}</text> `;
+        msglist[msgCnt].innerHTML = htmlsrc;
+
+        generateDataset(requestList);
+        sleep(1000);
+    }
+
+    alert("Dataset 생성 요청이 완료되었습니다.");
 };
 
 function sleep(ms) {

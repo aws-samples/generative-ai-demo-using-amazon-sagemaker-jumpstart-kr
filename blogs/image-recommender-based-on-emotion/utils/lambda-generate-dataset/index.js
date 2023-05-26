@@ -99,6 +99,7 @@ exports.handler = async (event, context) => {
                 }
             };
         }
+        console.log('queryParams: '+JSON.stringify(queryParams));
 
         let dynamoQuery; 
         try {
