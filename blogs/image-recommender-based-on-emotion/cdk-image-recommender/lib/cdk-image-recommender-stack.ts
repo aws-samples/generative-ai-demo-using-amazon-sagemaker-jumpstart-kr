@@ -82,7 +82,7 @@ export class CdkImageRecommenderStack extends cdk.Stack {
 
     // API Gateway
     const role = new iam.Role(this, "api-role-image-recommender", {
-      roleName: "api-role-image-recommender",
+      roleName: `api-role-image-recommender-${cdk.Stack.of(this).region}`,
       assumedBy: new iam.ServicePrincipal("apigateway.amazonaws.com")
     });
     role.addToPolicy(new iam.PolicyStatement({
