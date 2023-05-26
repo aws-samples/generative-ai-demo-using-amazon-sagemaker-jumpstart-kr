@@ -112,13 +112,8 @@ exports.handler = async (event, context) => {
             return;
         }  
 
-        let date = new Date();
-        const current = Math.floor(date.getTime()/1000.0);
-        console.log('current: ', current);
-
         for(let i in dynamoQuery['Items']) {    
             let itemId = dynamoQuery['Items'][i]['ObjKey'];
-            let timestamp = current + parseInt(i);
 
             // push the event to SQS
             try {                
@@ -131,7 +126,6 @@ exports.handler = async (event, context) => {
                         userId: userId,
                         eventType: "click",
                         eventId: uuid,
-                        timestamp: timestamp
                     }), 
                     QueueUrl: queueUrl,
                     MessageGroupId: "generateDataset"  // use single lambda for stable diffusion 

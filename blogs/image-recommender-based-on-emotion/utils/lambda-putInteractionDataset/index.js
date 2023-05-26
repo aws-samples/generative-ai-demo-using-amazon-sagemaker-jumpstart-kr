@@ -25,7 +25,10 @@ exports.handler = async (event, context) => {
         const userId = body['userId'];
         const eventType = body['eventType'];
         const eventId = body['eventId'];
-        const timestamp = body['timestamp'];
+        // const timestamp = body['timestamp'];
+        let date = new Date();
+        const timestamp = Math.floor(date.getTime()/1000.0);
+        // console.log('current: ', timestamp);
 
         let impression = [];
         impression.push(itemId);

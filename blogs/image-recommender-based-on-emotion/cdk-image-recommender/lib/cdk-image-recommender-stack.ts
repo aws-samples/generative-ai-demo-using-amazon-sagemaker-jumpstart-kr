@@ -18,12 +18,11 @@ import * as rekognition from 'aws-cdk-lib/aws-rekognition';
 
 const debug = false;
 const stage = "dev";
-
 const endpoints = [
   "jumpstart-example-model-txt2img-stabili-2023-05-23-11-01-09-198",
 ]
 const nproc = 1;
-const trackingId = "916f972e-f7a2-49ce-ab1b-9802ae166c6e";
+const trackingId = "43479f6e-7c5f-4af0-809d-49025889e9a0";
 
 export class CdkImageRecommenderStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -82,8 +81,8 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     }
 
     // API Gateway
-    const role = new iam.Role(this, `api-role-image-recommender`, {
-      roleName: `api-role-image-recommender-${cdk.Stack.of(this).region}`,
+    const role = new iam.Role(this, "api-role-image-recommender", {
+      roleName: "api-role-image-recommender",
       assumedBy: new iam.ServicePrincipal("apigateway.amazonaws.com")
     });
     role.addToPolicy(new iam.PolicyStatement({
