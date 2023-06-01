@@ -4,6 +4,8 @@
 
 개인화 추천의 경우에 사용자의 이전 상호작용(interaction)을 이용하여 추천을 수행하게 되는데, 이전 상호작용이 없거나 충분하지 않은 경우에는 감정(emotion)에 맞는 적절한 추천을 할 수 없습니다. 따라서, 여기에서는 이전 상호작용이 부족한 경우에는 감정 정보를 바탕으로 미리 학습한 데이터를 이용하여 "감정 추천"을 수행하고, 일정량의 데이터가 확보되었을 때에 "개인화 추천"을 수행하는 방법을 이용합니다. 아래는 사용자의 감정에 따라 이미지를 추천하는 시스템 아키텍처를 보여주고 있습니다.
 
+현재의 내용은 AWS Tech Blog의 [Amazon Rekognition과 Personalize를 이용하여 감정으로 이미지 추천하기](https://aws.amazon.com/ko/blogs/tech/image-recommender-based-on-emotion/)로 포스팅되었습니다.
+
 ## 감정으로 이미지 추천하는 아키텍처
 
 아래의 아키텍처(Archtiecture)에서는 사용자(user)에게 감정 기반의 이미지 추천(Image Recommendation)하고 시스템 관리자(administrator)가 이미지를 생성(Image Creation)하는 구조로 구성됩니다. 
