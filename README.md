@@ -29,7 +29,11 @@ My Emotion Gardens은 사용자 감정과 외부 날씨에 따라 변화되는 �
     - [(Blog) 다시 돌아온 AWS Summit Seoul에 참여해 주셔서 감사합니다!](https://aws.amazon.com/ko/blogs/korea/thank-you-for-joining-aws-summit-seoul-2023/?fbclid=IwAR0lcvIBgjDFLD1RUwQ2XLG4gN0Qpbe2wUfNE7IzhIjmxoiYeULNzna8TMc)
     - [기조연설 중 데모 소개 - 1시간 9분 17초부터](https://youtu.be/xYYHB5zfNmo?t=4157)
 
+## Blog 
 
+### Amazon Rekognition과 Personalize를 이용하여 감정으로 이미지 추천하기
+
+AWS Tech Blog에 포스팅된 [Amazon Rekognition과 Personalize를 이용하여 감정으로 이미지 추천하기](https://aws.amazon.com/ko/blogs/tech/image-recommender-based-on-emotion/)는 생성형 AI인 Stable Diffusion 모델을 활용하여 생성된 이미지를 "감정 추천"과 "개인화 추천" 방식으로 추천하는 방법을 설명하고 있습니다. 상세한 코드는 [감정으로 이미지 추천하기](https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/tree/main/blogs/image-recommender-based-on-emotion)을 참조합니다.
 
 ## Security
 
