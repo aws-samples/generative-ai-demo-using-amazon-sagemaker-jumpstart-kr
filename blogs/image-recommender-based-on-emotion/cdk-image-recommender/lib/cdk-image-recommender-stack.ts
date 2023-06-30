@@ -19,10 +19,10 @@ import * as rekognition from 'aws-cdk-lib/aws-rekognition';
 const debug = false;
 const stage = "dev";
 const endpoints = [
-  "jumpstart-example-model-txt2img-stabili-2023-05-12-22-15-07-602",
+  "jumpstart-example-model-txt2img-stabili-2023-05-23-11-01-09-198",
 ]
 const nproc = 1;
-const trackingId = "c611bf0f-0315-4db9-a418-5c40e3f7fe7d";
+const trackingId = "43479f6e-7c5f-4af0-809d-49025889e9a0";
 
 export class CdkImageRecommenderStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -82,7 +82,7 @@ export class CdkImageRecommenderStack extends cdk.Stack {
 
     // API Gateway
     const role = new iam.Role(this, "api-role-image-recommender", {
-      roleName: "api-role-image-recommender",
+      roleName: `api-role-image-recommender-${cdk.Stack.of(this).region}`,
       assumedBy: new iam.ServicePrincipal("apigateway.amazonaws.com")
     });
     role.addToPolicy(new iam.PolicyStatement({
@@ -238,8 +238,8 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     const interactionTableName = 'db-personalize-interactions';
     const interactionDataTable = new dynamodb.Table(this, 'dynamodb-personalize-interactions', {
       tableName: interactionTableName,
-      partitionKey: { name: 'USER_ID', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: 'TIMESTAMP', type: dynamodb.AttributeType.NUMBER }, // no need
+      partitionKey: { name: 'ITEM_ID', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: 'TIMESTAMP', type: dynamodb.AttributeType.NUMBER }, 
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
@@ -859,6 +859,16 @@ export class CdkImageRecommenderStack extends cdk.Stack {
     userDataTable.grantReadWriteData(lambdaGenerateCSV); // permission for dynamo    
     
     // UTIL: generate dataset for user and interaction
+    // SQS - GenDataset    
+    const queuePutInteractionDataset = new sqs.Queue(this, 'queuePutInteractionDataset', {
+      visibilityTimeout: cdk.Duration.seconds(310),
+      queueName: 'queue-put-interaction-dataset.fifo',
+      fifo: true,
+      contentBasedDeduplication: false,
+      deliveryDelay: cdk.Duration.millis(0),
+      retentionPeriod: cdk.Duration.days(2),
+    });
+
     const lambdaGenerateDataset = new lambda.Function(this, "lambda-generate-dataset", {
       runtime: lambda.Runtime.NODEJS_16_X,
       functionName: "lambda-generate-dataset",
@@ -872,18 +882,40 @@ export class CdkImageRecommenderStack extends cdk.Stack {
         userTableName: userTableName,
         tableName: tableName,
         indexName: indexName,
-        interactionTableName: interactionTableName,
-        trackingId: trackingId
+        queueUrl: queuePutInteractionDataset.queueUrl
       }
     });    
     interactionDataTable.grantReadWriteData(lambdaGenerateDataset);
     userDataTable.grantReadWriteData(lambdaGenerateDataset); 
     dataTable.grantReadWriteData(lambdaGenerateDataset); // permission for dynamo 
+    queuePutInteractionDataset.grantSendMessages(lambdaGenerateDataset); // permision for SQS putItem    
     lambdaGenerateDataset.role?.attachInlinePolicy(
       new iam.Policy(this, 'personalize-policy-for-lambda-generate-dataset', {
         statements: [PersonalizePolicy],
       }),
     );
+
+    const lambdaPutInteractionDataset = new lambda.Function(this, "lambda-put-interaction-dataset", {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      functionName: "lambda-put-interaction-dataset",
+      code: lambda.Code.fromAsset("../utils/lambda-putInteractionDataset"),
+      handler: "index.handler",
+      timeout: cdk.Duration.seconds(180),
+      logRetention: logs.RetentionDays.ONE_DAY,
+      environment: {
+        interactionTableName: interactionTableName,
+        queueUrl: queuePutInteractionDataset.queueUrl,
+        trackingId: trackingId
+      }
+    });    
+    interactionDataTable.grantReadWriteData(lambdaPutInteractionDataset); // permission for dynamo 
+    queuePutInteractionDataset.grantSendMessages(lambdaPutInteractionDataset); // permision for SQS putItem
+    lambdaPutInteractionDataset.role?.attachInlinePolicy(
+      new iam.Policy(this, 'personalize-policy-for-lambda-put-interaction-dataset', {
+        statements: [PersonalizePolicy],
+      }),
+    );
+    lambdaPutInteractionDataset.addEventSource(new SqsEventSource(queuePutInteractionDataset)); // add event source 
 
     // POST method
     const generateDataset = api.root.addResource('generateDataset');

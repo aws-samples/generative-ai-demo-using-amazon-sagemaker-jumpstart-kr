@@ -1,4 +1,5 @@
 const aws = require('aws-sdk');
+const sqs = new aws.SQS({apiVersion: '2012-11-05'});
 const { v4: uuidv4 } = require('uuid');
 
 const personalizeevents = new aws.PersonalizeEvents();
@@ -9,8 +10,7 @@ const dynamo = new aws.DynamoDB.DocumentClient();
 
 const tableName = process.env.tableName;
 const indexName = process.env.indexName;
-const trackingId = process.env.trackingId;
-const interactionTableName = process.env.interactionTableName;
+const queueUrl = process.env.queueUrl;
 
 exports.handler = async (event, context) => {
     //console.log('## ENVIRONMENT VARIABLES: ' + JSON.stringify(process.env));
@@ -22,7 +22,6 @@ exports.handler = async (event, context) => {
     //console.log('header: ' + JSON.stringify(header));
 
     let response = "";
-    let isCompleted = false;
 
     for(let i in body) {
         let userId = body[i]['userId'];
@@ -79,14 +78,28 @@ exports.handler = async (event, context) => {
             }
         });
 
-        let queryParams = {
-            TableName: tableName,
-            IndexName: indexName,    
-            KeyConditionExpression: "Emotion = :emotion",
-            ExpressionAttributeValues: {
-                ":emotion": emotion
-            }
-        };
+        let queryParams;
+        if(emotion == "any") { // for any
+            queryParams = {
+                TableName: tableName,
+                IndexName: indexName,    
+                KeyConditionExpression: "Emotion = :emotion",
+                ExpressionAttributeValues: {
+                    ":emotion": "surprised"
+                }
+            };
+        }
+        else {
+            queryParams = {
+                TableName: tableName,
+                IndexName: indexName,    
+                KeyConditionExpression: "Emotion = :emotion",
+                ExpressionAttributeValues: {
+                    ":emotion": emotion
+                }
+            };
+        }
+        console.log('queryParams: '+JSON.stringify(queryParams));
 
         let dynamoQuery; 
         try {
@@ -99,70 +112,28 @@ exports.handler = async (event, context) => {
             return;
         }  
 
-        let date = new Date();
-        const current = Math.floor(date.getTime()/1000.0);
-        console.log('current: ', current);
-
         for(let i in dynamoQuery['Items']) {    
             let itemId = dynamoQuery['Items'][i]['ObjKey'];
-            let timestamp = current + parseInt(i);
-            let impression = [];
-            impression.push(itemId);
 
-            // put event dataset
-            try {
-                var params = {            
-                    sessionId: itemId,
-                    trackingId: trackingId,
-                    userId: userId,
-                    eventList: [{
-                        eventType: "click",  // 'rating'
-                        sentAt: timestamp,
-                        eventId: uuidv4(),
+            // push the event to SQS
+            try {                
+                let uuid = uuidv4();
+                let params = {
+                    MessageDeduplicationId: uuid,
+                    MessageAttributes: {},
+                    MessageBody: JSON.stringify({
                         itemId: itemId,
-                        impression: impression,
-                    }],
-                };
-                // console.log('event params: ', JSON.stringify(params));
+                        userId: userId,
+                        eventType: "click",
+                        eventId: uuid,
+                    }), 
+                    QueueUrl: queueUrl,
+                    MessageGroupId: "generateDataset"  // use single lambda for stable diffusion 
+                };         
+                console.log('params: '+JSON.stringify(params));
 
-                const result = await personalizeevents.putEvents(params).promise();
-                // console.log('putEvent result: ' + JSON.stringify(result));
-
-                let impressionStr = "";
-                if(impression.length==1) {
-                    impressionStr = impression[0];
-                }
-                else {
-                    let i=0;
-                    for(; i<impression.length-1; i++) {                
-                        impressionStr += impression[i];    
-                        impressionStr += '|'
-                    }
-                    impressionStr += impression[i]
-                }
-                // console.log('impressionStr: ' + impressionStr); 
-                
-                // DynamodB for personalize interactions
-                var personalzeParams = {
-                    TableName: interactionTableName,
-                    Item: {
-                        USER_ID: userId,
-                        ITEM_ID: itemId,
-                        TIMESTAMP: timestamp,
-                        EVENT_TYPE: "click",
-                        IMPRESSION: impressionStr,
-                    }
-                };
-                // console.log('personalzeParams: ' + JSON.stringify(personalzeParams));
-
-                dynamo.put(personalzeParams, function (err, data) {
-                    if (err) {
-                        console.log('Failure: ' + err);
-                    }
-                    else {
-                        // console.log('dynamodb put result: ' + JSON.stringify(data));
-                    }
-                });        
+                let result = await sqs.sendMessage(params).promise();  
+                console.log("result="+JSON.stringify(result));
 
                 response = {
                     statusCode: 200,
@@ -178,26 +149,7 @@ exports.handler = async (event, context) => {
             }
         } 
     }
-    isCompleted = true;
-
-    function wait() {
-        return new Promise((resolve, reject) => {
-            if (!isCompleted) {
-                setTimeout(() => resolve("wait..."), 1000);
-            }
-            else {
-                setTimeout(() => resolve("done..."), 0);
-            }
-        });
-    }
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
-    console.log(await wait());
 
     console.debug('response: ' + JSON.stringify(response));
     return response;
 };
-
-
