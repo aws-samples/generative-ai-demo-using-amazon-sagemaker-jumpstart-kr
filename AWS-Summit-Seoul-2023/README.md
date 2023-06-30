@@ -17,7 +17,17 @@ AWS Summit Seoul 2023에서 "My Emotion Gardens"가 메인 데모로 전시되�
 
 
 ## 전체 아키텍처
-![2023 AWS Summit Seoul_MyEmotionGardens(1)](https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/assets/100750420/3f75065a-76dc-4118-a788-1908881276f8)
+![2023 AWS Summit Seoul_MyEmotionGardens_Architecture](./images/MyEmotionGardens_Architecture.png)
+
+1. [Amazon SageMaker](https://aws.amazon.com/ko/sagemaker/)의 [JumpStart](https://aws.amazon.com/ko/sagemaker/jumpstart/)을 사용하여 Stable Diffusion Foundation Model을 생성하고, SageMaker Endpoint를 배포합니다.
+2. [AWS Lambda](https://aws.amazon.com/ko/lambda/) 함수는 SageMaker Endpoint를 이용하여 이미지를 생성하고, [Amazon S3](https://aws.amazon.com/ko/s3/)에 저장합니다.
+3. S3에 저장된 이미지 정보는 [Amazon DynamoDB](https://aws.amazon.com/ko/dynamodb/)에 저장되고, 향후 추천을 위해 [Amazon Personalize](https://aws.amazon.com/ko/personalize/) 에도 아이템으로 넣어줍니다.
+4. Kiosk 앱은 [Amazon Amplify](https://aws.amazon.com/ko/amplify/)로 제작되었습니다. [Amazon Cognito](https://aws.amazon.com/ko/cognito/)를 통해 인증 처리를 하고, [AWS AppSync](https://aws.amazon.com/ko/appsync/)를 이용해 DynamoDB 데이터를 읽고 쓸 수 있습니다.
+5. [Amazon API Gateway](https://aws.amazon.com/ko/api-gateway/)를 통해 백엔드의 Lambda 함수를 호출합니다. [Amazon CloudFront](https://aws.amazon.com/ko/cloudfront/)의 배포를 통해 이미지를 비롯한 정적 컨텐츠, API들이 서비스 됩니다. 
+6. Kiosk에서 사진을 찍으면 [Amazon Rekognition](https://aws.amazon.com/ko/rekognition/) 서비스에서 얼굴 이미지를 분석하여 감정(Emotion) 정보를 얻습니다.
+7. [Amazon Personalize](https://aws.amazon.com/ko/personalize/)에서 이 감정과 사용자 선택 정보에 맞는 이미지를 추천합니다. 사용자는 추천된 이미지 중에 마음에 드는 이미지를 선택할 수 있고, 이 선택은 Personalize에 더 나은 추천을 위한 이벤트 정보로 입력되고, DynamoDB에도 저장됩니다. 
+8. 이미지들이 Kiosk에 디스플레이되고, 동시에 [AWS IoT Core](https://aws.amazon.com/ko/iot-core/)를 통해 Thing(라즈베리파이)에 명령을 전달하고, 조명과 가습기, 서큘레이터들이 사용자의 선택과 추천된 이미지에 어울리게 동작합니다.
+9. [Amazon QuickSight](https://aws.amazon.com/ko/quicksight/) 대시보드는 Demo zone에서의 데이터를 집계하여 보여줍니다. NoSQL DB인 DynamoDB의 데이터 연결을 위해서 [Amazon Athena](https://aws.amazon.com/ko/athena/)가 같이 사용됩니다. 
 
 
 ## 이미지 생성 및 추천
