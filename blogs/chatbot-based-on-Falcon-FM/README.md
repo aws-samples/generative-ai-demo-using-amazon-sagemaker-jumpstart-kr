@@ -152,7 +152,7 @@ llm = SagemakerEndpoint(
 )
 ```
 
-문서의 크기가 크므로 [RecursiveCharacterTextSplitter](https://js.langchain.com/docs/modules/indexes/text_splitters/examples/recursive_character)를 이용해 chunk 단위로 분리하고 Document에 저장합니다. 이후 load_summarize_chain를 이용해 요약합니다.
+문서의 크기가 크므로 [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/recursive_text_splitter)를 이용해 chunk 단위로 분리하고 Document에 저장합니다. 이후 load_summarize_chain를 이용해 요약합니다.
 
 ```python
 from langchain.text_splitter import RecursiveCharacterTextSplitter
