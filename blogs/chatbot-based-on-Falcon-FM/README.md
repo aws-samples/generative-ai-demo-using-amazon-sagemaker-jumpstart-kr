@@ -26,7 +26,7 @@
 ```
 
 사용자가 입력한 메시지는 CloudFront - API Gateway를 통해 Lambda로 전달됩니다. Lambda는 이벤트(event)에서 메시지(text)를 분리한 후에 payload를 생성합니다. 상세한 내용은 [lambda_function.py
-](./lambda-chat/lambda_function.py)을 참조합니다. 여기서 payload의 parameters는 [Falcon Parameters](https://github.com/kyopark2014/chatbot-based-on-Falcon-FM/blob/main/falcon-parameters.md)을 참조합니다.
+](./lambda-chat/lambda_function.py)을 참조합니다. 여기서 payload의 parameters는 [Falcon Parameters](./falcon-parameters.md)을 참조합니다.
 
 ```python
 text = event['text']
