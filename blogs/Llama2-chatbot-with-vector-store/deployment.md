@@ -32,19 +32,19 @@
 아래와 같이 스크립트를 다운로드 합니다. 
 
 ```text
-curl https://raw.githubusercontent.com/kyopark2014/technical-summary/main/resize.sh -o resize.sh
+curl https://raw.githubusercontent.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/main/blogs/Llama2-chatbot-with-vector-store/resize.sh -o resize.sh
 ```
 
-이후 아래 명령어로 용량을 100G로 변경합니다.
+이후 아래 명령어로 용량을 80G로 변경합니다.
 ```text
-chmod a+rx resize.sh && ./resize.sh 100
+chmod a+rx resize.sh && ./resize.sh 80
 ```
 
 
 4) 소스를 다운로드합니다.
 
 ```java
-git clone https://github.com/kyopark2014/Llama2-chatbot-with-vector-store
+curl https://raw.githubusercontent.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/main/blogs/Llama2-chatbot-with-vector-store/Llama2-chatbot-with-vector-store.zip -o Llama2-chatbot-with-vector-store.zip && unzip Llama2-chatbot-with-vector-store.zip
 ```
 
 5) cdk 폴더로 이동하여 필요한 라이브러리를 설치합니다.
@@ -72,7 +72,7 @@ aws sts get-caller-identity --query Account --output text
 아래와 같이 bootstrap을 수행합니다. 여기서 "account-id"는 상기 명령어로 확인한 12자리의 Account ID입니다. bootstrap 1회만 수행하면 되므로, 기존에 cdk를 사용하고 있었다면 bootstrap은 건너뛰어도 됩니다.
 
 ```java
-cdk bootstrap aws://account-id/ap-northeast-2
+cdk bootstrap aws://[account-id]/us-east-1
 ```
 
 8) 인프라를 설치합니다.
