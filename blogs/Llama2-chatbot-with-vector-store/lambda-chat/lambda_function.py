@@ -67,7 +67,7 @@ client = boto3.client("sagemaker-runtime")
 parameters = {
     "max_new_tokens": 1024, 
     "top_p": 0.9, 
-    "temperature": 0
+    "temperature": 0.1
 } 
 
 llm = SagemakerEndpoint(
