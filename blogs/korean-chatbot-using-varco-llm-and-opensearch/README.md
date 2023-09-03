@@ -223,7 +223,9 @@ RAG를 수행하는 get_answer_using_template()은 아래와 같습니다. [Retr
 from langchain.chains import RetrievalQA
 
 def get_answer_using_template(query, vectorstore):  
-    prompt_template = """Human: Use the following pieces of context to provide a concise answer to the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    prompt_template = """다음은 User와 Assistant의 친근한 대화입니다. 
+Assistant은 말이 많고 상황에 맞는 구체적인 세부 정보를 많이 제공합니다. 
+Assistant는 모르는 질문을 받으면 솔직히 모른다고 말합니다.
 
     {context}
 
