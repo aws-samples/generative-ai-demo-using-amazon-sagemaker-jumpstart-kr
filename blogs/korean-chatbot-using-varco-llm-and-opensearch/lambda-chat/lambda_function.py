@@ -20,6 +20,7 @@ from langchain.vectorstores import OpenSearchVectorSearch
 from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
+from langchain.memory import ConversationBufferMemory 
 
 s3 = boto3.client('s3')
 s3_bucket = os.environ.get('s3_bucket') # bucket name
@@ -35,6 +36,7 @@ embedding_region = os.environ.get('embedding_region')
 endpoint_embedding = os.environ.get('endpoint_embedding')
 enableOpenSearch = os.environ.get('enableOpenSearch')
 enableReference = os.environ.get('enableReference')
+enableRAG = os.environ.get('enableRAG', 'true')
 
 class ContentHandler(LLMContentHandler):
     content_type = "application/json"
@@ -69,7 +71,12 @@ llm = SagemakerEndpoint(
     content_handler = content_handler
 )
 
-# embedding
+# memory for retrival docs
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True, input_key="question", output_key='answer', human_prefix='User', ai_prefix='Assistant')
+# memory for conversation
+chat_memory = ConversationBufferMemory(human_prefix='User', ai_prefix='Assistant')
+
+# embedding 
 from typing import Dict, List
 class ContentHandler2(EmbeddingsContentHandler):
     content_type = "application/json"
@@ -142,11 +149,12 @@ def summerize_text(text):
             page_content=text
         )
     ]
-    prompt_template = """Write a concise summary of the following:
-
-    {text}
+    prompt_template = """다음 텍스트를 간결하게 요약하십시오.
+텍스트의 요점을 다루는 글머리 기호로 응답을 반환합니다.
+    
+    TEXT: {text}
                 
-    CONCISE SUMMARY """
+    SUMMARY:"""
 
     PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
     chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
@@ -175,7 +183,9 @@ def get_answer_using_template(query, vectorstore):
     
     #print('length of relevant_documents: ', len(relevant_documents))
     
-    prompt_template = """Human: Use the following pieces of context to provide a concise answer to the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    prompt_template = """다음은 User와 Assistant의 친근한 대화입니다. 
+Assistant은 말이 많고 상황에 맞는 구체적인 세부 정보를 많이 제공합니다. 
+Assistant는 모르는 질문을 받으면 솔직히 모른다고 말합니다.
 
     {context}
 
@@ -227,7 +237,8 @@ def lambda_handler(event, context):
     body = event['body']
     print('body: ', body)
 
-    global llm, vectorstore, embeddings, enableOpenSearch, enableReference
+    global llm, vectorstore, embeddings
+    global enableReference, enableRAG, enableConversationMode
 
     vectorstore = OpenSearchVectorSearch(
         # index_name = "rag-index-*", // all
@@ -245,35 +256,44 @@ def lambda_handler(event, context):
     
     if type == 'text':
         text = body
+        
+        querySize = len(text)
+        print('query size: ', querySize)
+
+        textCount = len(text.split())
+        print(f"query size: {querySize}, workds: {textCount}")
 
          # debugging
-        if text == 'enableOpenSearch':
-            enableOpenSearch = 'true'
-            msg  = "OpenSearch is enabled"
-        elif text == 'disableOpenSearch':
-            enableOpenSearch = 'false'
-            msg  = "OpenSearch is disabled"
-        elif text == 'enableReference':
+        if text == 'enableReference':
             enableReference = 'true'
             msg  = "Referece is enabled"
         elif text == 'disableReference':
             enableReference = 'false'
             msg  = "Reference is disabled"
+        elif text == 'enableConversationMode':
+            enableConversationMode = 'true'
+            msg  = "conversationMode is enabled"
+        elif text == 'disableConversationMode':
+            enableConversationMode = 'false'
+            msg  = "conversationMode is disabled"
+        elif text == 'enableRAG':
+            enableRAG = 'true'
+            msg  = "RAG is enabled"
+        elif text == 'disableRAG':
+            enableRAG = 'false'
+            msg  = "RAG is disabled"
         else:
-            querySize = len(text)
-            print('query size: ', querySize)
 
-            textCount = len(text.split())
-            print(f"query size: {querySize}, workds: {textCount}")
-
-            if querySize<1800 and enableOpenSearch=='true': 
+            if querySize<1800 and enableRAG=='true': 
                 answer = get_answer_using_template(text, vectorstore)
             else:
-                answer = llm(text)        
+                answer = llm(text)   
             print('answer: ', answer)
 
             pos = answer.rfind('### Assistant:\n')+15
             msg = answer[pos:]    
+        #print('msg: ', msg)
+        chat_memory.save_context({"input": text}, {"output": msg})
             
     elif type == 'document':
         object = body
@@ -327,11 +347,12 @@ def lambda_handler(event, context):
         ]
         
         # summerization to show the document
-        prompt_template = """Write a concise summary of the following:
-
-        {text}
+        prompt_template = """다음 텍스트를 간결하게 요약하십시오.
+텍스트의 요점을 다루는 글머리 기호로 응답을 반환합니다.
+    
+        TEXT: {text}
                 
-        CONCISE SUMMARY """
+        SUMMARY:"""
 
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
         chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
