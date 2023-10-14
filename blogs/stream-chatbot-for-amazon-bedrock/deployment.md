@@ -15,7 +15,7 @@
 아래와 같이 스크립트를 다운로드 합니다. 
 
 ```text
-curl https://raw.githubusercontent.com/kyopark2014/technical-summary/main/resize.sh -o resize.sh
+curl https://raw.githubusercontent.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/main/blogs/stream-chatbot-for-amazon-bedrock/resize.sh -o resize.sh
 ```
 
 이후 아래 명령어로 용량을 80G로 변경합니다.
@@ -26,7 +26,7 @@ chmod a+rx resize.sh && ./resize.sh 80
 4) 소스를 다운로드합니다.
 
 ```java
-curl https://github.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/tree/main/blogs/stream-chatbot-for-amazon-bedrock/stream-chatbot-for-amazon-bedrock.zip -o stream-chatbot-for-amazon-bedrock.zip && unzip stream-chatbot-for-amazon-bedrock.zip
+curl https://raw.githubusercontent.com/aws-samples/generative-ai-demo-using-amazon-sagemaker-jumpstart-kr/main/blogs/stream-chatbot-for-amazon-bedrock/stream-chatbot-for-amazon-bedrock.zip -o stream-chatbot-for-amazon-bedrock.zip && unzip stream-chatbot-for-amazon-bedrock.zip
 ```
 
 5) cdk 폴더로 이동하여 필요한 라이브러리를 설치합니다.
