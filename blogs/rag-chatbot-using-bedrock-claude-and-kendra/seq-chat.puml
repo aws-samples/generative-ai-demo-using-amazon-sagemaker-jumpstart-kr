@@ -1,0 +1,92 @@
+@startuml Sequence Diagram - Sprites
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!includeurl AWSPuml/AWSCommon.puml
+!includeurl AWSPuml/Compute/all.puml
+!includeurl AWSPuml/Mobile/APIGateway.puml
+!includeurl AWSPuml/General/InternetGateway.puml
+!includeurl AWSPuml/Database/Database.puml
+!includeurl AWSPuml/Database/DynamoDB.puml
+!includeurl AWSPuml/Database/ElastiCache.puml
+!includeurl AWSPuml/Storage/SimpleStorageServiceS3.puml
+!includeurl AWSPuml/NetworkingAndContentDelivery/CloudFront.puml
+!includeurl AWSPuml/ApplicationIntegration/SNS.puml
+!includeurl AWSPuml/MachineLearning/Rekognition.puml
+!includeurl AWSPuml/MachineLearning/Polly.puml
+!includeurl AWSPuml/ApplicationIntegration/SQS.puml
+!includeurl AWSPuml/MachineLearning/SageMaker.puml
+!includeurl AWSPuml/MachineLearning/Kendra.puml
+
+'Comment out to use default PlantUML sequence formatting
+skinparam participant {
+    BackgroundColor AWS_BG_COLOR
+    BorderColor AWS_BORDER_COLOR
+}
+'Hide the bottom boxes
+hide footbox
+
+actor User as user
+participant "<color:#magenta><$CloudFront></color>\nAmazon CloudFront" as cdn
+participant "<color:#green><$SimpleStorageServiceS3></color>\nAmazon S3" as s3
+participant "<color:#red><$APIGateway>\nAmazon API Gateway\n(REST)" as api1
+participant "<color:#red><$APIGateway>\nAmazon API Gateway\n(WeSocket)" as api2
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(history)" as lambdaHistory
+participant "<color:#D86613><$Lambda></color>\nAmazon Lambda\n(chat-ws)" as lambdaChat
+participant "<color:#blue><$DynamoDB></color>\nDynamoDB" as dynamodb
+participant "<color:#green><$Kendra></color>\nKendra" as kendra
+participant "<color:#green><$SageMaker></color>\nBedrock" as llm
+
+user -> cdn : Load Webpage
+
+cdn -> s3 ++:
+
+s3 -> cdn --:
+
+cdn -> user: html, css, js
+
+
+user -> cdn: /history
+
+cdn -> api1 --: /history
+
+api1 -> lambdaHistory ++: /history
+
+lambdaHistory -> dynamodb ++: load history
+
+dynamodb -> lambdaHistory --: chat history
+
+lambdaHistory -> api1 --: 200OK (chat history)
+
+api1 -> cdn: 200OK (chat history)
+
+cdn -> user: 200OK (chat history)
+
+user -> api2: msg (question)
+
+api2 -> lambdaChat ++: msg (question)
+
+lambdaChat -> dynamodb ++: load chat history \n(First run only)
+
+dynamodb -> lambdaChat --: chat history
+
+lambdaChat -> llm ++: make revised question \n using question + chat history
+
+llm -> lambdaChat --: revised question
+
+lambdaChat -> kendra ++: search using revised question
+
+kendra -> lambdaChat --: relevant docs
+
+lambdaChat -> llm ++: revised question + relevant docs
+
+llm -> lambdaChat --: 200OK (answer)
+
+lambdaChat -> dynamodb ++: save new dialog
+
+dynamodb -> lambdaChat --: 
+
+lambdaChat -> api2 --: msg (answer)
+
+api2 -> user: msg (answer)
+
+@enduml
