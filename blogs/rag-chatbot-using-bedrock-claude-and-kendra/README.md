@@ -171,7 +171,7 @@ def store_document_for_kendra(path, s3_file_name, requestId):
 
 ### FAQ 활용하기
 
-[FAQ-Kendra](https://github.com/aws-samples/enterprise-search-with-amazon-kendra-workshop/blob/master/Part%202%20-%20Adding%20a%20FAQ.md)와 같이 Kendra Console에서 FAQ를 등록할 수 있습니다. 이때 [index당 등록할 수 있는 FAQ의 수](https://us-west-2.console.aws.amazon.com/servicequotas/home/services/kendra/quotas/L-522F5A9C)는 기본이 30개이고 Quota는 조정이 가능합니다. 아래 그림은 FAQ의 한 예입니다. 만약 "How many free clinics are in Spokane WA?"와 같은 질문을 하면 답변으로 "13"을 얻을 수 있습니다.
+[FAQ-Kendra](https://github.com/aws-samples/enterprise-search-with-amazon-kendra-workshop/blob/master/Part%202%20-%20Adding%20a%20FAQ.md)와 같이 Kendra Console에서 FAQ를 등록할 수 있습니다. 이때 [index당 등록할 수 있는 FAQ 문서의 수](https://us-west-2.console.aws.amazon.com/servicequotas/home/services/kendra/quotas/L-522F5A9C)는 기본이 30개이고 Quota는 조정이 가능합니다. 아래 그림은 FAQ의 한 예입니다. 만약 "How many free clinics are in Spokane WA?"와 같은 질문을 하면 답변으로 "13"을 얻을 수 있습니다.
 
 ![noname](./images/faq_demo.png)
 
@@ -326,7 +326,7 @@ if len(resp["ResultItems"]) >= 1:
         break
 ```
 
-Retrieve API의 경우에 "ScoreAttributes"를 2023년 12월(현재)에는 영어만 제공하고 있으므로 한국어에 대해서 검색범위를 제한할 수 없습니다. 따라서, 아래와 같이 [In-memory 방식의 Faiss VectoreStore](https://python.langchain.com/docs/integrations/vectorstores/faiss)를 이용하여 관련이 없는 문서는 제외하였습니다. 이것은 Embedding과 Vector Store에 대한 검색을 필요로 하므로, 추후 Kendra에서 한국어에 대해 "ScoreAttributes"를 지원하게 되면 제외할 수 있습니다.
+Retrieve API의 경우에 "ScoreAttributes"를 2023년 12월(현재)에는 영어만 제공하고 있으므로 한국어에 대해서 검색범위를 제한할 수 없습니다. 따라서, 아래와 같이 [In-memory 방식 Faiss VectoreStore](https://python.langchain.com/docs/integrations/vectorstores/faiss)의 similarity search를 이용하여 관련이 없는 문서는 제외하였습니다. 이것은 Embedding과 Vector Store에 대한 검색을 필요로 하므로, 추후 Kendra에서 한국어에 대해 "ScoreAttributes"를 지원하게 되면 제외할 수 있습니다.
 
 ```python
 def check_confidence(query, relevant_docs):
@@ -532,7 +532,7 @@ RAG에 문서 추가시 동작을 확인하기 위하여, [보일러 에러코�
 
 ![image](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/a204e83f-94be-44a8-89f8-9fa7d5c269bf)
 
-대용량 언어 모델(LLM)의 특성상 실습의 답변은 상기 화면과 조금 다를 수 있습니다. 만약 결과 메시지 하단에 참고 자료 링크 보여지지 않는다면, Kendra의 indexing에 끝나지 않은것이므로, 수분후에 다시 시도합니다.
+대용량 언어 모델(LLM)의 특성상 실습의 답변은 상기 화면과 조금 다를 수 있습니다. 만약 결과 메시지 하단에 참고 자료 링크 보여지지 않는다면, Kendra의 index 작업이 끝나지 않은것이므로, 수분후에 다시 시도합니다.
 
 ## 리소스 정리하기 
 
