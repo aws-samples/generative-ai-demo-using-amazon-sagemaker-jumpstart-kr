@@ -169,6 +169,15 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
       value: cfnIndex.attrId,
       description: 'The index of kendra',
     });
+    const kendraS3ReadPolicy = new iam.PolicyStatement({
+        resources: ['*'],
+        actions: ["s3:Get*","s3:List*","s3:Describe*"],
+    });
+    roleKendra.attachInlinePolicy( // add kendra policy
+      new iam.Policy(this, `kendra-s3-read-policy-for-${projectName}`, {
+        statements: [kendraS3ReadPolicy],
+      }),
+    );   
 
     const accountId = process.env.CDK_DEFAULT_ACCOUNT;
     const kendraResourceArn = `arn:aws:kendra:${kendra_region}:${accountId}:index/${cfnIndex.attrId}`
