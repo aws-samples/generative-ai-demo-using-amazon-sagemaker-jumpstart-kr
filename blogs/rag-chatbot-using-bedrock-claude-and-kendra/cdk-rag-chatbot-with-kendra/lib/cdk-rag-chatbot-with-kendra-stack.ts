@@ -188,6 +188,15 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
         statements: [kendraPolicy],
       }),
     );
+    const kendraLogPolicy = new iam.PolicyStatement({
+      resources: ['*'],
+      actions: ["logs:*", "cloudwatch:GenerateQuery"],
+    });
+    roleKendra.attachInlinePolicy( // add kendra policy
+      new iam.Policy(this, `kendra-log-policy-for-${projectName}`, {
+        statements: [kendraLogPolicy],
+      }),
+    );
 
     roleLambdaWebsocket.attachInlinePolicy(
       new iam.Policy(this, `lambda-inline-policy-for-kendra-in-${projectName}`, {
