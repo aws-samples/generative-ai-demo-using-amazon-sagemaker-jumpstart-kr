@@ -189,10 +189,10 @@ def store_document_for_faiss(docs, vectorstore_faiss):
     vectorstore_faiss.add_documents(docs)       
     print('uploaded into faiss')
 
-def store_document_for_opensearch(bedrock_embeddings, docs, userId, requestId):
+def store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId):
     print('store document into opensearch')
     new_vectorstore = OpenSearchVectorSearch(
-        index_name="rag-index-"+userId+'-'+requestId,
+        index_name="rag-index-"+userId+'-'+documentId,
         is_aoss = False,
         #engine="faiss",  # default: nmslib
         embedding_function = bedrock_embeddings,
@@ -203,7 +203,7 @@ def store_document_for_opensearch(bedrock_embeddings, docs, userId, requestId):
     print('uploaded into opensearch')
 
 # store document into Kendra
-def store_document_for_kendra(path, s3_file_name, requestId):
+def store_document_for_kendra(path, s3_file_name, documentId):
     print('store document into kendra')
     encoded_name = parse.quote(s3_file_name)
     source_uri = path + encoded_name    
@@ -235,7 +235,7 @@ def store_document_for_kendra(path, s3_file_name, requestId):
 
     documents = [
         {
-            "Id": requestId,
+            "Id": documentId,
             "Title": s3_file_name,
             "S3Path": {
                 "Bucket": s3_bucket,
@@ -1390,12 +1390,13 @@ def getResponse(connectionId, jsonBody):
                 msg = "uploaded file: "+object
                                 
             if conv_type == 'qa':
+                documentId = "upload" + "-" + object
                 start_time = time.time()
                 if useParallelUpload == 'false':                    
                     print('rag_type: ', rag_type)                
                     if rag_type=='kendra':      
                         print('upload to kendra: ', object)           
-                        store_document_for_kendra(path, object, requestId)  # store the object into kendra
+                        store_document_for_kendra(path, object, documentId)  # store the object into kendra
                                         
                     else:
                         if file_type == 'pdf' or file_type == 'txt' or file_type == 'csv':
@@ -1411,15 +1412,15 @@ def getResponse(connectionId, jsonBody):
                                     store_document_for_faiss(doc, vectorstore_faiss)
                                                                 
                             elif rag_type == 'opensearch' or rag_type == 'all':    
-                                store_document_for_opensearch(bedrock_embeddings, docs, userId, requestId)
+                                store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId)
                     
                 else:                    
-                    p1 = Process(target=store_document_for_kendra, args=(path, object, requestId,))
+                    p1 = Process(target=store_document_for_kendra, args=(path, object, documentId,))
                     p1.start(); p1.join()
                     
                     if file_type == 'pdf' or file_type == 'txt' or file_type == 'csv':
                         # opensearch
-                        p2 = Process(target=store_document_for_opensearch, args=(bedrock_embeddings, docs, userId, requestId,))
+                        p2 = Process(target=store_document_for_opensearch, args=(bedrock_embeddings, docs, userId, documentId,))
                         p2.start(); p2.join()
 
                         # faiss
