@@ -196,7 +196,7 @@ def get_prompt_template(query, convType):
     return PromptTemplate.from_template(prompt_template)
 
 # store document into Kendra
-def store_document_for_kendra(path, s3_file_name, requestId):
+def store_document_for_kendra(path, s3_file_name, documentId):
     print('store document into kendra')
     encoded_name = parse.quote(s3_file_name)
     source_uri = path + encoded_name    
@@ -228,7 +228,7 @@ def store_document_for_kendra(path, s3_file_name, requestId):
 
     documents = [
         {
-            "Id": requestId,
+            "Id": documentId,
             "Title": s3_file_name,
             "S3Path": {
                 "Bucket": s3_bucket,
@@ -1141,10 +1141,11 @@ def getResponse(connectionId, jsonBody):
                 msg = "uploaded file: "+object
                                 
             if convType == 'qa':
+                documentId = "upload" + "-" + object
                 start_time = time.time()
                 print('rag_type: ', rag_type)                
                 print('upload to kendra: ', object)           
-                store_document_for_kendra(path, object, requestId)  # store the object into kendra
+                store_document_for_kendra(path, object, documentId)  # store the object into kendra
                                                                 
         elapsed_time = int(time.time()) - start
         print("total run time(sec): ", elapsed_time)
