@@ -1038,7 +1038,7 @@ def getResponse(connectionId, jsonBody):
             memory_chain = map_chain[userId]
             print('memory_chain exist. reuse it!')
         else: 
-            memory_chain = ConversationBufferWindowMemory(memory_key="chat_history", output_key='answer', return_messages=True, k=5)
+            memory_chain = ConversationBufferWindowMemory(memory_key="chat_history", output_key='answer', return_messages=True, k=20)
             map_chain[userId] = memory_chain
             print('memory_chain does not exist. create new one!')
 

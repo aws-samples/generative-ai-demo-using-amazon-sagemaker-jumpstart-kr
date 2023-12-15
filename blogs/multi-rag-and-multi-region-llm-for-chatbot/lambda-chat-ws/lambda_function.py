@@ -403,9 +403,15 @@ def load_chat_history(userId, allowTime, conv_type):
 
             if conv_type=='qa':
                 memory_chain.chat_memory.add_user_message(text)
-                memory_chain.chat_memory.add_ai_message(msg)                        
+                if len(msg) > 200:
+                    memory_chain.chat_memory.add_ai_message(msg)        
+                else:
+                    memory_chain.chat_memory.add_ai_message(msg[:200])                      
             else:
-                memory_chat.save_context({"input": text}, {"output": msg})
+                if len(msg) > 200:
+                    memory_chat.save_context({"input": text}, {"output": msg[:200]})
+                else:
+                    memory_chat.save_context({"input": text}, {"output": msg})
                 
 def getAllowTime():
     d = datetime.datetime.now() - datetime.timedelta(days = 2)
@@ -448,7 +454,11 @@ def extract_chat_history_from_memory():
 
     for dialogue_turn in chats['chat_history']:
         role_prefix = _ROLE_MAP.get(dialogue_turn.type, f"{dialogue_turn.type}: ")
-        chat_history.append(f"{role_prefix[2:]}{dialogue_turn.content}")
+        history = f"{role_prefix[2:]}{dialogue_turn.content}"
+        if len(history)>200:
+            chat_history.append(history[:200])
+        else:
+            chat_history.append(history)
 
     return chat_history
 
@@ -1260,7 +1270,7 @@ def getResponse(connectionId, jsonBody):
             memory_chain = map_chain[userId]
             print('memory_chain exist. reuse it!')
         else: 
-            memory_chain = ConversationBufferWindowMemory(memory_key="chat_history", output_key='answer', return_messages=True, k=5)
+            memory_chain = ConversationBufferWindowMemory(memory_key="chat_history", output_key='answer', return_messages=True, k=20)
             map_chain[userId] = memory_chain
             print('memory_chain does not exist. create new one!')
     else:    # normal 
