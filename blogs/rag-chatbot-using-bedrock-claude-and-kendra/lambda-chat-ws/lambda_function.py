@@ -1011,6 +1011,33 @@ def get_answer_from_PROMPT(text, convType, connectionId, requestId):
     
     return msg
 
+def create_metadata(bucket, key, meta_prefix, s3_prefix, uri, category, documentId):    
+    title = key
+    timestamp = int(time.time())
+
+    metadata = {
+        "Attributes": {
+            "_category": category,
+            "_source_uri": uri,
+            "_version": str(timestamp),
+        },
+        "Title": title,
+        "DocumentId": documentId,        
+    }
+    print('metadata: ', metadata)
+
+    client = boto3.client('s3')
+    try: 
+        client.put_object(
+            Body=json.dumps(metadata), 
+            Bucket=bucket, 
+            Key=meta_prefix+'/'+s3_prefix+'/'+key+'.metadata.json' 
+        )
+    except Exception:
+        err_msg = traceback.format_exc()
+        print('error message: ', err_msg)        
+        raise Exception ("Not able to create meta file")
+
 def getResponse(connectionId, jsonBody):
     userId  = jsonBody['user_id']
     # print('userId: ', userId)
@@ -1151,11 +1178,15 @@ def getResponse(connectionId, jsonBody):
                 msg = "uploaded file: "+object
                                 
             if convType == 'qa':
+                category = "upload"
                 documentId = "upload" + "-" + object
                 start_time = time.time()
                 print('rag_type: ', rag_type)                
                 print('upload to kendra: ', object)           
                 store_document_for_kendra(path, object, documentId)  # store the object into kendra
+
+                meta_prefix = "metadata"
+                create_metadata(bucket=s3_bucket, key=object, meta_prefix=meta_prefix, s3_prefix=s3_prefix, uri=path+parse.quote(object), category=category, documentId=documentId)
                                                                 
         elapsed_time = int(time.time()) - start
         print("total run time(sec): ", elapsed_time)
