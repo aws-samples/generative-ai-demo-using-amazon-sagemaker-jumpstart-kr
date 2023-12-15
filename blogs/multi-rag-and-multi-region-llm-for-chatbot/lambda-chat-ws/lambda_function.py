@@ -1443,7 +1443,7 @@ def getResponse(connectionId, jsonBody):
                         )
                         isReady = True
                     else:
-                        store_document_for_faiss(doc, vectorstore_faiss)
+                        store_document_for_faiss(docs, vectorstore_faiss)
 
                     print('upload to opensearch: ', object)
                     store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId)
