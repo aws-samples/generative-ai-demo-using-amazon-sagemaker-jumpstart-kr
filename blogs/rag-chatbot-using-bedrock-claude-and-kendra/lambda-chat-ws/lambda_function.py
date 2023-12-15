@@ -1111,7 +1111,7 @@ def getResponse(connectionId, jsonBody):
                     print(f'rag_type: {rag_type}, rag_method: {rag_method}')                          
                     msg = get_answer_using_RAG(text, rag_type, convType, connectionId, requestId)                     
                 else: # general conversation
-                    msg = get_answer_from_PROMPT(text, convType, connectionId, requestId)
+                    msg = get_answer_from_conversation(text, conversation, convType, connectionId, requestId)
                 
         elif type == 'document':
             object = body
