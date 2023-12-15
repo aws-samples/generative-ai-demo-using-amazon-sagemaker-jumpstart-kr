@@ -30,7 +30,7 @@ const opensearch_passwd = "Wifi1234!";
 const enableReference = 'true';
 let opensearch_url = "";
 const debugMessageMode = 'false'; // if true, debug messages will be delivered to the client.
-const useParallelUpload = 'true';
+const useParallelUpload = 'false';
 const useParallelRAG = 'true';
 const numberOfRelevantDocs = '8';
 
