@@ -48,6 +48,7 @@ kendraIndex = os.environ.get('kendraIndex')
 roleArn = os.environ.get('roleArn')
 numberOfRelevantDocs = os.environ.get('numberOfRelevantDocs', '10')
 top_k = int(numberOfRelevantDocs)
+MSG_LENGTH = 100
 
 # websocket
 connection_url = os.environ.get('connection_url')
@@ -67,10 +68,13 @@ boto3_bedrock = boto3.client(
 
 HUMAN_PROMPT = "\n\nHuman:"
 AI_PROMPT = "\n\nAssistant:"
+
+print('modelId: ', modelId[:9])
+
 def get_parameter(modelId):
-    if modelId == 'anthropic.claude-v1' or modelId == 'anthropic.claude-v2' or modelId == 'anthropic.claude-v2:1':
+    if modelId[:9] == 'anthropic':
         return {
-            "max_tokens_to_sample":8191, # 8k
+            "max_tokens_to_sample":8196,
             "temperature":0.1,
             "top_k":250,
             "top_p":0.9,
@@ -392,13 +396,13 @@ def load_chat_history(userId, allowTime, convType):
 
             if convType=='qa':
                 memory_chain.chat_memory.add_user_message(text)
-                if len(msg) > 200:
+                if len(msg) > MSG_LENGTH:
                     memory_chain.chat_memory.add_ai_message(msg)        
                 else:
-                    memory_chain.chat_memory.add_ai_message(msg[:200])                         
+                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                       
             else:
-                if len(msg) > 200:
-                    memory_chat.save_context({"input": text}, {"output": msg[:200]})
+                if len(msg) > MSG_LENGTH:
+                    memory_chat.save_context({"input": text}, {"output": msg[:MSG_LENGTH]})
                 else:
                     memory_chat.save_context({"input": text}, {"output": msg})
                 
@@ -444,8 +448,8 @@ def extract_chat_history_from_memory():
     for dialogue_turn in chats['chat_history']:
         role_prefix = _ROLE_MAP.get(dialogue_turn.type, f"{dialogue_turn.type}: ")
         history = f"{role_prefix[2:]}{dialogue_turn.content}"
-        if len(history)>200:
-            chat_history.append(history[:200])
+        if len(history)>MSG_LENGTH:
+            chat_history.append(history[:MSG_LENGTH])
         else:
             chat_history.append(history)
 
@@ -463,7 +467,7 @@ def get_revised_question(connectionId, requestId, query):
         {chat_history}
         </history>
 
-        Human: <history>를 참조하여, 다음의 <question>의 뜻을 명확히 하는 새로운 질문을 한국어로 생성하세요. 
+        Human: <history>를 참조하여, 다음의 <question>의 뜻을 명확히 하는 새로운 질문을 한국어로 생성하세요. 새로운 질문은 원래 질문의 중요한 단어를 반드시 포함합니다.
 
         <question>            
         {question}
@@ -477,7 +481,7 @@ def get_revised_question(connectionId, requestId, query):
         </history>
         Answer only with the new question.
 
-        Human: using <history>, rephrase the follow up <question> to be a standalone question. 
+        Human: using <history>, rephrase the follow up <question> to be a standalone question. The standalone question must have main words of the original question.
          
         <quesion>
         {question}
@@ -889,6 +893,7 @@ def create_ConversationalRetrievalChain(PROMPT, retriever):
     return qa
 
 def get_answer_using_RAG(text, rag_type, convType, connectionId, requestId):    
+    reference = ""
     if rag_method == 'RetrievalQA': # RetrievalQA
         revised_question = get_revised_question(connectionId, requestId, text) # generate new prompt using chat history
         print('revised_question: ', revised_question)
@@ -915,7 +920,7 @@ def get_answer_using_RAG(text, rag_type, convType, connectionId, requestId):
         print('source_documents: ', source_documents)
 
         if len(source_documents)>=1 and enableReference=='true':
-            msg = msg+get_reference(source_documents, rag_method, rag_type)    
+            reference = get_reference(source_documents, rag_method, rag_type)    
 
     elif rag_method == 'ConversationalRetrievalChain': # ConversationalRetrievalChain
         PROMPT = get_prompt_template(text, convType)
@@ -930,7 +935,7 @@ def get_answer_using_RAG(text, rag_type, convType, connectionId, requestId):
         print('source_documents: ', result['source_documents']) 
 
         if len(result['source_documents'])>=1 and enableReference=='true':
-            msg = msg+get_reference(result['source_documents'], rag_method, rag_type)
+            reference = get_reference(result['source_documents'], rag_method, rag_type)
     
     elif rag_method == 'RetrievalPrompt': # RetrievalPrompt
         revised_question = get_revised_question(connectionId, requestId, text) # generate new prompt using chat history
@@ -960,7 +965,7 @@ def get_answer_using_RAG(text, rag_type, convType, connectionId, requestId):
             raise Exception ("Not able to request to LLM")    
 
         if len(relevant_docs)>=1 and enableReference=='true':
-            msg = msg+get_reference(relevant_docs, rag_method, rag_type)
+            reference = get_reference(relevant_docs, rag_method, rag_type)
 
 
     if isDebugging==True:   # extract chat history for debug
@@ -970,8 +975,7 @@ def get_answer_using_RAG(text, rag_type, convType, connectionId, requestId):
     memory_chain.chat_memory.add_user_message(text)  # append new diaglog
     memory_chain.chat_memory.add_ai_message(msg)
     
-
-    return msg
+    return msg, reference
 
 def get_answer_from_conversation(text, conversation, convType, connectionId, requestId):
     conversation.prompt = get_prompt_template(text, convType)
@@ -1055,6 +1059,7 @@ def getResponse(connectionId, jsonBody):
     global llm, modelId, enableReference, rag_type, conversation
     global parameters, map_chain, map_chat, memory_chat, memory_chain, debugMessageMode
     
+    reference = ""
     if "rag_type" in jsonBody:
         rag_type = jsonBody['rag_type']  # RAG type
         print('rag_type: ', rag_type)
@@ -1136,7 +1141,7 @@ def getResponse(connectionId, jsonBody):
             else:          
                 if convType == 'qa':   # question & answering
                     print(f'rag_type: {rag_type}, rag_method: {rag_method}')                          
-                    msg = get_answer_using_RAG(text, rag_type, convType, connectionId, requestId)                     
+                    msg, reference = get_answer_using_RAG(text, rag_type, convType, connectionId, requestId)                     
                 else: # general conversation
                     msg = get_answer_from_conversation(text, conversation, convType, connectionId, requestId)
                 
@@ -1177,10 +1182,10 @@ def getResponse(connectionId, jsonBody):
             else:
                 msg = "uploaded file: "+object
                                 
-            if convType == 'qa':
+            if convType == 'qa':                
                 category = "upload"
-                documentId = "upload" + "-" + object
-                start_time = time.time()
+                documentId = category + "-" + object
+                
                 print('rag_type: ', rag_type)                
                 print('upload to kendra: ', object)           
                 store_document_for_kendra(path, object, documentId)  # store the object into kendra
@@ -1189,9 +1194,8 @@ def getResponse(connectionId, jsonBody):
                 create_metadata(bucket=s3_bucket, key=object, meta_prefix=meta_prefix, s3_prefix=s3_prefix, uri=path+parse.quote(object), category=category, documentId=documentId)
                                                                 
         elapsed_time = int(time.time()) - start
-        print("total run time(sec): ", elapsed_time)
-        
-        print('msg: ', msg)
+        print("total run time(sec): ", elapsed_time)        
+        # print('msg+reference: ', msg+reference)
 
         item = {
             'user_id': {'S':userId},
@@ -1199,7 +1203,7 @@ def getResponse(connectionId, jsonBody):
             'request_time': {'S':requestTime},
             'type': {'S':type},
             'body': {'S':body},
-            'msg': {'S':msg}
+            'msg': {'S':msg+reference}
         }
         client = boto3.client('dynamodb')
         try:
@@ -1210,7 +1214,7 @@ def getResponse(connectionId, jsonBody):
             raise Exception ("Not able to write into dynamodb")        
         #print('resp, ', resp)
 
-    return msg
+    return msg, reference
 
 def lambda_handler(event, context):
     # print('event: ', event)
@@ -1239,7 +1243,9 @@ def lambda_handler(event, context):
 
                 requestId  = jsonBody['request_id']
                 try:
-                    msg = getResponse(connectionId, jsonBody)
+                    msg, reference = getResponse(connectionId, jsonBody)
+
+                    print('msg+reference: ', msg+reference)
                 except Exception:
                     err_msg = traceback.format_exc()
                     print('err_msg: ', err_msg)
@@ -1249,7 +1255,7 @@ def lambda_handler(event, context):
                                     
                 result = {
                     'request_id': requestId,
-                    'msg': msg,
+                    'msg': msg+reference,
                     'status': 'completed'
                 }
                 #print('result: ', json.dumps(result))

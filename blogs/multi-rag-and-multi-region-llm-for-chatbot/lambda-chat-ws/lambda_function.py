@@ -53,6 +53,7 @@ top_k = int(numberOfRelevantDocs)
 selected_LLM = 0
 capabilities = json.loads(os.environ.get('capabilities'))
 print('capabilities: ', capabilities)
+MSG_LENGTH = 100
 
 # websocket
 connection_url = os.environ.get('connection_url')
@@ -190,7 +191,7 @@ def store_document_for_faiss(docs, vectorstore_faiss):
     print('uploaded into faiss')
 
 def store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId):
-    print('store document into opensearch')
+    print('store document to opensearch')
     new_vectorstore = OpenSearchVectorSearch(
         index_name="rag-index-"+userId+'-'+documentId,
         is_aoss = False,
@@ -204,7 +205,7 @@ def store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId):
 
 # store document into Kendra
 def store_document_for_kendra(path, s3_file_name, documentId):
-    print('store document into kendra')
+    print('store document to kendra')
     encoded_name = parse.quote(s3_file_name)
     source_uri = path + encoded_name    
     #print('source_uri: ', source_uri)
@@ -403,13 +404,13 @@ def load_chat_history(userId, allowTime, conv_type):
 
             if conv_type=='qa':
                 memory_chain.chat_memory.add_user_message(text)
-                if len(msg) > 200:
+                if len(msg) > MSG_LENGTH:
                     memory_chain.chat_memory.add_ai_message(msg)        
                 else:
-                    memory_chain.chat_memory.add_ai_message(msg[:200])                      
+                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                      
             else:
-                if len(msg) > 200:
-                    memory_chat.save_context({"input": text}, {"output": msg[:200]})
+                if len(msg) > MSG_LENGTH:
+                    memory_chat.save_context({"input": text}, {"output": msg[:MSG_LENGTH]})
                 else:
                     memory_chat.save_context({"input": text}, {"output": msg})
                 
@@ -455,8 +456,8 @@ def extract_chat_history_from_memory():
     for dialogue_turn in chats['chat_history']:
         role_prefix = _ROLE_MAP.get(dialogue_turn.type, f"{dialogue_turn.type}: ")
         history = f"{role_prefix[2:]}{dialogue_turn.content}"
-        if len(history)>200:
-            chat_history.append(history[:200])
+        if len(history)>MSG_LENGTH:
+            chat_history.append(history[:MSG_LENGTH])
         else:
             chat_history.append(history)
 
@@ -474,7 +475,7 @@ def get_revised_question(llm, connectionId, requestId, query):
         {chat_history}
         </history>
 
-        Human: <history>를 참조하여, 다음의 <question>의 뜻을 명확히 하는 새로운 질문을 한국어로 생성하세요.
+        Human: <history>를 참조하여, 다음의 <question>의 뜻을 명확히 하는 새로운 질문을 한국어로 생성하세요. 새로운 질문은 원래 질문의 중요한 단어를 반드시 포함합니다.
 
         <question>            
         {question}
@@ -488,7 +489,7 @@ def get_revised_question(llm, connectionId, requestId, query):
         </history>
         Answer only with the new question.
 
-        Human: using <history>, rephrase the follow up <question> to be a standalone question.
+        Human: using <history>, rephrase the follow up <question> to be a standalone question. The standalone question must have main words of the original question.
          
         <quesion>
         {question}
@@ -1083,6 +1084,7 @@ def retrieve_process_from_RAG(conn, query, top_k, rag_type):
     conn.close()
 
 def get_answer_using_RAG(llm, text, conv_type, connectionId, requestId, bedrock_embeddings):
+    reference = ""
     start_time_for_revise = time.time()
 
     revised_question = get_revised_question(llm, connectionId, requestId, text) # generate new prompt using chat history
@@ -1160,7 +1162,7 @@ def get_answer_using_RAG(llm, text, conv_type, connectionId, requestId, bedrock_
         raise Exception ("Not able to request to LLM")    
 
     if len(selected_relevant_docs)>=1 and enableReference=='true':
-        msg = msg+get_reference(selected_relevant_docs)
+        reference = get_reference(selected_relevant_docs)
             
     if isDebugging==True:   # extract chat history for debug
         chat_history_all = extract_chat_history_from_memory()
@@ -1169,7 +1171,7 @@ def get_answer_using_RAG(llm, text, conv_type, connectionId, requestId, bedrock_
     memory_chain.chat_memory.add_user_message(text)  # append new diaglog
     memory_chain.chat_memory.add_ai_message(msg)
     
-    return msg
+    return msg, reference
 
 def get_answer_from_conversation(text, conversation, conv_type, connectionId, requestId):
     conversation.prompt = get_prompt_template(text, conv_type)
@@ -1251,10 +1253,10 @@ def getResponse(connectionId, jsonBody):
     conv_type = jsonBody['conv_type']  # conversation type
     print('Conversation Type: ', conv_type)
 
-    rag_type = ""
-
     global vectorstore_opensearch, vectorstore_faiss, enableReference
     global map_chain, map_chat, memory_chat, memory_chain, isReady, debugMessageMode, selected_LLM
+
+    reference = ""
 
     # Multi-LLM
     profile = profile_of_LLMs[selected_LLM]
@@ -1381,7 +1383,7 @@ def getResponse(connectionId, jsonBody):
                 msg  = "The chat memory was intialized in this session."
             else:          
                 if conv_type == 'qa':   # question & answering
-                    msg = get_answer_using_RAG(llm, text, conv_type, connectionId, requestId, bedrock_embeddings)     
+                    msg, reference = get_answer_using_RAG(llm, text, conv_type, connectionId, requestId, bedrock_embeddings)     
                 
                 elif conv_type == 'normal':      # normal
                     msg = get_answer_from_conversation(text, conversation, conv_type, connectionId, requestId)
@@ -1427,9 +1429,9 @@ def getResponse(connectionId, jsonBody):
                 msg = "uploaded file: "+object
                                 
             if conv_type == 'qa':
-                category = "upload"
-                documentId = category + "-" + object
                 start_time = time.time()
+                category = "upload"
+                documentId = "upload" + "-" + object
                 if useParallelUpload == 'false':                    
                     print('upload to kendra: ', object)           
                     store_document_for_kendra(path, object, documentId)  # store the object into kendra
@@ -1467,16 +1469,15 @@ def getResponse(connectionId, jsonBody):
                             isReady = True
                         else: 
                             vectorstore_faiss.add_documents(docs)       
-
+                
                 meta_prefix = "metadata"
                 create_metadata(bucket=s3_bucket, key=object, meta_prefix=meta_prefix, s3_prefix=s3_prefix, uri=path+parse.quote(object), category=category, documentId=documentId)
-
+                        
                 print('processing time: ', str(time.time() - start_time))
                         
         elapsed_time = int(time.time()) - start
-        print("total run time(sec): ", elapsed_time)
-        
-        print('msg: ', msg)
+        print("total run time(sec): ", elapsed_time)        
+        #print('msg+reference: ', msg+reference)
 
         item = {
             'user_id': {'S':userId},
@@ -1484,7 +1485,7 @@ def getResponse(connectionId, jsonBody):
             'request_time': {'S':requestTime},
             'type': {'S':type},
             'body': {'S':body},
-            'msg': {'S':msg}
+            'msg': {'S':msg+reference}
         }
         client = boto3.client('dynamodb')
         try:
@@ -1500,7 +1501,7 @@ def getResponse(connectionId, jsonBody):
     else:
         selected_LLM = selected_LLM + 1
 
-    return msg
+    return msg, reference
 
 def lambda_handler(event, context):
     # print('event: ', event)
@@ -1529,7 +1530,9 @@ def lambda_handler(event, context):
 
                 requestId  = jsonBody['request_id']
                 try:
-                    msg = getResponse(connectionId, jsonBody)
+                    msg, reference = getResponse(connectionId, jsonBody)
+
+                    print('msg+reference: ', msg+reference)
                 except Exception:
                     err_msg = traceback.format_exc()
                     print('err_msg: ', err_msg)
@@ -1539,7 +1542,7 @@ def lambda_handler(event, context):
                                     
                 result = {
                     'request_id': requestId,
-                    'msg': msg,
+                    'msg': msg+reference,
                     'status': 'completed'
                 }
                 #print('result: ', json.dumps(result))

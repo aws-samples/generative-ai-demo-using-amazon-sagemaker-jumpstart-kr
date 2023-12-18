@@ -30,7 +30,7 @@ const opensearch_passwd = "Wifi1234!";
 const enableReference = 'true';
 let opensearch_url = "";
 const debugMessageMode = 'false'; // if true, debug messages will be delivered to the client.
-const useParallelUpload = 'false';
+const useParallelUpload = 'true';
 const useParallelRAG = 'true';
 const numberOfRelevantDocs = '8';
 
@@ -39,13 +39,13 @@ const profile_of_LLMs = JSON.stringify([
   {
     "bedrock_region": "us-west-2",
     "model_type": "claude",
-    "model_id": "anthropic.claude-v2:1",
+    "model_id": "anthropic.claude-instant-v1",  // anthropic.claude-v2:1
     "maxOutputTokens": "8196"
   },
   {
     "bedrock_region": "us-east-1",
     "model_type": "claude",
-    "model_id": "anthropic.claude-v2:1",
+    "model_id": "anthropic.claude-instant-v1",
     "maxOutputTokens": "8196"
   },
 ]);
@@ -185,25 +185,7 @@ export class CdkMultiRagChatbotStack extends cdk.Stack {
         edition: 'DEVELOPER_EDITION',  // ENTERPRISE_EDITION, 
         name: `reg-kendra-${projectName}`,
         roleArn: roleKendra.roleArn,
-      }); 
-      const kendraLogPolicy = new iam.PolicyStatement({
-        resources: ['*'],
-        actions: ["logs:*", "cloudwatch:GenerateQuery"],
-      });
-      roleKendra.attachInlinePolicy( // add kendra policy
-        new iam.Policy(this, `kendra-log-policy-for-${projectName}`, {
-          statements: [kendraLogPolicy],
-        }),
-      );
-      const kendraS3ReadPolicy = new iam.PolicyStatement({
-        resources: ['*'],
-        actions: ["s3:Get*","s3:List*","s3:Describe*"],
-      });
-      roleKendra.attachInlinePolicy( // add kendra policy
-        new iam.Policy(this, `kendra-s3-read-policy-for-${projectName}`, {
-          statements: [kendraS3ReadPolicy],
-        }),
-      );
+      });     
       new cdk.CfnOutput(this, `index-of-kendra-for-${projectName}`, {
         value: cfnIndex.attrId,
         description: 'The index of kendra',
@@ -227,6 +209,24 @@ export class CdkMultiRagChatbotStack extends cdk.Stack {
           statements: [kendraPolicy],
         }),
       );      
+      const kendraLogPolicy = new iam.PolicyStatement({
+        resources: ['*'],
+        actions: ["logs:*", "cloudwatch:GenerateQuery"],
+      });
+      roleKendra.attachInlinePolicy( // add kendra policy
+        new iam.Policy(this, `kendra-log-policy-for-${projectName}`, {
+          statements: [kendraLogPolicy],
+        }),
+      );
+      const kendraS3ReadPolicy = new iam.PolicyStatement({
+        resources: ['*'],
+        actions: ["s3:Get*","s3:List*","s3:Describe*"],
+      });
+      roleKendra.attachInlinePolicy( // add kendra policy
+        new iam.Policy(this, `kendra-s3-read-policy-for-${projectName}`, {
+          statements: [kendraS3ReadPolicy],
+        }),
+      );   
       kendraIndex = cfnIndex.attrId;
 
       roleLambdaWebsocket.attachInlinePolicy( 
@@ -246,6 +246,11 @@ export class CdkMultiRagChatbotStack extends cdk.Stack {
           statements: [passRolePolicy],
         }), 
       );  
+
+      new cdk.CfnOutput(this, `create-S3-data-source-for-${projectName}`, {
+        value: 'aws kendra create-data-source --index-id '+kendraIndex+' --name data-source-for-upload-file --type S3 --role-arn '+roleLambdaWebsocket.roleArn+' --configuration \'{\"S3Configuration\":{\"BucketName\":\"'+s3Bucket.bucketName+'\", \"DocumentsMetadataConfiguration\": {\"S3Prefix\":\"metadata/\"},\"InclusionPrefixes\": [\"'+s3_prefix+'/\"]}}\' --language-code ko --region '+kendra_region,
+        description: 'The commend to create data source using S3',
+      });
     }
 
     // opensearch

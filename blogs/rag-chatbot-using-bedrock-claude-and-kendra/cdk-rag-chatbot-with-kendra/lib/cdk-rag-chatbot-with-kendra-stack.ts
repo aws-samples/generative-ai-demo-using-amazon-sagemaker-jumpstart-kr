@@ -17,7 +17,7 @@ const region = process.env.CDK_DEFAULT_REGION;
 const debug = false;
 const stage = 'dev';
 const s3_prefix = 'docs';
-const model_id = "anthropic.claude-v2:1";
+const model_id = "anthropic.claude-instant-v1"; // anthropic.claude-v2:1 or anthropic.claude-instant-v1
 const projectName = `rag-chatbot-with-kendra`;
 
 const bucketName = `storage-for-${projectName}-${region}`;
@@ -169,15 +169,6 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
       value: cfnIndex.attrId,
       description: 'The index of kendra',
     });
-    const kendraS3ReadPolicy = new iam.PolicyStatement({
-        resources: ['*'],
-        actions: ["s3:Get*","s3:List*","s3:Describe*"],
-    });
-    roleKendra.attachInlinePolicy( // add kendra policy
-      new iam.Policy(this, `kendra-s3-read-policy-for-${projectName}`, {
-        statements: [kendraS3ReadPolicy],
-      }),
-    );   
 
     const accountId = process.env.CDK_DEFAULT_ACCOUNT;
     const kendraResourceArn = `arn:aws:kendra:${kendra_region}:${accountId}:index/${cfnIndex.attrId}`
@@ -187,7 +178,6 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
         description: 'The arn of resource',
       });
     }
-
     const kendraPolicy = new iam.PolicyStatement({
       resources: [kendraResourceArn],
       actions: ['kendra:*'],
@@ -206,6 +196,15 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
         statements: [kendraLogPolicy],
       }),
     );
+    const kendraS3ReadPolicy = new iam.PolicyStatement({
+        resources: ['*'],
+        actions: ["s3:Get*","s3:List*","s3:Describe*"],
+      });
+    roleKendra.attachInlinePolicy( // add kendra policy
+      new iam.Policy(this, `kendra-s3-read-policy-for-${projectName}`, {
+        statements: [kendraS3ReadPolicy],
+      }),
+    );   
 
     roleLambdaWebsocket.attachInlinePolicy(
       new iam.Policy(this, `lambda-inline-policy-for-kendra-in-${projectName}`, {
@@ -225,6 +224,12 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
       }),
     );
 
+    kendraIndex = cfnIndex.attrId;
+    new cdk.CfnOutput(this, `create-S3-data-source-for-${projectName}`, {
+      value: 'aws kendra create-data-source --index-id '+kendraIndex+' --name data-source-for-upload-file --type S3 --role-arn '+roleLambdaWebsocket.roleArn+' --configuration \'{\"S3Configuration\":{\"BucketName\":\"'+s3Bucket.bucketName+'\", \"DocumentsMetadataConfiguration\": {\"S3Prefix\":\"metadata/\"},\"InclusionPrefixes\": [\"'+s3_prefix+'/\"]}}\' --language-code ko --region '+kendra_region,
+      description: 'The commend to create data source using S3',
+    });
+
     // api role
     const role = new iam.Role(this, `api-role-for-${projectName}`, {
       roleName: `api-role-for-${projectName}-${region}`,
@@ -240,8 +245,6 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
     role.addManagedPolicy({
       managedPolicyArn: 'arn:aws:iam::aws:policy/AWSLambdaExecute',
     });
-
-    kendraIndex = cfnIndex.attrId;
 
     // API Gateway
     const api = new apiGateway.RestApi(this, `api-chatbot-for-${projectName}`, {
