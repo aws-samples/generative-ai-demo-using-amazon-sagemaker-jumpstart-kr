@@ -397,9 +397,9 @@ def load_chat_history(userId, allowTime, convType):
             if convType=='qa':
                 memory_chain.chat_memory.add_user_message(text)
                 if len(msg) > MSG_LENGTH:
-                    memory_chain.chat_memory.add_ai_message(msg)        
+                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                         
                 else:
-                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                       
+                    memory_chain.chat_memory.add_ai_message(msg)                       
             else:
                 if len(msg) > MSG_LENGTH:
                     memory_chat.save_context({"input": text}, {"output": msg[:MSG_LENGTH]})
@@ -1074,6 +1074,9 @@ def getResponse(connectionId, jsonBody):
             map_chain[userId] = memory_chain
             print('memory_chain does not exist. create new one!')
 
+            allowTime = getAllowTime()
+            load_chat_history(userId, allowTime, convType)
+
     else:    # normal 
         if userId in map_chat:  
             memory_chat = map_chat[userId]
@@ -1082,11 +1085,12 @@ def getResponse(connectionId, jsonBody):
             memory_chat = ConversationBufferWindowMemory(human_prefix='Human', ai_prefix='Assistant', k=20)
             map_chat[userId] = memory_chat
             print('memory_chat does not exist. create new one!')        
+
+            allowTime = getAllowTime()
+            load_chat_history(userId, allowTime, convType)
+        
         conversation = ConversationChain(llm=llm, verbose=False, memory=memory_chat)
         
-    allowTime = getAllowTime()
-    load_chat_history(userId, allowTime, convType)
-
     start = int(time.time())    
 
     msg = ""

@@ -191,16 +191,17 @@ def store_document_for_faiss(docs, vectorstore_faiss):
     print('uploaded into faiss')
 
 def store_document_for_opensearch(bedrock_embeddings, docs, userId, documentId):
-    print('store document to opensearch')
     new_vectorstore = OpenSearchVectorSearch(
-        index_name="rag-index-"+userId+'-'+documentId,
+        index_name="rag-index-"+userId,
         is_aoss = False,
         #engine="faiss",  # default: nmslib
         embedding_function = bedrock_embeddings,
         opensearch_url = opensearch_url,
         http_auth=(opensearch_account, opensearch_passwd),
     )
-    new_vectorstore.add_documents(docs)    
+    response = new_vectorstore.add_documents(docs)    
+    print('response of adding documents: ', response)
+    
     print('uploaded into opensearch')
 
 # store document into Kendra
@@ -275,17 +276,45 @@ def load_document(file_type, s3_file_name):
     doc = s3r.Object(s3_bucket, s3_prefix+'/'+s3_file_name)
     
     if file_type == 'pdf':
-        contents = doc.get()['Body'].read()
-        reader = PyPDF2.PdfReader(BytesIO(contents))
+        Byte_contents = doc.get()['Body'].read()
+        reader = PyPDF2.PdfReader(BytesIO(Byte_contents))
         
-        raw_text = []
+        texts = []
         for page in reader.pages:
-            raw_text.append(page.extract_text())
-        contents = '\n'.join(raw_text)    
+            texts.append(page.extract_text())
+        contents = '\n'.join(texts)
+        
+    elif file_type == 'pptx':
+        Byte_contents = doc.get()['Body'].read()
+            
+        from pptx import Presentation
+        prs = Presentation(BytesIO(Byte_contents))
+
+        texts = []
+        for i, slide in enumerate(prs.slides):
+            text = ""
+            for shape in slide.shapes:
+                if shape.has_text_frame:
+                    text = text + shape.text
+            texts.append(text)
+        contents = '\n'.join(texts)
         
     elif file_type == 'txt':        
         contents = doc.get()['Body'].read().decode('utf-8')
-        
+
+    elif file_type == 'docx':
+        Byte_contents = doc.get()['Body'].read()
+            
+        import docx
+        doc_contents =docx.Document(BytesIO(Byte_contents))
+
+        texts = []
+        for i, para in enumerate(doc_contents.paragraphs):
+            if(para.text):
+                texts.append(para.text)
+                # print(f"{i}: {para.text}")        
+        contents = '\n'.join(texts)
+            
     # print('contents: ', contents)
     new_contents = str(contents).replace("\n"," ") 
     print('length: ', len(new_contents))
@@ -298,11 +327,7 @@ def load_document(file_type, s3_file_name):
     ) 
 
     texts = text_splitter.split_text(new_contents) 
-    if len(new_contents)>0:
-        print('texts[0]: ', texts[0])
-    else:
-        print('No texts')
-            
+                
     return texts
 
 # load csv documents from s3
@@ -405,9 +430,9 @@ def load_chat_history(userId, allowTime, conv_type):
             if conv_type=='qa':
                 memory_chain.chat_memory.add_user_message(text)
                 if len(msg) > MSG_LENGTH:
-                    memory_chain.chat_memory.add_ai_message(msg)        
+                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                           
                 else:
-                    memory_chain.chat_memory.add_ai_message(msg[:MSG_LENGTH])                      
+                    memory_chain.chat_memory.add_ai_message(msg)                   
             else:
                 if len(msg) > MSG_LENGTH:
                     memory_chat.save_context({"input": text}, {"output": msg[:MSG_LENGTH]})
@@ -913,9 +938,9 @@ def get_reference_using_kendra_retriever(docs):
         name = doc['metadata']['title']
 
         if page: 
-            reference = reference + f"{i+1}. {page}page in <a href={uri} target=_blank>{name} </a>, {doc['rag_type']} ({doc['assessed_score']})\n"
+            reference = reference + f"{i+1}. {page}page in <a href={uri} target=_blank>{name}</a>, {doc['rag_type']} ({doc['assessed_score']})\n"
         else:
-            reference = reference + f"{i+1}. <a href={uri} target=_blank>{name} </a>, {doc['rag_type']} ({doc['assessed_score']})\n"
+            reference = reference + f"{i+1}. <a href={uri} target=_blank>{name}</a>, {doc['rag_type']} ({doc['assessed_score']})\n"
     return reference
 
 def get_reference_using_custom_retriever(docs):
@@ -925,7 +950,7 @@ def get_reference_using_custom_retriever(docs):
             if doc['api_type'] == 'retrieve': # Retrieve. socre of confidence is only avaialbe for English
                 uri = doc['metadata']['source']
                 name = doc['metadata']['title']
-                reference = reference + f"{i+1}. <a href={uri} target=_blank>{name} </a>, {doc['rag_type']} ({doc['assessed_score']})\n"
+                reference = reference + f"{i+1}. <a href={uri} target=_blank>{name}</a>, {doc['rag_type']} ({doc['assessed_score']})\n"
             else: # Query
                 confidence = doc['confidence']
                 if ("type" in doc['metadata']) and (doc['metadata']['type'] == "QUESTION_ANSWER"):
@@ -959,9 +984,9 @@ def get_reference_using_custom_retriever(docs):
             name = doc['metadata']['title']
 
             if page: 
-                reference = reference + f"{i+1}. {page}page in <a href={uri} target=_blank>{name} </a>, {doc['rag_type']} ({doc['assessed_score']})\n"
+                reference = reference + f"{i+1}. {page}page in <a href={uri} target=_blank>{name}</a>, {doc['rag_type']} ({doc['assessed_score']})\n"
             else:
-                reference = reference + f"{i+1}. <a href={uri} target=_blank>{name} </a>, {doc['rag_type']} ({doc['assessed_score']})\n"                
+                reference = reference + f"{i+1}. <a href={uri} target=_blank>{name}</a>, {doc['rag_type']} ({doc['assessed_score']})\n"                
     return reference
             
 def retrieve_from_vectorstore(query, top_k, rag_type):
@@ -1302,6 +1327,9 @@ def getResponse(connectionId, jsonBody):
             memory_chain = ConversationBufferWindowMemory(memory_key="chat_history", output_key='answer', return_messages=True, k=20)
             map_chain[userId] = memory_chain
             print('memory_chain does not exist. create new one!')
+
+            allowTime = getAllowTime()
+            load_chat_history(userId, allowTime, conv_type)
     else:    # normal 
         if userId in map_chat:  
             memory_chat = map_chat[userId]
@@ -1310,11 +1338,11 @@ def getResponse(connectionId, jsonBody):
             memory_chat = ConversationBufferWindowMemory(human_prefix='Human', ai_prefix='Assistant', k=20)
             map_chat[userId] = memory_chat
             print('memory_chat does not exist. create new one!')
+
+            allowTime = getAllowTime()
+            load_chat_history(userId, allowTime, conv_type)
         conversation = ConversationChain(llm=llm, verbose=False, memory=memory_chat)
         
-    allowTime = getAllowTime()
-    load_chat_history(userId, allowTime, conv_type)
-
     # rag sources
     if conv_type == 'qa':
         vectorstore_opensearch = OpenSearchVectorSearch(
@@ -1392,8 +1420,9 @@ def getResponse(connectionId, jsonBody):
                     msg = get_answer_from_PROMPT(llm, text, conv_type, connectionId, requestId)
                 
         elif type == 'document':
-            object = body
+            isTyping(connectionId, requestId)
 
+            object = body
             file_type = object[object.rfind('.')+1:len(object)]            
             print('file_type: ', file_type)
 
@@ -1406,7 +1435,7 @@ def getResponse(connectionId, jsonBody):
 
                 msg = get_summary(llm, texts)
 
-            elif file_type == 'pdf' or file_type == 'txt':
+            elif file_type == 'pdf' or file_type == 'txt' or file_type == 'pptx' or file_type == 'docx':
                 texts = load_document(file_type, object)
 
                 docs = []
@@ -1454,7 +1483,7 @@ def getResponse(connectionId, jsonBody):
                     p1 = Process(target=store_document_for_kendra, args=(path, object, documentId,))
                     p1.start(); p1.join()
                     
-                    if file_type == 'pdf' or file_type == 'txt' or file_type == 'csv':
+                    if file_type == 'pdf' or file_type == 'txt' or file_type == 'csv' or file_type == 'pptx' or file_type == 'docx':
                         # opensearch
                         p2 = Process(target=store_document_for_opensearch, args=(bedrock_embeddings, docs, userId, documentId,))
                         p2.start(); p2.join()
