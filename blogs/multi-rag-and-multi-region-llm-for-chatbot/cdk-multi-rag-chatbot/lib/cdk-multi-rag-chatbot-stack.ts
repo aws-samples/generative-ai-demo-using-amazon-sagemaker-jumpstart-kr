@@ -22,7 +22,7 @@ const s3_prefix = 'docs';
 const projectName = `multi-rag-chatbot`; 
 
 const bucketName = `storage-for-${projectName}-${region}`; 
-const kendra_region = "ap-northeast-1"; 
+let kendra_region = process.env.CDK_DEFAULT_REGION; 
 let deployed_rag_type = 'all';   // all, opensearch, kendra, faiss
 
 const opensearch_account = "admin";
@@ -567,7 +567,7 @@ export class CdkMultiRagChatbotStack extends cdk.Stack {
       role: roleLambdaWebsocket,
       environment: {
         // bedrock_region: bedrock_region,
-        kendra_region: kendra_region,
+        kendra_region: String(kendra_region),
         // model_id: model_id,
         s3_bucket: s3Bucket.bucketName,
         s3_prefix: s3_prefix,

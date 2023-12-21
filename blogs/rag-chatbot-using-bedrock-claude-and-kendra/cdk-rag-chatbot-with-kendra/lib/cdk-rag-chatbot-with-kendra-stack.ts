@@ -22,7 +22,7 @@ const projectName = `rag-chatbot-with-kendra`;
 
 const bucketName = `storage-for-${projectName}-${region}`;
 const bedrock_region = "us-west-2";  // "us-east-1" "us-west-2" 
-const kendra_region = "ap-northeast-1";
+let kendra_region = process.env.CDK_DEFAULT_REGION;
 
 const rag_type = 'kendra';  // faiss, opensearch, kendra
 const rag_method = 'RetrievalPrompt' // RetrievalPrompt, RetrievalQA, ConversationalRetrievalChain
@@ -478,7 +478,7 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
       role: roleLambdaWebsocket,
       environment: {
         bedrock_region: bedrock_region,
-        kendra_region: kendra_region,
+        kendra_region: String(kendra_region),
         model_id: model_id,
         s3_bucket: s3Bucket.bucketName,
         s3_prefix: s3_prefix,
