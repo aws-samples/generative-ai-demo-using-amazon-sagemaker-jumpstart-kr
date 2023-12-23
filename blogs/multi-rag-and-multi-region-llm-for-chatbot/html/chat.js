@@ -1,5 +1,10 @@
-const endpoint = 'wss://87ftbwacuj.execute-api.ap-northeast-1.amazonaws.com/dev';
 const langstate = 'korean'; // korean or english
+// earn endpoint 
+let endpoint = localStorage.getItem('connection_url');
+if(endpoint=="") {
+    console.log('provisioning is required!');
+}
+console.log('endpoint: ', endpoint);
 
 console.log('feedback...');
 const feedback = document.getElementById('feedback');

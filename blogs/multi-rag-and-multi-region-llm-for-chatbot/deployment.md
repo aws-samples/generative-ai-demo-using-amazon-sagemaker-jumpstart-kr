@@ -57,7 +57,7 @@ aws sts get-caller-identity --query Account --output text
 cdk bootstrap aws://[Account ID]/ap-northeast-1
 ```
 
-8) 인프라를 설치합니다.
+7) 인프라를 설치합니다.
 
 ```java
 cdk deploy --all
@@ -69,13 +69,7 @@ cdk deploy --all
 
 
 
-
-9) Output의 websocketurl을 복사한 후, 'multi-rag-and-multi-region-llm-for-chatbot/html/'의 "chat.js"를 열어서 아래와 같이 endpoint를 업데이트 합니다.
-
-![noname](./images/endpoint.png)
-
-
-9) HTMl 파일을 S3에 복사합니다.
+8) HTMl 파일을 S3에 복사합니다.
 
 아래와 같이 Output의 HtmlUpdateCommend을 붙여넣기 합니다. 
 
