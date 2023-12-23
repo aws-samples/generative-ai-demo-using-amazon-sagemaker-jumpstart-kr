@@ -2,16 +2,16 @@ import json
 import boto3
 import os
 
-connection_url = os.environ.get('connection_url')
+wss_url = os.environ.get('wss_url')
 
 def lambda_handler(event, context):
     print('event: ', event)
 
-    print('connection_url: ', connection_url)
+    print('wss_url: ', wss_url)
     
     return {
         'statusCode': 200,
         'info': json.dumps({
-            'connection_url': connection_url
+            'wss_url': wss_url
         })
     }

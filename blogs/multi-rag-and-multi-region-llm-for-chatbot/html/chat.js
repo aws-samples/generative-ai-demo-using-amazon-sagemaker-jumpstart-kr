@@ -1,6 +1,6 @@
 const langstate = 'korean'; // korean or english
 // earn endpoint 
-let endpoint = localStorage.getItem('connection_url');
+let endpoint = localStorage.getItem('wss_url');
 if(endpoint=="") {
     console.log('provisioning is required!');
 }

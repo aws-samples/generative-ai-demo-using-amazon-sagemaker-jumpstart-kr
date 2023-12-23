@@ -49,10 +49,10 @@ function getProvisioningInfo(userId) {
             let provisioning_info = JSON.parse(response['info']);
             console.log("provisioning info: " + JSON.stringify(provisioning_info));
                         
-            let connection_url = provisioning_info.connection_url;
-            console.log("connection_url: ", connection_url);
+            let wss_url = provisioning_info.wss_url;
+            console.log("wss_url: ", wss_url);
 
-            localStorage.setItem('connection_url',connection_url);
+            localStorage.setItem('wss_url',wss_url);
         }
     };
 
