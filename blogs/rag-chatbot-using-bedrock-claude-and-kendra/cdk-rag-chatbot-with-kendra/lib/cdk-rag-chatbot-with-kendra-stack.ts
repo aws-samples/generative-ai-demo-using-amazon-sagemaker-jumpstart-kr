@@ -22,7 +22,7 @@ const projectName = `rag-chatbot-with-kendra`;
 
 const bucketName = `storage-for-${projectName}-${region}`;
 const bedrock_region = "us-west-2";  // "us-east-1" "us-west-2" 
-let kendra_region = process.env.CDK_DEFAULT_REGION;
+let kendra_region = process.env.CDK_DEFAULT_REGION; 
 
 const rag_type = 'kendra';  // faiss, opensearch, kendra
 const rag_method = 'RetrievalPrompt' // RetrievalPrompt, RetrievalQA, ConversationalRetrievalChain
@@ -550,6 +550,47 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
     new cdk.CfnOutput(this, `FAQ-Update-for-${projectName}`, {
       value: 'aws kendra create-faq --index-id ' + kendraIndex + ' --name FAQ_banking --s3-path \'{\"Bucket\":\"' + s3Bucket.bucketName + '\", \"Key\":\"faq/faq-banking.csv\"}\' --role-arn ' + roleLambdaWebsocket.roleArn + ' --language-code ko --region ' + kendra_region + ' --file-format CSV',
       description: 'The commend for uploading contents of FAQ',
+    });
+
+    // lambda - provisioning
+    const lambdaProvisioning = new lambda.Function(this, `lambda-provisioning-for-${projectName}`, {
+      description: 'lambda to earn provisioning info',
+      functionName: 'lambda-provisioning-api',
+      handler: 'lambda_function.lambda_handler',
+      runtime: lambda.Runtime.PYTHON_3_11,
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../lambda-provisioning')),
+      timeout: cdk.Duration.seconds(30),
+      logRetention: logs.RetentionDays.ONE_DAY,
+      environment: {
+        connection_url: connection_url,
+      }
+    });
+
+    // POST method - provisioning
+    const provisioning_info = api.root.addResource("provisioning");
+    provisioning_info.addMethod('POST', new apiGateway.LambdaIntegration(lambdaProvisioning, {
+      passthroughBehavior: apiGateway.PassthroughBehavior.WHEN_NO_TEMPLATES,
+      credentialsRole: role,
+      integrationResponses: [{
+        statusCode: '200',
+      }], 
+      proxy:false, 
+    }), {
+      methodResponses: [  
+        {
+          statusCode: '200',
+          responseModels: {
+            'application/json': apiGateway.Model.EMPTY_MODEL,
+          }, 
+        }
+      ]
+    }); 
+
+    // cloudfront setting for provisioning api
+    distribution.addBehavior("/provisioning", new origins.RestApiOrigin(api), {
+      cachePolicy: cloudFront.CachePolicy.CACHING_DISABLED,
+      allowedMethods: cloudFront.AllowedMethods.ALLOW_ALL,  
+      viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
     });
 
     // deploy components

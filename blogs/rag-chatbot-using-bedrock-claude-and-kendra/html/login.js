@@ -21,6 +21,9 @@ else {
 console.log(userInput.value);
 console.log(convtypeInput.value);
 
+// provisioning
+getProvisioningInfo(userId);
+
 function onSubmit(e) {
     e.preventDefault();
     console.log(userInput.value);
@@ -35,3 +38,30 @@ function onSubmit(e) {
     window.location.href = "chat.html";
 }
 
+function getProvisioningInfo(userId) {
+    const uri = "provisioning";
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", uri, true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            let provisioning_info = JSON.parse(response['info']);
+            console.log("provisioning info: " + JSON.stringify(provisioning_info));
+                        
+            let connection_url = provisioning_info.connection_url;
+            console.log("connection_url: ", connection_url);
+
+            localStorage.setItem('connection_url',connection_url);
+        }
+    };
+
+    var requestObj = {
+        "userId": userId
+    }
+    console.log("request: " + JSON.stringify(requestObj));
+
+    var blob = new Blob([JSON.stringify(requestObj)], {type: 'application/json'});
+
+    xhr.send(blob);   
+}

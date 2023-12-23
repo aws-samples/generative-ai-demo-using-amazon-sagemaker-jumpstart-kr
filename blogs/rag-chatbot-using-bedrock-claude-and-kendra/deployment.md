@@ -71,20 +71,15 @@ cdk deploy --all
 
 ![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/aaf5c20b-2b77-4a4f-afc1-bf5fa5d1b99f)
 
-8) Output의 "websocketurl"의 경로를 복사해서, 아래와 같이 왼쪽의 파일탐색기에서 “html/chat.js”파일을 열어서, endpoint를 업데이트합니다.
 
-
-![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/75e4f2af-5fe1-4dd7-b3d4-29e954f1dc50)
-
-
-9) HTML 파일을 S3에 복사합니다.
+8) HTML 파일을 S3에 복사합니다.
 
 아래와 같이 Output의 HtmlUpdateCommend을 터미널에 붙여넣기해서 필요한 파일을 S3로 업로드합니다.
 
 ![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/3428efb9-a41c-45cf-96de-c3bd0f7b740a)
 
 
-10) FAQ를 생성하기 위하여 아래와 같이 Output의 FAQUpdateforkoreanchatbot를 복사해서 터미널에 붙여넣기 합니다.
+9) FAQ를 생성하기 위하여 아래와 같이 Output의 FAQUpdateforkoreanchatbot를 복사해서 터미널에 붙여넣기 합니다.
 
 ![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/fce5192f-93de-4ed8-a32e-8ba133d1c392)
 
@@ -94,7 +89,7 @@ Kendra console의 [FAQs]에 접속하면 아래와 같이 "FAQ_banking"로 Sampl
 ![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/93d8da15-5f2d-4122-a9b2-5aa1e03ddd09)
 
 
-11) Output의 WebUrlforkoreanchatbot에 있는 URL을 복사하여 웹브라우저로 접속합니다. User Id로 적당한 이름을 넣고, Conversation Type으로는 "2. Question/Answering (RAG-Kendra)"를 선택합니다.
+10) Output의 WebUrlforragchatbotwithkendra에 있는 URL을 복사하여 웹브라우저로 접속합니다. User Id로 적당한 이름을 넣고, Conversation Type으로는 "2. Question/Answering (RAG-Kendra)"를 선택합니다.
 
 ![noname](https://github.com/kyopark2014/rag-chatbot-using-bedrock-claude-and-kendra/assets/52392004/3635bad9-972c-4f6d-aa83-4a06368c6fe9)
 
