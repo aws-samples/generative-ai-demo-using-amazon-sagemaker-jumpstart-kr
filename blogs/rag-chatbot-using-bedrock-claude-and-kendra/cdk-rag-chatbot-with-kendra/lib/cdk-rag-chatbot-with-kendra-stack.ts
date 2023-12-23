@@ -555,7 +555,7 @@ export class CdkRagChatbotWithKendraStack extends cdk.Stack {
     // lambda - provisioning
     const lambdaProvisioning = new lambda.Function(this, `lambda-provisioning-for-${projectName}`, {
       description: 'lambda to earn provisioning info',
-      functionName: 'lambda-provisioning-api',
+      functionName: `lambda-provisioning-api-${projectName}`,
       handler: 'lambda_function.lambda_handler',
       runtime: lambda.Runtime.PYTHON_3_11,
       code: lambda.Code.fromAsset(path.join(__dirname, '../../lambda-provisioning')),
